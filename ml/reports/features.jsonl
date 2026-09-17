@@ -1,0 +1,3 @@
+{"set": "word", "n_features": 254358, "n_word": 254358, "train_nnz": 6452421, "seconds": 27.5}
+{"set": "word_noslang", "n_features": 275488, "n_word": 275488, "train_nnz": 6416442, "seconds": 33.1}
+{"set": "wordchar", "n_features": 343970, "n_word": 254358, "train_nnz": 64171975, "seconds": 205.1}

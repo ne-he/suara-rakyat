@@ -1,0 +1,35 @@
+# data mentah dan turunan (unduh ulang dari Mendeley, lihat README)
+dataset/*
+!dataset/.gitkeep
+data/
+models/
+
+# catatan kerja internal
+_notes/
+
+# python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+
+# node / next
+node_modules/
+.next/
+out/
+.vercel/
+*.tsbuildinfo
+next-env.d.ts
+
+# env
+.env
+.env.*
+!.env.example
+
+# os
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# konfigurasi lokal alat bantu
+.claude/

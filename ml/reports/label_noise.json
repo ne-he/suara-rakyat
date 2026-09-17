@@ -1,0 +1,34 @@
+{
+  "keys_seen_2plus": 12988,
+  "rows_in_those_keys": 268270,
+  "oracle_accuracy_on_duplicated_rows": 0.9453,
+  "oracle_macro_f1_on_duplicated_rows": 0.6701,
+  "neutral_rows_whose_text_majority_is_not_neutral": 0.9236,
+  "example_mixed": {
+    "mantap": {
+      "negative": 295,
+      "neutral": 324,
+      "positive": 19155
+    },
+    "bagus": {
+      "negative": 483,
+      "neutral": 798,
+      "positive": 21023
+    },
+    "ok": {
+      "negative": 529,
+      "neutral": 895,
+      "positive": 25600
+    },
+    "lumayan": {
+      "negative": 81,
+      "neutral": 302,
+      "positive": 631
+    },
+    "aplikasi sangat membantu": {
+      "negative": 1,
+      "neutral": 2,
+      "positive": 276
+    }
+  }
+}

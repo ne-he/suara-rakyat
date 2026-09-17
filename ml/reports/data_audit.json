@@ -1,0 +1,101 @@
+{
+  "raw_rows": 617722,
+  "columns": [
+    "Unnamed: 0",
+    "app",
+    "content",
+    "translation",
+    "score",
+    "at",
+    "appVersion",
+    "labelScoreBase"
+  ],
+  "null_counts": {
+    "Unnamed: 0": 0,
+    "app": 0,
+    "content": 26,
+    "translation": 7775,
+    "score": 0,
+    "at": 0,
+    "appVersion": 90403,
+    "labelScoreBase": 0
+  },
+  "label_counts_raw": {
+    "positive": 336449,
+    "negative": 246898,
+    "neutral": 34375
+  },
+  "score_by_label": {
+    "1": {
+      "negative": 216959,
+      "neutral": 0,
+      "positive": 0
+    },
+    "2": {
+      "negative": 29939,
+      "neutral": 0,
+      "positive": 0
+    },
+    "3": {
+      "negative": 0,
+      "neutral": 34375,
+      "positive": 0
+    },
+    "4": {
+      "negative": 0,
+      "neutral": 0,
+      "positive": 45280
+    },
+    "5": {
+      "negative": 0,
+      "neutral": 0,
+      "positive": 291169
+    }
+  },
+  "app_counts_raw": {
+    "JMO": 200000,
+    "satusehat": 190696,
+    "mobileJKN": 122103,
+    "pertamina": 96291,
+    "KAI": 7311,
+    "BMKG": 1321
+  },
+  "date_min": "2012-05-11 17:18:48",
+  "date_max": "2023-03-26 01:32:45",
+  "exact_duplicate_content": 234107,
+  "empty_after_normalize": 148,
+  "unique_keys": 362292,
+  "keys_with_conflicting_labels": 3260,
+  "keys_dropped_tie": 1005,
+  "rows_in_tied_keys": 2290,
+  "prepared_rows": 361287,
+  "prepared_label_counts": {
+    "negative": 211861,
+    "positive": 123879,
+    "neutral": 25547
+  },
+  "split_counts": {
+    "test": {
+      "negative": 21285,
+      "neutral": 2539,
+      "positive": 12403
+    },
+    "train": {
+      "negative": 169369,
+      "neutral": 20403,
+      "positive": 99003
+    },
+    "val": {
+      "negative": 21207,
+      "neutral": 2605,
+      "positive": 12473
+    }
+  },
+  "rows_represented": 615284,
+  "token_len_percentiles": {
+    "0.5": 9.0,
+    "0.9": 30.0,
+    "0.99": 65.0
+  },
+  "share_single_token_keys": 0.0163
+}

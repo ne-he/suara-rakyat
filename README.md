@@ -4,7 +4,7 @@ Web untuk membaca nada ulasan aplikasi layanan publik (Mobile JKN, JMO, SatuSeha
 
 Projek AOL mata kuliah Software Engineering. Tim: Nehemiah, Marcel, Wilson, Hans, Daniel.
 
-Web: `[?]` (diisi setelah deploy Vercel)
+Web: https://suara-rakyat-xi.vercel.app
 
 ## Tiga model di web
 
@@ -59,26 +59,28 @@ Uji paritas (`npm run parity`) membandingkan prediksi TypeScript dengan Python u
 Bagian atas halaman adalah cerita 4 babak yang bergerak mengikuti scroll (`web/components/ScrollStory.tsx`). Ada dua mode:
 
 - **Mode kode** (default): adegan kerumunan warga, bendera merah putih, dan balon suara yang tersusun jadi proporsi negatif 59%, netral 7%, positif 34% digambar langsung di canvas.
-- **Mode video**: kalau folder `web/public/frames/` berisi frame, adegan diganti frame video yang diputar sesuai posisi scroll.
+- **Mode video** (aktif sekarang): frame dari 3 klip ilustrasi (jalan menuju Monas, HP dan balon suara, pita negatif/netral/positif) diputar sesuai posisi scroll. Kalau folder `web/public/frames/` dihapus, web kembali ke mode kode.
 
-Cara memasang video (misalnya hasil Google Whisk Animate, MP4 8 detik 16:9):
+Cara memasang atau mengganti video:
 
 ```bash
-# taruh video di tools/frames/media/ dengan nama scene-1.mp4, scene-2.mp4, scene-3.mp4
+# taruh scene1.mp4, scene2.mp4, scene3.mp4 di folder vid/ (root repo)
+# atur potongan detik dan porsi scroll di tools/frames/scenes.json
 cd tools/frames
 npm install
 npm run frames
 ```
 
-Script memotong tiap video jadi 96 frame WebP (12 fps) dalam dua ukuran: 1280 px untuk desktop dan 640 px untuk HP. Web otomatis memakai frame itu setelah build ulang.
+Script memotong video jadi frame WebP 12 fps dalam dua ukuran: 1280 px untuk desktop dan 640 px untuk HP. Scene 2 dipotong di detik 6,0 karena setelahnya kamera turun lagi. Scene 3 mendapat porsi scroll dua babak. Total frame sekarang 288 (desktop 9,6 MB, HP 4,7 MB), dimuat bertahap: frame jarang dulu, lalu makin rapat.
 
 Uji kemulusan di Chromium dengan GPU Intel Iris Xe, scroll roda mouse naik turun sepanjang cerita:
 
 | Mode | Layar | Median waktu frame | Frame di atas 33 ms |
 |---|---|---|---|
+| Video | desktop 1440×900 | 16,7 ms | 2 dari 338 |
+| Video | HP 390×844 | 16,7 ms | 1 dari 316 |
 | Kode | desktop 1440×900 | 16,7 ms | 0 dari 368 |
 | Kode | HP 390×844 | 16,7 ms | 0 dari 355 |
-| Video (frame uji) | HP 390×844, render software | 16,7 ms | 1 dari 306 |
 
 ## Struktur folder
 
@@ -95,7 +97,7 @@ web/
   model/             bobot model hasil export
   data/              ringkasan dataset dan papan peringkat untuk halaman
   scripts/           uji paritas
-tools/frames/        pemotong video jadi frame untuk cerita scroll
+tools/frames/        pemotong video jadi frame + scenes.json (potongan dan porsi scroll)
 ```
 
 ## Menjalankan ulang

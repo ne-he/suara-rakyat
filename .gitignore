@@ -37,3 +37,6 @@ desktop.ini
 # alat potong frame: video sumber dan dependensi lokal
 tools/frames/node_modules/
 tools/frames/media/
+
+# video sumber scene (hasilnya ada di web/public/frames)
+/vid/

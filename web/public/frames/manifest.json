@@ -1,0 +1,78 @@
+{
+  "fps": 12,
+  "generated": "2026-09-17T13:48:03.317Z",
+  "scenes": [
+    {
+      "id": "scene1",
+      "weight": 1,
+      "source": {
+        "file": "scene1.mp4",
+        "seconds": 10.01,
+        "start": 0,
+        "end": 10.01
+      },
+      "variants": {
+        "d": {
+          "width": 1280,
+          "height": 720,
+          "frames": 120,
+          "mb": 3.4
+        },
+        "m": {
+          "width": 640,
+          "height": 360,
+          "frames": 120,
+          "mb": 1.6
+        }
+      }
+    },
+    {
+      "id": "scene2",
+      "weight": 1,
+      "source": {
+        "file": "scene2.mp4",
+        "seconds": 8,
+        "start": 0,
+        "end": 6
+      },
+      "variants": {
+        "d": {
+          "width": 1280,
+          "height": 720,
+          "frames": 72,
+          "mb": 2
+        },
+        "m": {
+          "width": 640,
+          "height": 360,
+          "frames": 72,
+          "mb": 1
+        }
+      }
+    },
+    {
+      "id": "scene3",
+      "weight": 2,
+      "source": {
+        "file": "scene3.mp4",
+        "seconds": 8,
+        "start": 0,
+        "end": 8
+      },
+      "variants": {
+        "d": {
+          "width": 1280,
+          "height": 720,
+          "frames": 96,
+          "mb": 4.2
+        },
+        "m": {
+          "width": 640,
+          "height": 360,
+          "frames": 96,
+          "mb": 2.1
+        }
+      }
+    }
+  ]
+}

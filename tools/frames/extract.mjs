@@ -1,11 +1,13 @@
 // Potong video scene jadi urutan frame WebP untuk scroll story di web.
 //
 // Pakai:
-//   1. Taruh video di tools/frames/media/ dengan nama scene-1.mp4, scene-2.mp4, scene-3.mp4 (urut cerita)
-//   2. cd tools/frames && npm install && npm run frames
-// Hasil: web/public/frames/scene-N/{d,m}/0001.webp + web/public/frames/manifest.json
-//   d = desktop (lebar 1280), m = HP (lebar 640). Web otomatis memakai frame ini kalau manifest ada.
-// Opsi env: FPS (default 12), QD (kualitas desktop, 68), QM (kualitas HP, 62)
+//   1. Taruh video di folder vid/ (root repo) dengan nama scene1.mp4, scene2.mp4, ... (urut cerita).
+//      Nama scene-1.mp4 juga diterima. Folder lain: set env MEDIA=path.
+//   2. Atur potongan dan porsi scroll di tools/frames/scenes.json (opsional).
+//   3. cd tools/frames && npm install && npm run frames
+// Hasil: web/public/frames/sceneN/{d,m}/0001.webp + web/public/frames/manifest.json
+//   d = desktop (lebar 1280), m = HP (lebar 640). Web otomatis memakai frame ini setelah build ulang.
+// Opsi env: FPS (default 12), QD (kualitas desktop, 62), QM (kualitas HP, 58)
 
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
@@ -14,12 +16,14 @@ import { fileURLToPath } from "node:url";
 import ffmpeg from "ffmpeg-static";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const mediaDir = path.join(here, "media");
+const mediaDir = path.resolve(process.env.MEDIA ?? path.join(here, "../../vid"));
 const outRoot = path.resolve(here, "../../web/public/frames");
+const configFile = path.join(here, "scenes.json");
+const config = fs.existsSync(configFile) ? JSON.parse(fs.readFileSync(configFile, "utf8")) : {};
 const FPS = Number(process.env.FPS ?? 12);
 const VARIANTS = [
-  { key: "d", width: 1280, quality: Number(process.env.QD ?? 68) },
-  { key: "m", width: 640, quality: Number(process.env.QM ?? 62) },
+  { key: "d", width: 1280, quality: Number(process.env.QD ?? 62) },
+  { key: "m", width: 640, quality: Number(process.env.QM ?? 58) },
 ];
 
 function run(args) {
@@ -28,22 +32,23 @@ function run(args) {
   return r.stderr;
 }
 
-function probeSize(file) {
+function probe(file) {
   const r = spawnSync(ffmpeg, ["-hide_banner", "-i", file], { encoding: "utf8" });
-  const m = r.stderr.match(/Video:.*?(\d{2,5})x(\d{2,5})/);
-  if (!m) throw new Error(`tidak bisa membaca ukuran video ${file}`);
-  return { w: Number(m[1]), h: Number(m[2]) };
+  const size = r.stderr.match(/Video:.*?(\d{2,5})x(\d{2,5})/);
+  const dur = r.stderr.match(/Duration: (\d+):(\d+):([\d.]+)/);
+  if (!size || !dur) throw new Error(`tidak bisa membaca video ${file}`);
+  return { w: Number(size[1]), h: Number(size[2]), seconds: Number(dur[1]) * 3600 + Number(dur[2]) * 60 + Number(dur[3]) };
 }
 
 const videos = fs.existsSync(mediaDir)
   ? fs
       .readdirSync(mediaDir)
-      .filter((f) => /^scene-\d+\.(mp4|webm|mov)$/i.test(f))
+      .filter((f) => /^scene-?\d+\.(mp4|webm|mov)$/i.test(f))
       .sort((a, b) => Number(a.match(/\d+/)[0]) - Number(b.match(/\d+/)[0]))
   : [];
 
 if (videos.length === 0) {
-  console.error(`Tidak ada video. Taruh scene-1.mp4, scene-2.mp4, ... di ${mediaDir}`);
+  console.error(`Tidak ada video. Taruh scene1.mp4, scene2.mp4, ... di ${mediaDir}`);
   process.exit(1);
 }
 
@@ -51,27 +56,32 @@ fs.rmSync(outRoot, { recursive: true, force: true });
 const manifest = { fps: FPS, generated: new Date().toISOString(), scenes: [] };
 
 for (const file of videos) {
-  const id = path.parse(file).name;
+  const id = `scene${file.match(/\d+/)[0]}`;
+  const cfg = config[id] ?? {};
   const src = path.join(mediaDir, file);
-  const { w, h } = probeSize(src);
-  const scene = { id, variants: {} };
+  const { w, h, seconds } = probe(src);
+  const start = Number(cfg.start ?? 0);
+  const end = cfg.end == null ? seconds : Math.min(seconds, Number(cfg.end));
+  const scene = { id, weight: Number(cfg.weight ?? 1), source: { file, seconds: +seconds.toFixed(2), start, end }, variants: {} };
   for (const v of VARIANTS) {
     const dir = path.join(outRoot, id, v.key);
     fs.mkdirSync(dir, { recursive: true });
     const height = Math.round((h * v.width) / w / 2) * 2;
     run([
-      "-hide_banner", "-y", "-i", src,
+      "-hide_banner", "-y", "-ss", String(start), "-to", String(end), "-i", src,
       "-vf", `fps=${FPS},scale=${v.width}:${height}:flags=lanczos`,
-      "-an", "-c:v", "libwebp", "-quality", String(v.quality), "-compression_level", "4",
+      "-an", "-c:v", "libwebp", "-quality", String(v.quality), "-compression_level", "5",
       "-f", "image2", path.join(dir, "%04d.webp"),
     ]);
-    const frames = fs.readdirSync(dir).filter((f) => f.endsWith(".webp")).length;
-    const bytes = fs.readdirSync(dir).reduce((s, f) => s + fs.statSync(path.join(dir, f)).size, 0);
-    scene.variants[v.key] = { width: v.width, height, frames, mb: Math.round(bytes / 1e5) / 10 };
-    console.log(`${id}/${v.key}: ${frames} frame, ${v.width}x${height}, ${scene.variants[v.key].mb} MB`);
+    const names = fs.readdirSync(dir).filter((f) => f.endsWith(".webp"));
+    const bytes = names.reduce((s, f) => s + fs.statSync(path.join(dir, f)).size, 0);
+    scene.variants[v.key] = { width: v.width, height, frames: names.length, mb: Math.round(bytes / 1e5) / 10 };
+    console.log(`${id}/${v.key}: ${names.length} frame (${start}s sampai ${end.toFixed(2)}s), ${v.width}x${height}, ${scene.variants[v.key].mb} MB`);
   }
   manifest.scenes.push(scene);
 }
 
 fs.writeFileSync(path.join(outRoot, "manifest.json"), JSON.stringify(manifest, null, 2));
+const total = (k) => manifest.scenes.reduce((s, sc) => s + sc.variants[k].mb, 0).toFixed(1);
+console.log(`total desktop ${total("d")} MB, HP ${total("m")} MB`);
 console.log(`manifest: ${path.join(outRoot, "manifest.json")}`);

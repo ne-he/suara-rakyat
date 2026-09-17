@@ -9,7 +9,11 @@ import { useEffect, useRef } from "react";
 
 export type FramesManifest = {
   fps: number;
-  scenes: { id: string; variants: Record<"d" | "m", { width: number; height: number; frames: number; mb: number }> }[];
+  scenes: {
+    id: string;
+    weight?: number; // porsi panjang scroll untuk scene ini (default 1)
+    variants: Record<"d" | "m", { width: number; height: number; frames: number; mb: number }>;
+  }[];
 };
 
 export type Chapter = { kicker: string; title: string; body: string; cta?: { label: string; href: string } };
@@ -432,6 +436,17 @@ export default function ScrollStory({ manifest, chapters, shares }: Props) {
     let cssH = 0;
 
     const variant: "d" | "m" = window.innerWidth < 820 ? "m" : "d";
+    // batas kumulatif tiap scene di sumbu progres 0..1, sebanding weight
+    const bounds: number[] = [0];
+    if (manifest && manifest.scenes.length) {
+      const total = manifest.scenes.reduce((acc, sc) => acc + (sc.weight ?? 1), 0);
+      let acc = 0;
+      for (const sc of manifest.scenes) {
+        acc += (sc.weight ?? 1) / total;
+        bounds.push(acc);
+      }
+      bounds[bounds.length - 1] = 1;
+    }
     const store = manifest && manifest.scenes.length ? new FrameStore(manifest, variant, () => {
       dirty = true;
       kick();
@@ -470,13 +485,16 @@ export default function ScrollStory({ manifest, chapters, shares }: Props) {
     function drawFrames(p: number) {
       const scenes = manifest!.scenes;
       const S = scenes.length;
-      const g = clamp(p) * S;
-      const s = clamp(Math.floor(g), 0, S - 1);
-      const t = p >= 1 ? 1 : clamp(g - s);
+      const q = clamp(p);
+      let s = 0;
+      while (s < S - 1 && q >= bounds[s + 1]) s++;
+      const t = clamp((q - bounds[s]) / (bounds[s + 1] - bounds[s]));
       const count = scenes[s].variants[variant].frames;
       const fi = Math.round(t * (count - 1));
-      const fade = 0.12;
-      const a = s < S - 1 && t > 1 - fade ? Math.round(((t - (1 - fade)) / fade) * 20) / 20 : 0;
+      // crossfade ke frame pertama scene berikutnya di 3% terakhir sebelum batas scene
+      const FADE = 0.03;
+      const dist = bounds[s + 1] - q;
+      const a = s < S - 1 && dist < FADE ? Math.round((1 - dist / FADE) * 20) / 20 : 0;
       const key = `${s}:${fi}:${a}`;
       if (key === lastKey && !dirty) return;
       const img = store!.nearest(s, fi);

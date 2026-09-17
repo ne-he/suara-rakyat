@@ -1,3 +1,4 @@
 *.f32 binary
 web/model/*.txt text eol=lf
 web/scripts/parity_samples.json text eol=lf
+*.webp binary

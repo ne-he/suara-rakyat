@@ -1,0 +1,6 @@
+{
+  "_catatan": "start/end dalam detik (potong klip), weight = porsi panjang scroll. Babak cerita: scene 1 = babak 1, scene 2 = babak 2, scene 3 = babak 3 dan 4. Scene 2 dipotong di 6,0 detik karena setelah itu kamera turun lagi ke kerumunan.",
+  "scene1": { "start": 0, "end": null, "weight": 1 },
+  "scene2": { "start": 0, "end": 6.0, "weight": 1 },
+  "scene3": { "start": 0, "end": null, "weight": 2 }
+}

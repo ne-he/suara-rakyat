@@ -1,0 +1,12 @@
+{
+  "name": "suara-frames",
+  "private": true,
+  "description": "Potong video scene (MP4 dari Whisk) jadi urutan frame WebP untuk scroll story di web.",
+  "type": "module",
+  "scripts": {
+    "frames": "node extract.mjs"
+  },
+  "devDependencies": {
+    "ffmpeg-static": "^5.2.0"
+  }
+}

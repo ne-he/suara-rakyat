@@ -1,63 +1,91 @@
 @import "tailwindcss";
 
 :root {
-  --paper: #f3eee3;
-  --paper-2: #ebe4d5;
-  --card: #fbf8f1;
-  --ink: #17140f;
-  --ink-2: #4a443a;
-  --muted: #7a7266;
-  --line: #d8cfbd;
-  --signal: #d9401c;
-  --neg: #b3261e;
-  --neu: #9a6b00;
-  --pos: #1d6e45;
+  --merah: #ce1126;
+  --merah-tua: #8e0c1a;
+  --putih: #f6f1e7;
+  --kertas: #efe7d6;
+  --kardus: #c9a46a;
+  --aspal: #141210;
+  --aspal-2: #2a2622;
+  --abu: #6f675c;
+  --garis: #d9ceb8;
+  --neg: #b0151f;
+  --neu: #c98a05;
+  --pos: #1c7a4c;
 }
 
 @theme inline {
-  --color-paper: var(--paper);
-  --color-paper-2: var(--paper-2);
-  --color-card: var(--card);
-  --color-ink: var(--ink);
-  --color-ink-2: var(--ink-2);
-  --color-muted: var(--muted);
-  --color-line: var(--line);
-  --color-signal: var(--signal);
+  --color-merah: var(--merah);
+  --color-merah-tua: var(--merah-tua);
+  --color-putih: var(--putih);
+  --color-kertas: var(--kertas);
+  --color-kardus: var(--kardus);
+  --color-aspal: var(--aspal);
+  --color-aspal-2: var(--aspal-2);
+  --color-abu: var(--abu);
+  --color-garis: var(--garis);
   --color-neg: var(--neg);
   --color-neu: var(--neu);
   --color-pos: var(--pos);
-  --font-display: var(--font-bricolage);
+  --font-display: var(--font-shoulders);
+  --font-marker: var(--font-marker);
   --font-sans: var(--font-jakarta);
   --font-mono: var(--font-jetbrains);
 }
 
 html {
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--putih);
+  color: var(--aspal);
+  scroll-behavior: smooth;
 }
 
 body {
   font-family: var(--font-jakarta), system-ui, sans-serif;
-  background-color: var(--paper);
-  background-image:
-    radial-gradient(circle at 1px 1px, rgba(23, 20, 15, 0.07) 1px, transparent 0),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0));
-  background-size: 22px 22px, 100% 100%;
+  background: var(--putih);
+  overflow-x: clip;
 }
 
 ::selection {
-  background: var(--signal);
-  color: var(--paper);
+  background: var(--merah);
+  color: var(--putih);
 }
 
-.rule {
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent 0,
-    transparent 31px,
-    rgba(23, 20, 15, 0.08) 31px,
-    rgba(23, 20, 15, 0.08) 32px
-  );
+.display {
+  font-family: var(--font-shoulders), Impact, sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  line-height: 0.86;
+  text-transform: uppercase;
+}
+
+.marker {
+  font-family: var(--font-marker), "Comic Sans MS", cursive;
+}
+
+.kicker {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* garis merah putih ala bendera, dipakai sebagai pembatas */
+.bendera {
+  height: 10px;
+  background: linear-gradient(to bottom, var(--merah) 0 50%, #fff 50% 100%);
+  border-top: 1px solid var(--aspal);
+  border-bottom: 1px solid var(--aspal);
+}
+
+/* papan karton demo */
+.karton {
+  background: #d8b77e;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(90, 60, 20, 0.06) 0 2px, transparent 2px 7px),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.18), rgba(0, 0, 0, 0.06));
+  border: 2px solid var(--aspal);
+  box-shadow: 6px 6px 0 var(--aspal);
 }
 
 .stamp {
@@ -67,7 +95,7 @@ body {
 @keyframes stamp-in {
   0% {
     opacity: 0;
-    transform: rotate(-9deg) scale(1.7);
+    transform: rotate(-10deg) scale(1.8);
   }
   100% {
     opacity: 1;
@@ -76,17 +104,17 @@ body {
 }
 
 .bar-fill {
-  transition: width 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: width 650ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .rise {
-  animation: rise 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: rise 650ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(14px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -95,6 +123,9 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   .stamp,
   .rise {
     animation: none;

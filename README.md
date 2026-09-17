@@ -1,40 +1,26 @@
-# SUARA v1: model sentimen ulasan aplikasi layanan publik
+# Suara Rakyat
 
-Web kecil untuk membaca nada ulasan aplikasi pemerintah (Mobile JKN, JMO, SatuSehat, MyPertamina, KAI Access, Info BMKG). Tempel satu ulasan, lalu web menampilkan label negatif, netral, atau positif, probabilitasnya, dan kata yang paling mendorong hasil itu.
+Web untuk membaca nada ulasan aplikasi layanan publik (Mobile JKN, JMO, SatuSehat, MyPertamina, KAI Access, Info BMKG). Tulis satu ulasan, pilih salah satu dari tiga model, lalu web menampilkan label negatif, netral, atau positif, probabilitasnya, kata yang paling mendorong hasil itu, dan pendapat dua model lainnya.
 
-Ini versi pertama dari projek SUARA untuk mata kuliah Software Engineering. Fokus v1 cuma dua: cari model terbaik secara jujur, lalu jalankan di web.
+Projek AOL mata kuliah Software Engineering. Tim: Nehemiah, Marcel, Wilson, Hans, Daniel.
 
 Web: `[?]` (diisi setelah deploy Vercel)
 
-## Hasil singkat
+## Tiga model di web
 
-Model yang dipakai web: **Linear SVM** (C = 0,1) dengan fitur TF-IDF kata 1-2 gram dan karakter 2-5 gram.
+Semua dites di 36.227 ulasan unik yang tidak pernah dilihat saat training.
 
-| Metrik (test, 36.227 ulasan unik) | Nilai |
-|---|---|
-| Macro-F1 | **0,668** (bootstrap 95%: 0,662 sampai 0,674) |
-| Akurasi | 82,7% |
-| F1 negatif / netral / positif | 0,889 / 0,271 / 0,843 |
-| Negatif terbaca positif atau sebaliknya | 6,6% |
-| Akurasi kalau netral dikesampingkan | 91,1% |
-| Waktu prediksi di web | sekitar 0,5 ms per ulasan (setelah model dimuat) |
+| Model | Fitur | Val macro-F1 | Test macro-F1 | Akurasi | Polaritas terbalik |
+|---|---|---|---|---|---|
+| Linear SVM (default) | kata + karakter | 0,665 | **0,668** | 82,7% | 6,6% |
+| Logistic Regression | kata + karakter | 0,659 | 0,663 | 82,1% | 7,0% |
+| Naive Bayes (Multinomial) | kata | 0,647 | 0,651 | 79,6% | 7,4% |
 
-Ada 27 konfigurasi yang diadu. Potongan papan peringkatnya:
+"Polaritas terbalik" artinya ulasan negatif terbaca positif atau sebaliknya. Rentang bootstrap 95% untuk macro-F1 Linear SVM: 0,662 sampai 0,674.
 
-| Model | Fitur | Val macro-F1 | Test macro-F1 |
-|---|---|---|---|
-| Linear SVM C=0,1 (dipakai web) | kata + karakter | 0,665 | 0,668 |
-| Linear SVM C=0,1 | kata | 0,664 | 0,666 |
-| Logistic Regression C=2 | kata + karakter | 0,659 | 0,663 |
-| LightGBM (30 ribu fitur chi2) | kata | 0,659 | 0,658 |
-| Multinomial Naive Bayes | kata | 0,647 | 0,651 |
-| Regresi bintang (Ridge) | kata + karakter | 0,643 | 0,646 |
-| Complement Naive Bayes | kata | 0,632 | 0,636 |
-| Tebak kelas mayoritas | kata | 0,246 | 0,247 |
+Ketiganya dipilih dari 27 konfigurasi yang diadu (tabel lengkap di `ml/reports/results.md`). Beda Linear SVM dengan SVM fitur kata saja tidak signifikan (selisih bootstrap 95%: -0,001 sampai 0,005). Beda dengan Complement Naive Bayes signifikan (0,027 sampai 0,037).
 
-Tabel lengkap ada di `ml/reports/results.md`. Semua angka di atas sudah memakai geser bias kelas yang di-tune di validation.
-
-Beda SVM kata + karakter dengan SVM kata saja tidak signifikan (selisih bootstrap 95%: -0,001 sampai 0,005). Beda dengan Complement Naive Bayes signifikan (0,027 sampai 0,037).
+Ketiga model memakai satu mesin fitur yang sama, jadi satu request menghitung fitur sekali lalu menjalankan ketiganya. Rata-rata di laptop: sekitar 0,7 ms untuk tiga model sekaligus.
 
 ## Data dan cara membersihkannya
 
@@ -44,7 +30,7 @@ Temuan audit (`ml/reports/data_audit.json`):
 
 - Label murni dari bintang. Bintang 1-2 jadi negatif, 3 netral, 4-5 positif.
 - 234.107 baris adalah duplikat persis. Kebanyakan ulasan pendek seperti "mantap" dan "bagus".
-- Setelah teks dinormalisasi tersisa 362.292 teks unik. Sebanyak 1.005 teks labelnya seri (misal satu kali positif, satu kali negatif) dan dibuang, jadi total 361.287.
+- Setelah teks dinormalisasi tersisa 362.292 teks unik. Sebanyak 1.005 teks labelnya seri dan dibuang, jadi total 361.287.
 
 Kalau duplikat dibiarkan, "mantap" bisa muncul di train dan test sekaligus. Skor jadi terlihat tinggi padahal model cuma hafal. Karena itu tiap teks unik dibagi ke train, validation, atau test berdasarkan hash md5 dari teks ternormalisasi (80/10/10). Teks yang sama pasti masuk kelompok yang sama.
 
@@ -54,20 +40,45 @@ Normalisasi (`ml/suara_ml/textnorm.py`): NFKC, huruf kecil, URL dibuang, huruf y
 
 Label bintang itu berisik. Teks "mantap" diberi bintang negatif 295 kali dan netral 324 kali. Untuk 268.270 ulasan yang teksnya muncul berulang, tebakan paling sempurna yang bisa dibuat dari teks cuma mencapai macro-F1 0,670. Sebanyak 92% ulasan bintang 3 di kelompok itu punya teks yang mayoritasnya bukan netral. Detail di `ml/reports/label_noise.json`.
 
-Jadi kelas netral memang sulit bagi model apa pun yang hanya membaca teks. Geser bias kelas (dipilih di validation) menaikkan F1 netral di test dari 0,09 ke 0,27, dengan biaya akurasi turun dari 85,0% ke 82,7%.
+Geser bias kelas (dipilih di validation) menaikkan F1 netral Linear SVM di test dari 0,09 ke 0,27, dengan biaya akurasi turun dari 85,0% ke 82,7%.
 
 ## Cara model dipilih
 
 1. Semua model dilatih di train (288.775 teks).
 2. Untuk tiap model, geser bias kelas dicari di validation supaya macro-F1 maksimal, lalu suhu softmax dikalibrasi di validation.
-3. Model dengan macro-F1 validation tertinggi dan bisa dijalankan di web dipilih.
-4. Test baru dihitung setelah itu. Angka test tidak dipakai untuk memilih.
+3. Urutan model ditentukan macro-F1 validation. Test baru dihitung setelah itu dan tidak dipakai untuk memilih.
 
 ## Dari Python ke web
 
-Bobot SVM, idf, dan kosakata diekspor ke `web/model/` (sekitar 9 MB). Rumus fitur ditulis ulang di TypeScript (`web/lib/textnorm.ts`, `web/lib/model.ts`), jadi web tidak butuh Python, GPU, atau layanan luar.
+Bobot tiga model, idf, dan kosakata diekspor ke `web/model/` (sekitar 16 MB). Rumus fitur ditulis ulang di TypeScript (`web/lib/textnorm.ts`, `web/lib/model.ts`), jadi web tidak butuh Python, GPU, atau layanan luar.
 
-Uji paritas membandingkan prediksi TypeScript dengan Python di 3.018 teks (3.000 teks validation plus 18 teks jebakan seperti emoji, huruf unicode aneh, URL, dan teks kosong). Hasil terakhir: 0 label berbeda, selisih probabilitas maksimal 0,0000005.
+Uji paritas (`npm run parity`) membandingkan prediksi TypeScript dengan Python untuk tiap model di 3.018 teks, termasuk 18 teks jebakan seperti emoji, huruf unicode aneh, URL, dan teks kosong. Hasil terakhir: 0 label berbeda di ketiga model, selisih probabilitas maksimal 0,00000065.
+
+## Cerita scroll
+
+Bagian atas halaman adalah cerita 4 babak yang bergerak mengikuti scroll (`web/components/ScrollStory.tsx`). Ada dua mode:
+
+- **Mode kode** (default): adegan kerumunan warga, bendera merah putih, dan balon suara yang tersusun jadi proporsi negatif 59%, netral 7%, positif 34% digambar langsung di canvas.
+- **Mode video**: kalau folder `web/public/frames/` berisi frame, adegan diganti frame video yang diputar sesuai posisi scroll.
+
+Cara memasang video (misalnya hasil Google Whisk Animate, MP4 8 detik 16:9):
+
+```bash
+# taruh video di tools/frames/media/ dengan nama scene-1.mp4, scene-2.mp4, scene-3.mp4
+cd tools/frames
+npm install
+npm run frames
+```
+
+Script memotong tiap video jadi 96 frame WebP (12 fps) dalam dua ukuran: 1280 px untuk desktop dan 640 px untuk HP. Web otomatis memakai frame itu setelah build ulang.
+
+Uji kemulusan di Chromium dengan GPU Intel Iris Xe, scroll roda mouse naik turun sepanjang cerita:
+
+| Mode | Layar | Median waktu frame | Frame di atas 33 ms |
+|---|---|---|---|
+| Kode | desktop 1440×900 | 16,7 ms | 0 dari 368 |
+| Kode | HP 390×844 | 16,7 ms | 0 dari 355 |
+| Video (frame uji) | HP 390×844, render software | 16,7 ms | 1 dari 306 |
 
 ## Struktur folder
 
@@ -79,10 +90,12 @@ ml/
   reports/           audit data, hasil semua run, seleksi final, confusion matrix
 web/
   app/               halaman dan route /api/predict
-  components/        form analisis ulasan
-  lib/               port TypeScript normalisasi dan inferensi
+  components/        cerita scroll, formulir + pilihan model, panel bukti
+  lib/               port TypeScript normalisasi dan inferensi 3 model
   model/             bobot model hasil export
+  data/              ringkasan dataset dan papan peringkat untuk halaman
   scripts/           uji paritas
+tools/frames/        pemotong video jadi frame untuk cerita scroll
 ```
 
 ## Menjalankan ulang
@@ -113,13 +126,16 @@ npm run dev
 
 ## IndoBERT
 
-Notebook `ml/notebooks/indobert_colab.ipynb` melatih IndoBERTweet di split yang sama persis, lalu menyimpan logit validation dan test. Hasilnya bisa dimasukkan ke `data/scores/` dan otomatis ikut dibandingkan oleh `04_final.py`. Status v1: belum dijalankan.
+Notebook `ml/notebooks/indobert_colab.ipynb` melatih IndoBERTweet di split yang sama persis. Dirancang untuk sekali Run all lalu ditinggal: izin Google Drive dan upload data ada di sel paling atas, hasil langsung dicadangkan ke Drive, lalu dua zip terunduh otomatis. Logit validation dan test dari zip hasil dimasukkan ke `data/scores/`, lalu `04_final.py` otomatis membandingkannya.
+
+Notebook sudah diuji jalan dari awal sampai akhir di laptop dengan model mini (transformers 5.17, torch 2.14). Status training IndoBERT penuh: belum dijalankan.
 
 ## Batasan
 
 - Label berasal dari bintang, bukan anotasi manusia.
 - Model membaca pola kata. Sarkasme dan konteks panjang bisa salah baca.
 - Data berhenti di 2023. Istilah atau fitur aplikasi yang lebih baru bisa belum dikenali.
+- Info BMKG dan KAI Access datanya sedikit, jadi skor per aplikasi keduanya paling goyah.
 - Hasil model bukan penilaian resmi instansi mana pun.
 
 ## Sumber data

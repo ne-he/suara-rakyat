@@ -3,25 +3,26 @@
 import { useRef, useState } from "react";
 
 type Label = "negative" | "neutral" | "positive";
-type Result = {
+type Prediction = {
+  model: string;
   label: Label;
   probs: Record<Label, number>;
   tokens: { token: string; weight: number }[];
   empty: boolean;
-  ms: number;
+};
+type ApiResult = { default: string; results: Record<string, Prediction>; ms: number };
+
+export type ModelCard = {
+  id: string;
+  name: string;
+  features: string;
+  tagline: string;
+  macroF1: number;
+  accuracy: number;
 };
 
-const LABEL_ID: Record<Label, string> = {
-  negative: "Negatif",
-  neutral: "Netral",
-  positive: "Positif",
-};
-
-const COLOR: Record<Label, string> = {
-  negative: "var(--neg)",
-  neutral: "var(--neu)",
-  positive: "var(--pos)",
-};
+const LABEL_ID: Record<Label, string> = { negative: "Negatif", neutral: "Netral", positive: "Positif" };
+const COLOR: Record<Label, string> = { negative: "var(--neg)", neutral: "var(--neu)", positive: "var(--pos)" };
 
 const SAMPLES = [
   { app: "Mobile JKN", text: "Sudah 3 hari tidak bisa login, kode OTP tidak pernah masuk. Tolong diperbaiki." },
@@ -32,10 +33,12 @@ const SAMPLES = [
 ];
 
 const MAX = 2000;
+const dec = (x: number) => x.toFixed(3).replace(".", ",");
 
-export default function Analyzer() {
+export default function Analyzer({ models, defaultId }: { models: ModelCard[]; defaultId: string }) {
   const [text, setText] = useState("");
-  const [result, setResult] = useState<Result | null>(null);
+  const [selected, setSelected] = useState(defaultId);
+  const [data, setData] = useState<ApiResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [stampKey, setStampKey] = useState(0);
@@ -43,7 +46,7 @@ export default function Analyzer() {
 
   async function analyze(value = text) {
     if (!value.trim()) {
-      setError("Tulis atau tempel ulasannya dulu.");
+      setError("Tulis atau tempel suaramu dulu.");
       areaRef.current?.focus();
       return;
     }
@@ -55,9 +58,9 @@ export default function Analyzer() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: value }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "Gagal membaca ulasan.");
-      setResult(data as Result);
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error ?? "Gagal membaca ulasan.");
+      setData(json as ApiResult);
       setStampKey((k) => k + 1);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Gagal membaca ulasan.");
@@ -66,6 +69,12 @@ export default function Analyzer() {
     }
   }
 
+  function pick(id: string) {
+    setSelected(id);
+    if (data) setStampKey((k) => k + 1);
+  }
+
+  const result = data?.results[selected] ?? null;
   const maxAbs = result ? Math.max(1e-9, ...result.tokens.map((t) => Math.abs(t.weight))) : 1;
   const topDrivers = result
     ? [...result.tokens]
@@ -74,24 +83,51 @@ export default function Analyzer() {
         .filter((t, i, arr) => arr.findIndex((x) => x.token === t.token) === i)
         .slice(0, 4)
     : [];
+  const agree = data ? new Set(Object.values(data.results).map((r) => r.label)).size === 1 : false;
 
   return (
-    <div className="relative">
-      <div className="rounded-[18px] border border-ink/80 bg-card shadow-[6px_6px_0_0_var(--ink)]">
-        <div className="flex items-center justify-between border-b border-ink/80 px-5 py-3 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-2">
-          <span>Formulir baca ulasan</span>
-          <span aria-hidden>No. {String(stampKey + 1).padStart(4, "0")}</span>
-        </div>
+    <div className="grid gap-8 lg:grid-cols-[1.05fr_1fr]">
+      <div>
+        <fieldset>
+          <legend className="kicker text-abu">1. Pilih model pembaca</legend>
+          <div className="mt-3 grid gap-3 sm:grid-cols-3">
+            {models.map((m, i) => {
+              const on = m.id === selected;
+              return (
+                <label
+                  key={m.id}
+                  className={`relative cursor-pointer rounded-xl border-2 p-4 transition ${
+                    on ? "border-aspal bg-aspal text-putih shadow-[4px_4px_0_var(--merah)]" : "border-aspal/25 bg-white hover:border-aspal"
+                  }`}
+                >
+                  <input type="radio" name="model" value={m.id} checked={on} onChange={() => pick(m.id)} className="sr-only" />
+                  {i === 0 && (
+                    <span className="absolute -top-2.5 right-3 rounded-full bg-merah px-2 py-0.5 font-mono text-[10px] uppercase text-putih">
+                      juara
+                    </span>
+                  )}
+                  <span className="display block text-2xl">{m.name}</span>
+                  <span className={`mt-1 block text-xs ${on ? "text-putih/70" : "text-abu"}`}>fitur {m.features}</span>
+                  <span className={`mt-3 block text-sm leading-snug ${on ? "text-putih/90" : "text-aspal-2"}`}>{m.tagline}</span>
+                  <span className="mt-3 flex gap-4 font-mono text-xs">
+                    <span>F1 {dec(m.macroF1)}</span>
+                    <span>akurasi {(m.accuracy * 100).toFixed(1).replace(".", ",")}%</span>
+                  </span>
+                </label>
+              );
+            })}
+          </div>
+        </fieldset>
 
         <form
-          className="p-5"
+          className="karton mt-8 rounded-sm p-5 sm:p-6"
           onSubmit={(e) => {
             e.preventDefault();
             analyze();
           }}
         >
-          <label htmlFor="review" className="mb-2 block font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
-            Isi ulasan
+          <label htmlFor="review" className="kicker block text-aspal">
+            2. Tulis suaramu
           </label>
           <textarea
             id="review"
@@ -106,16 +142,15 @@ export default function Analyzer() {
             onKeyDown={(e) => {
               if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) analyze();
             }}
-            placeholder="Contoh: aplikasinya sering error pas mau daftar antrean, tolong diperbaiki"
-            className="rule w-full resize-y rounded-lg border border-line bg-transparent px-3 py-2 text-[17px] leading-8 text-ink outline-none placeholder:text-muted/70 focus:border-ink"
+            placeholder="contoh: aplikasinya sering error pas mau daftar antrean, tolong diperbaiki"
+            className="marker mt-3 w-full resize-y rounded-sm border-2 border-aspal/70 bg-white/70 px-3 py-2 text-[19px] leading-8 text-aspal outline-none placeholder:text-aspal/40 focus:border-aspal focus:bg-white"
           />
-          <div className="mt-1 flex items-center justify-between text-xs text-muted">
-            <span>{error ? <span className="font-medium text-neg">{error}</span> : "Ctrl + Enter untuk kirim"}</span>
+          <div className="mt-1 flex items-center justify-between text-xs text-aspal/70">
+            <span>{error ? <span className="font-semibold text-neg">{error}</span> : "Ctrl + Enter untuk kirim"}</span>
             <span className="font-mono">
               {text.length}/{MAX}
             </span>
           </div>
-
           <div className="mt-4 flex flex-wrap gap-2">
             {SAMPLES.map((s) => (
               <button
@@ -125,37 +160,42 @@ export default function Analyzer() {
                   setText(s.text);
                   analyze(s.text);
                 }}
-                className="rounded-full border border-line bg-paper px-3 py-1.5 text-xs text-ink-2 transition hover:border-ink hover:text-ink"
+                className="rounded-full border border-aspal/40 bg-putih/80 px-3 py-1.5 text-xs text-aspal transition hover:border-aspal hover:bg-putih"
               >
                 Contoh {s.app}
               </button>
             ))}
           </div>
-
           <button
             type="submit"
             disabled={loading}
-            className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-ink px-5 py-3.5 font-display text-lg font-bold text-paper transition hover:bg-signal disabled:opacity-60"
+            className="display mt-5 w-full rounded-sm bg-merah px-5 py-3.5 text-3xl text-putih shadow-[4px_4px_0_var(--aspal)] transition hover:bg-merah-tua active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0_var(--aspal)] disabled:opacity-60"
           >
-            {loading ? "Membaca..." : "Baca nadanya"}
+            {loading ? "Membaca..." : "Suarakan"}
           </button>
         </form>
       </div>
 
-      <div aria-live="polite">
-        {result && (
-          <section className="rise mt-6 rounded-[18px] border border-line bg-card p-5">
+      <div aria-live="polite" className="lg:pt-8">
+        {!result && (
+          <div className="flex h-full min-h-64 flex-col justify-center rounded-xl border-2 border-dashed border-aspal/25 p-6 text-center">
+            <p className="display text-4xl text-aspal/30">Hasil muncul di sini</p>
+            <p className="mt-2 text-sm text-abu">Pilih model, tulis ulasan, lalu tekan Suarakan.</p>
+          </div>
+        )}
+        {result && data && (
+          <section className="rise rounded-xl border-2 border-aspal bg-white p-5 shadow-[6px_6px_0_var(--aspal)]">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted">Hasil</p>
-                <p className="mt-1 text-sm text-ink-2">
-                  Keyakinan model {Math.round(result.probs[result.label] * 100)}%
-                  <span className="text-muted"> · {result.ms} ms</span>
+                <p className="kicker text-abu">Dibaca oleh {models.find((m) => m.id === selected)?.name}</p>
+                <p className="mt-1 text-sm text-aspal-2">
+                  Keyakinan {Math.round(result.probs[result.label] * 100)}%
+                  <span className="text-abu"> · 3 model dalam {data.ms} ms</span>
                 </p>
               </div>
               <div
                 key={stampKey}
-                className="stamp select-none rounded-md border-[3px] px-4 py-1.5 font-display text-3xl font-extrabold uppercase tracking-wide"
+                className="stamp display select-none rounded-sm border-[3px] px-4 pb-1 pt-1.5 text-4xl"
                 style={{ color: COLOR[result.label], borderColor: COLOR[result.label] }}
               >
                 {LABEL_ID[result.label]}
@@ -164,13 +204,10 @@ export default function Analyzer() {
 
             <div className="mt-5 space-y-2.5">
               {(Object.keys(LABEL_ID) as Label[]).map((l) => (
-                <div key={l} className="grid grid-cols-[72px_1fr_48px] items-center gap-3 text-sm">
-                  <span className="text-ink-2">{LABEL_ID[l]}</span>
-                  <div className="h-3 overflow-hidden rounded-full bg-paper-2">
-                    <div
-                      className="bar-fill h-full rounded-full"
-                      style={{ width: `${(result.probs[l] * 100).toFixed(1)}%`, background: COLOR[l] }}
-                    />
+                <div key={l} className="grid grid-cols-[72px_1fr_52px] items-center gap-3 text-sm">
+                  <span className="text-aspal-2">{LABEL_ID[l]}</span>
+                  <div className="h-3 overflow-hidden rounded-full bg-kertas">
+                    <div className="bar-fill h-full rounded-full" style={{ width: `${(result.probs[l] * 100).toFixed(1)}%`, background: COLOR[l] }} />
                   </div>
                   <span className="text-right font-mono text-xs">{(result.probs[l] * 100).toFixed(1)}%</span>
                 </div>
@@ -178,14 +215,12 @@ export default function Analyzer() {
             </div>
 
             {result.empty ? (
-              <p className="mt-5 rounded-lg bg-paper-2 p-3 text-sm text-ink-2">
+              <p className="mt-5 rounded-lg bg-kertas p-3 text-sm text-aspal-2">
                 Tidak ada kata yang dikenali model, jadi hasil ini cuma tebakan dari pola umum. Coba tulis ulasan yang lebih lengkap.
               </p>
             ) : (
               <div className="mt-6">
-                <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
-                  Kata yang dibaca model (setelah dinormalisasi)
-                </p>
+                <p className="kicker text-abu">Kata yang dibaca model (setelah dinormalisasi)</p>
                 <p className="mt-2 flex flex-wrap gap-x-1.5 gap-y-2 text-[15px] leading-7">
                   {result.tokens.map((t, i) => {
                     const strength = Math.min(1, Math.abs(t.weight) / maxAbs);
@@ -196,12 +231,9 @@ export default function Analyzer() {
                         title={toward ? `Mendorong ke ${LABEL_ID[result.label]}` : `Menahan ${LABEL_ID[result.label]}`}
                         className="rounded px-1"
                         style={{
-                          background: toward
-                            ? `color-mix(in srgb, ${COLOR[result.label]} ${Math.round(strength * 32)}%, transparent)`
-                            : "transparent",
+                          background: toward ? `color-mix(in srgb, ${COLOR[result.label]} ${Math.round(strength * 34)}%, transparent)` : "transparent",
                           textDecoration: !toward && strength > 0.25 ? "line-through" : undefined,
-                          textDecorationColor: "var(--muted)",
-                          color: strength > 0.05 ? "var(--ink)" : "var(--muted)",
+                          color: strength > 0.05 ? "var(--aspal)" : "var(--abu)",
                         }}
                       >
                         {t.token}
@@ -210,13 +242,37 @@ export default function Analyzer() {
                   })}
                 </p>
                 {topDrivers.length > 0 && (
-                  <p className="mt-4 text-sm text-ink-2">
+                  <p className="mt-4 text-sm text-aspal-2">
                     Paling mendorong ke <b style={{ color: COLOR[result.label] }}>{LABEL_ID[result.label].toLowerCase()}</b>:{" "}
                     {topDrivers.map((t) => `"${t.token}"`).join(", ")}
                   </p>
                 )}
               </div>
             )}
+
+            <div className="mt-6 border-t-2 border-dashed border-aspal/20 pt-4">
+              <p className="kicker text-abu">{agree ? "Ketiga model sepakat" : "Ketiga model tidak sepakat"}</p>
+              <div className="mt-3 grid grid-cols-3 gap-2">
+                {models.map((m) => {
+                  const r = data.results[m.id];
+                  const on = m.id === selected;
+                  return (
+                    <button
+                      key={m.id}
+                      type="button"
+                      onClick={() => pick(m.id)}
+                      className={`rounded-lg border-2 p-2.5 text-left transition ${on ? "border-aspal bg-kertas" : "border-transparent bg-kertas/60 hover:border-aspal/40"}`}
+                    >
+                      <span className="block truncate text-[11px] text-abu">{m.name}</span>
+                      <span className="display block text-xl" style={{ color: COLOR[r.label] }}>
+                        {LABEL_ID[r.label]}
+                      </span>
+                      <span className="font-mono text-[11px]">{Math.round(r.probs[r.label] * 100)}%</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </section>
         )}
       </div>

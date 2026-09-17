@@ -1,4 +1,4 @@
-import { loadModel, predict } from "@/lib/model";
+import { loadModels, predictAll } from "@/lib/model";
 
 export const runtime = "nodejs";
 
@@ -47,9 +47,9 @@ export async function POST(request: Request) {
     return Response.json({ error: `Ulasan maksimal ${MAX_CHARS} karakter.` }, { status: 400 });
   }
 
-  loadModel(); // muat bobot sekali per instance, tidak ikut dihitung waktu prediksi
+  const { meta } = loadModels(); // muat bobot sekali per instance, tidak ikut dihitung waktu prediksi
   const t0 = performance.now();
-  const result = predict(text);
+  const results = predictAll(text);
   const ms = performance.now() - t0;
-  return Response.json({ ...result, ms: Math.round(ms * 100) / 100 });
+  return Response.json({ default: meta.default_model, results, ms: Math.round(ms * 100) / 100 });
 }

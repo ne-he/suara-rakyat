@@ -1,31 +1,40 @@
-// Uji paritas: prediksi web (TypeScript) harus sama dengan prediksi Python.
+// Uji paritas: prediksi web (TypeScript) untuk tiap model harus sama dengan prediksi Python.
 // Sampel dibuat oleh ml/scripts/05_export_web.py. Jalankan: npm run parity
 
 import fs from "node:fs";
 import path from "node:path";
-import { predict } from "../lib/model";
+import { predictAll } from "../lib/model";
 
-type Sample = { text: string; label: string; probs: number[] };
+type Sample = { text: string; probs: Record<string, number[]> };
 
-const samples = JSON.parse(
-  fs.readFileSync(path.join(__dirname, "parity_samples.json"), "utf8"),
-) as Sample[];
+const samples = JSON.parse(fs.readFileSync(path.join(__dirname, "parity_samples.json"), "utf8")) as Sample[];
+const LABELS = ["negative", "neutral", "positive"] as const;
 
-let labelMismatch = 0;
-let maxDiff = 0;
+const stats: Record<string, { mismatch: number; maxDiff: number }> = {};
 const bad: string[] = [];
 const t0 = performance.now();
 for (const s of samples) {
-  const p = predict(s.text);
-  const got = [p.probs.negative, p.probs.neutral, p.probs.positive];
-  const diff = Math.max(...got.map((g, i) => Math.abs(g - s.probs[i])));
-  maxDiff = Math.max(maxDiff, diff);
-  if (p.label !== s.label || diff > 1e-3) {
-    labelMismatch += p.label !== s.label ? 1 : 0;
-    if (bad.length < 10) bad.push(`${JSON.stringify(s.text)} py=${s.label} ${s.probs} ts=${p.label} ${got}`);
+  const all = predictAll(s.text);
+  for (const [id, expected] of Object.entries(s.probs)) {
+    const p = all[id];
+    if (!p) throw new Error(`model ${id} tidak ada di web`);
+    const got = LABELS.map((l) => p.probs[l]);
+    const diff = Math.max(...got.map((g, i) => Math.abs(g - expected[i])));
+    const expLabel = LABELS[expected.indexOf(Math.max(...expected))];
+    const st = (stats[id] ??= { mismatch: 0, maxDiff: 0 });
+    st.maxDiff = Math.max(st.maxDiff, diff);
+    if (p.label !== expLabel) st.mismatch += 1;
+    if ((p.label !== expLabel || diff > 1e-3) && bad.length < 10) {
+      bad.push(`[${id}] ${JSON.stringify(s.text)} py=${expected} ts=${got}`);
+    }
   }
 }
 const ms = (performance.now() - t0) / samples.length;
-console.log(`samples=${samples.length} label_mismatch=${labelMismatch} max_prob_diff=${maxDiff.toExponential(2)} avg_ms=${ms.toFixed(3)}`);
+let failed = false;
+for (const [id, st] of Object.entries(stats)) {
+  console.log(`${id}: samples=${samples.length} label_mismatch=${st.mismatch} max_prob_diff=${st.maxDiff.toExponential(2)}`);
+  if (st.mismatch > 0 || st.maxDiff > 1e-3) failed = true;
+}
+console.log(`avg_ms_all_models=${ms.toFixed(3)}`);
 bad.forEach((b) => console.log("  " + b));
-if (labelMismatch > 0 || maxDiff > 1e-3) process.exit(1);
+if (failed) process.exit(1);

@@ -1,5 +1,5 @@
 {
-  "version": "v1",
+  "version": "v1.1",
   "labels": [
     "negative",
     "neutral",
@@ -14,154 +14,238 @@
   },
   "n_word": 254358,
   "n_char": 89612,
-  "intercept": [
-    -0.2588014042199438,
-    -0.8786083365041637,
-    0.17682749968537737
-  ],
-  "bias": [
-    -0.04,
-    0.72,
-    0.0
-  ],
-  "temperature": 0.4333,
-  "source_run": "1.0*svc_wordchar_C0.1",
-  "metrics": {
-    "test": {
-      "macro_f1": 0.6678,
-      "accuracy": 0.8273,
-      "weighted_f1": 0.8301,
-      "per_class": {
-        "negative": {
-          "precision": 0.8659,
-          "recall": 0.9134,
-          "f1": 0.889,
-          "support": 21285
+  "default_model": "svm",
+  "models": [
+    {
+      "id": "svm",
+      "run": "svc_wordchar_C0.1",
+      "name": "Linear SVM",
+      "features": "kata + karakter",
+      "tagline": "Juara di validation. Paling seimbang.",
+      "n_cols": 343970,
+      "intercept": [
+        -0.2588014042199438,
+        -0.8786083365041637,
+        0.17682749968537737
+      ],
+      "bias": [
+        -0.04,
+        0.72,
+        0.0
+      ],
+      "temperature": 0.4333,
+      "fit_seconds": 29.1,
+      "metrics": {
+        "val_macro_f1": 0.6649,
+        "test": {
+          "macro_f1": 0.6678,
+          "accuracy": 0.8273,
+          "weighted_f1": 0.8301,
+          "per_class": {
+            "negative": {
+              "precision": 0.8659,
+              "recall": 0.9134,
+              "f1": 0.889,
+              "support": 21285
+            },
+            "neutral": {
+              "precision": 0.2508,
+              "recall": 0.295,
+              "f1": 0.2711,
+              "support": 2539
+            },
+            "positive": {
+              "precision": 0.9065,
+              "recall": 0.7884,
+              "f1": 0.8433,
+              "support": 12403
+            }
+          },
+          "confusion": [
+            [
+              19442,
+              1207,
+              636
+            ],
+            [
+              1418,
+              749,
+              372
+            ],
+            [
+              1594,
+              1031,
+              9778
+            ]
+          ]
         },
-        "neutral": {
-          "precision": 0.2508,
-          "recall": 0.295,
-          "f1": 0.2711,
-          "support": 2539
-        },
-        "positive": {
-          "precision": 0.9065,
-          "recall": 0.7884,
-          "f1": 0.8433,
-          "support": 12403
+        "test_macro_f1_raw": 0.6122,
+        "polarity_flip_rate": 0.0662,
+        "binary_neg_pos_accuracy": 0.9108,
+        "binary_neg_pos_macro_f1": 0.9021,
+        "test_by_app": {
+          "BMKG": 0.6434,
+          "JMO": 0.6863,
+          "KAI": 0.6559,
+          "mobileJKN": 0.6609,
+          "pertamina": 0.6532,
+          "satusehat": 0.6437
         }
-      },
-      "confusion": [
-        [
-          19442,
-          1207,
-          636
-        ],
-        [
-          1418,
-          749,
-          372
-        ],
-        [
-          1594,
-          1031,
-          9778
-        ]
-      ]
+      }
     },
-    "val": {
-      "macro_f1": 0.6649,
-      "accuracy": 0.8242,
-      "weighted_f1": 0.8267,
-      "per_class": {
-        "negative": {
-          "precision": 0.8625,
-          "recall": 0.9116,
-          "f1": 0.8864,
-          "support": 21207
+    {
+      "id": "logreg",
+      "run": "lr_wordchar_C2.0",
+      "name": "Logistic Regression",
+      "features": "kata + karakter",
+      "tagline": "Belajar peluang langsung. Sedikit lebih hati-hati.",
+      "n_cols": 343970,
+      "intercept": [
+        0.30209646742417623,
+        -1.5227311660245615,
+        1.2206346984169911
+      ],
+      "bias": [
+        0.08,
+        1.19,
+        0.0
+      ],
+      "temperature": 0.9572,
+      "fit_seconds": 339.6,
+      "metrics": {
+        "val_macro_f1": 0.6594,
+        "test": {
+          "macro_f1": 0.6628,
+          "accuracy": 0.8207,
+          "weighted_f1": 0.8247,
+          "per_class": {
+            "negative": {
+              "precision": 0.8649,
+              "recall": 0.8998,
+              "f1": 0.882,
+              "support": 21285
+            },
+            "neutral": {
+              "precision": 0.2411,
+              "recall": 0.295,
+              "f1": 0.2654,
+              "support": 2539
+            },
+            "positive": {
+              "precision": 0.8956,
+              "recall": 0.7926,
+              "f1": 0.841,
+              "support": 12403
+            }
+          },
+          "confusion": [
+            [
+              19152,
+              1414,
+              719
+            ],
+            [
+              1363,
+              749,
+              427
+            ],
+            [
+              1629,
+              943,
+              9831
+            ]
+          ]
         },
-        "neutral": {
-          "precision": 0.2479,
-          "recall": 0.2864,
-          "f1": 0.2658,
-          "support": 2605
-        },
-        "positive": {
-          "precision": 0.9049,
-          "recall": 0.788,
-          "f1": 0.8424,
-          "support": 12473
+        "test_macro_f1_raw": 0.6285,
+        "polarity_flip_rate": 0.0697,
+        "binary_neg_pos_accuracy": 0.9091,
+        "binary_neg_pos_macro_f1": 0.9004,
+        "test_by_app": {
+          "BMKG": 0.5168,
+          "JMO": 0.6784,
+          "KAI": 0.6316,
+          "mobileJKN": 0.6547,
+          "pertamina": 0.6605,
+          "satusehat": 0.638
         }
-      },
-      "confusion": [
-        [
-          19332,
-          1259,
-          616
-        ],
-        [
-          1442,
-          746,
-          417
-        ],
-        [
-          1640,
-          1004,
-          9829
-        ]
-      ]
+      }
     },
-    "test_weighted_by_frequency": {
-      "macro_f1": 0.6903,
-      "accuracy": 0.8592
-    },
-    "test_by_app": {
-      "BMKG": 0.6434,
-      "JMO": 0.6863,
-      "KAI": 0.6559,
-      "mobileJKN": 0.6609,
-      "pertamina": 0.6532,
-      "satusehat": 0.6437
-    },
-    "test_agree_1": 0.6675,
-    "polarity_flip_rate": 0.0662,
-    "binary_neg_pos": {
-      "accuracy": 0.9108,
-      "macro_f1": 0.9021
-    },
-    "label_noise_ceiling": {
-      "keys_seen_2plus": 12988,
-      "rows_in_those_keys": 268270,
-      "oracle_accuracy_on_duplicated_rows": 0.9453,
-      "oracle_macro_f1_on_duplicated_rows": 0.6701,
-      "neutral_rows_whose_text_majority_is_not_neutral": 0.9236,
-      "example_mixed": {
-        "mantap": {
-          "negative": 295,
-          "neutral": 324,
-          "positive": 19155
+    {
+      "id": "nb",
+      "run": "mnb_word_a0.1",
+      "name": "Naive Bayes",
+      "features": "kata",
+      "tagline": "Paling sederhana dan tercepat dilatih. Pembanding klasik.",
+      "n_cols": 254358,
+      "intercept": [
+        -0.5335680715224793,
+        -2.6499658893131315,
+        -1.070497685468979
+      ],
+      "bias": [
+        -0.54,
+        1.22,
+        0.0
+      ],
+      "temperature": 1.2743,
+      "fit_seconds": 0.2,
+      "metrics": {
+        "val_macro_f1": 0.647,
+        "test": {
+          "macro_f1": 0.651,
+          "accuracy": 0.7958,
+          "weighted_f1": 0.8082,
+          "per_class": {
+            "negative": {
+              "precision": 0.8698,
+              "recall": 0.8562,
+              "f1": 0.863,
+              "support": 21285
+            },
+            "neutral": {
+              "precision": 0.2139,
+              "recall": 0.3462,
+              "f1": 0.2644,
+              "support": 2539
+            },
+            "positive": {
+              "precision": 0.8711,
+              "recall": 0.7843,
+              "f1": 0.8255,
+              "support": 12403
+            }
+          },
+          "confusion": [
+            [
+              18224,
+              2060,
+              1001
+            ],
+            [
+              1222,
+              879,
+              438
+            ],
+            [
+              1505,
+              1170,
+              9728
+            ]
+          ]
         },
-        "bagus": {
-          "negative": 483,
-          "neutral": 798,
-          "positive": 21023
-        },
-        "ok": {
-          "negative": 529,
-          "neutral": 895,
-          "positive": 25600
-        },
-        "lumayan": {
-          "negative": 81,
-          "neutral": 302,
-          "positive": 631
-        },
-        "aplikasi sangat membantu": {
-          "negative": 1,
-          "neutral": 2,
-          "positive": 276
+        "test_macro_f1_raw": 0.6117,
+        "polarity_flip_rate": 0.0744,
+        "binary_neg_pos_accuracy": 0.8955,
+        "binary_neg_pos_macro_f1": 0.8857,
+        "test_by_app": {
+          "BMKG": 0.422,
+          "JMO": 0.6674,
+          "KAI": 0.5988,
+          "mobileJKN": 0.6512,
+          "pertamina": 0.6318,
+          "satusehat": 0.6241
         }
       }
     }
-  }
+  ]
 }

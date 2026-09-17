@@ -1,11 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, JetBrains_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import { Big_Shoulders, JetBrains_Mono, Permanent_Marker, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
+const shoulders = Big_Shoulders({
+  variable: "--font-shoulders",
   subsets: ["latin"],
-  weight: ["500", "700", "800"],
+  weight: ["700", "900"],
+  adjustFontFallback: false,
+});
+
+const marker = Permanent_Marker({
+  variable: "--font-marker",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 const jakarta = Plus_Jakarta_Sans({
@@ -21,22 +28,22 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SUARA · Baca nada ulasan aplikasi layanan publik",
+  title: "Suara Rakyat · Baca nada ulasan aplikasi layanan publik",
   description:
-    "Model sentimen yang dilatih dari ulasan Mobile JKN, JMO, SatuSehat, MyPertamina, KAI, dan BMKG. Tempel ulasan, lihat nadanya dan kata yang paling berpengaruh.",
+    "617.722 ulasan warga untuk Mobile JKN, JMO, SatuSehat, MyPertamina, KAI Access, dan Info BMKG dibaca oleh tiga model sentimen. Tulis ulasanmu dan pilih modelnya.",
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f3eee3",
+  themeColor: "#ce1126",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="id"
-      className={`${bricolage.variable} ${jakarta.variable} ${jetbrains.variable} h-full antialiased`}
+      className={`${shoulders.variable} ${marker.variable} ${jakarta.variable} ${jetbrains.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full">{children}</body>
     </html>
   );
 }

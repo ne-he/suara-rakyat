@@ -21,7 +21,7 @@
       "run": "svc_wordchar_C0.1",
       "name": "Linear SVM",
       "features": "kata + karakter",
-      "tagline": "Juara di validation. Paling seimbang.",
+      "tagline": "Skor validation tertinggi di antara model yang jalan di web ini.",
       "n_cols": 343970,
       "intercept": [
         -0.2588014042199438,
@@ -98,7 +98,7 @@
       "run": "lr_wordchar_C2.0",
       "name": "Logistic Regression",
       "features": "kata + karakter",
-      "tagline": "Belajar peluang langsung. Sedikit lebih hati-hati.",
+      "tagline": "Menghitung peluang tiap kelas. Skornya beda tipis dari SVM, latihnya 12 kali lebih lama.",
       "n_cols": 343970,
       "intercept": [
         0.30209646742417623,
@@ -175,7 +175,7 @@
       "run": "mnb_word_a0.1",
       "name": "Naive Bayes",
       "features": "kata",
-      "tagline": "Paling sederhana dan tercepat dilatih. Pembanding klasik.",
+      "tagline": "Model paling sederhana, dilatih kurang dari 1 detik. Dipakai sebagai pembanding.",
       "n_cols": 254358,
       "intercept": [
         -0.5335680715224793,

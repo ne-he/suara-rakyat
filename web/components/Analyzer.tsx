@@ -96,17 +96,19 @@ export default function Analyzer({ models, defaultId }: { models: ModelCard[]; d
               return (
                 <label
                   key={m.id}
-                  className={`relative cursor-pointer rounded-xl border-2 p-4 transition ${
+                  className={`poster cursor-pointer rounded-xl border-2 p-4 ${
                     on ? "border-aspal bg-aspal text-putih shadow-[4px_4px_0_var(--merah)]" : "border-aspal/25 bg-white hover:border-aspal"
                   }`}
                 >
                   <input type="radio" name="model" value={m.id} checked={on} onChange={() => pick(m.id)} className="sr-only" />
                   {i === 0 && (
                     <span className="absolute -top-2.5 right-3 rounded-full bg-merah px-2 py-0.5 font-mono text-[10px] uppercase text-putih">
-                      juara
+                      terbaik di web
                     </span>
                   )}
-                  <span className="display block text-2xl">{m.name}</span>
+                  <span className="display block text-2xl">
+                    <span className="angka">{m.name}</span>
+                  </span>
                   <span className={`mt-1 block text-xs ${on ? "text-putih/70" : "text-abu"}`}>fitur {m.features}</span>
                   <span className={`mt-3 block text-sm leading-snug ${on ? "text-putih/90" : "text-aspal-2"}`}>{m.tagline}</span>
                   <span className="mt-3 flex gap-4 font-mono text-xs">
@@ -160,7 +162,7 @@ export default function Analyzer({ models, defaultId }: { models: ModelCard[]; d
                   setText(s.text);
                   analyze(s.text);
                 }}
-                className="rounded-full border border-aspal/40 bg-putih/80 px-3 py-1.5 text-xs text-aspal transition hover:border-aspal hover:bg-putih"
+                className="rounded-full border border-aspal/40 bg-putih/80 px-3 py-1.5 text-xs text-aspal transition duration-300 hover:-translate-y-0.5 hover:border-aspal hover:bg-putih hover:shadow-[2px_2px_0_var(--aspal)]"
               >
                 Contoh {s.app}
               </button>
@@ -261,7 +263,7 @@ export default function Analyzer({ models, defaultId }: { models: ModelCard[]; d
                       key={m.id}
                       type="button"
                       onClick={() => pick(m.id)}
-                      className={`rounded-lg border-2 p-2.5 text-left transition ${on ? "border-aspal bg-kertas" : "border-transparent bg-kertas/60 hover:border-aspal/40"}`}
+                      className={`rounded-lg border-2 p-2.5 text-left transition duration-300 hover:-translate-y-0.5 ${on ? "border-aspal bg-kertas" : "border-transparent bg-kertas/60 hover:border-aspal/40"}`}
                     >
                       <span className="block truncate text-[11px] text-abu">{m.name}</span>
                       <span className="display block text-xl" style={{ color: COLOR[r.label] }}>

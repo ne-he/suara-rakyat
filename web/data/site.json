@@ -48,10 +48,43 @@
   },
   "leaderboard": [
     {
+      "name": "ens[indobertweet+svc_wordchar_C0.1]",
+      "family": "Gabungan skor",
+      "features": "transformer+wordchar",
+      "web_id": null,
+      "comparison": false,
+      "val_macro_f1": 0.6868,
+      "test_macro_f1": 0.6906,
+      "test_macro_f1_raw": 0.6294,
+      "test_accuracy": 0.8343,
+      "test_f1": {
+        "negative": 0.8938,
+        "neutral": 0.3127,
+        "positive": 0.8652
+      }
+    },
+    {
+      "name": "indobertweet",
+      "family": "IndoBERT (transformer)",
+      "features": "transformer",
+      "web_id": null,
+      "comparison": true,
+      "val_macro_f1": 0.6843,
+      "test_macro_f1": 0.6921,
+      "test_macro_f1_raw": 0.6363,
+      "test_accuracy": 0.8304,
+      "test_f1": {
+        "negative": 0.8912,
+        "neutral": 0.3234,
+        "positive": 0.8617
+      }
+    },
+    {
       "name": "svc_wordchar_C0.1",
       "family": "Linear SVM",
       "features": "wordchar",
       "web_id": "svm",
+      "comparison": false,
       "val_macro_f1": 0.6649,
       "test_macro_f1": 0.6678,
       "test_macro_f1_raw": 0.6122,
@@ -67,6 +100,7 @@
       "family": "Gabungan skor",
       "features": "word",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6644,
       "test_macro_f1": 0.6649,
       "test_macro_f1_raw": 0.6093,
@@ -82,6 +116,7 @@
       "family": "Linear SVM",
       "features": "word",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6639,
       "test_macro_f1": 0.6657,
       "test_macro_f1_raw": 0.6087,
@@ -97,6 +132,7 @@
       "family": "Gabungan skor",
       "features": "wordchar",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6639,
       "test_macro_f1": 0.6692,
       "test_macro_f1_raw": 0.6094,
@@ -112,6 +148,7 @@
       "family": "Linear SVM",
       "features": "wordchar",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6635,
       "test_macro_f1": 0.6662,
       "test_macro_f1_raw": 0.6096,
@@ -127,6 +164,7 @@
       "family": "Linear SVM",
       "features": "word",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6632,
       "test_macro_f1": 0.6632,
       "test_macro_f1_raw": 0.6144,
@@ -142,6 +180,7 @@
       "family": "Linear SVM",
       "features": "wordchar",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6631,
       "test_macro_f1": 0.665,
       "test_macro_f1_raw": 0.6172,
@@ -157,6 +196,7 @@
       "family": "Linear SVM",
       "features": "word",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6616,
       "test_macro_f1": 0.6636,
       "test_macro_f1_raw": 0.6054,
@@ -172,6 +212,7 @@
       "family": "Linear SVM",
       "features": "wordchar",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6615,
       "test_macro_f1": 0.6667,
       "test_macro_f1_raw": 0.663,
@@ -187,6 +228,7 @@
       "family": "Linear SVM",
       "features": "word_noslang",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6608,
       "test_macro_f1": 0.6661,
       "test_macro_f1_raw": 0.6069,
@@ -202,6 +244,7 @@
       "family": "Linear SVM",
       "features": "word_noslang",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6603,
       "test_macro_f1": 0.6648,
       "test_macro_f1_raw": 0.6119,
@@ -217,6 +260,7 @@
       "family": "Logistic Regression",
       "features": "wordchar",
       "web_id": "logreg",
+      "comparison": false,
       "val_macro_f1": 0.6594,
       "test_macro_f1": 0.6628,
       "test_macro_f1_raw": 0.6285,
@@ -232,6 +276,7 @@
       "family": "Linear SVM",
       "features": "wordchar",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6589,
       "test_macro_f1": 0.6582,
       "test_macro_f1_raw": 0.6204,
@@ -247,6 +292,7 @@
       "family": "LightGBM",
       "features": "word",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6587,
       "test_macro_f1": 0.6579,
       "test_macro_f1_raw": 0.6198,
@@ -262,6 +308,7 @@
       "family": "Logistic Regression",
       "features": "word",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6586,
       "test_macro_f1": 0.6614,
       "test_macro_f1_raw": 0.6232,
@@ -277,6 +324,7 @@
       "family": "Linear SVM",
       "features": "word",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6555,
       "test_macro_f1": 0.6551,
       "test_macro_f1_raw": 0.6182,
@@ -292,6 +340,7 @@
       "family": "Logistic Regression",
       "features": "word",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6475,
       "test_macro_f1": 0.6483,
       "test_macro_f1_raw": 0.6291,
@@ -307,6 +356,7 @@
       "family": "Multinomial Naive Bayes",
       "features": "word",
       "web_id": "nb",
+      "comparison": false,
       "val_macro_f1": 0.647,
       "test_macro_f1": 0.651,
       "test_macro_f1_raw": 0.6117,
@@ -322,6 +372,7 @@
       "family": "Logistic Regression",
       "features": "wordchar",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6441,
       "test_macro_f1": 0.6466,
       "test_macro_f1_raw": 0.6313,
@@ -337,6 +388,7 @@
       "family": "SGD (modified Huber)",
       "features": "wordchar",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6438,
       "test_macro_f1": 0.6447,
       "test_macro_f1_raw": 0.628,
@@ -352,6 +404,7 @@
       "family": "Regresi bintang (Ridge)",
       "features": "wordchar",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6432,
       "test_macro_f1": 0.6463,
       "test_macro_f1_raw": 0.5796,
@@ -367,6 +420,7 @@
       "family": "Regresi bintang (Ridge)",
       "features": "wordchar",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6391,
       "test_macro_f1": 0.6403,
       "test_macro_f1_raw": 0.5768,
@@ -382,6 +436,7 @@
       "family": "Regresi bintang (Ridge)",
       "features": "word",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.636,
       "test_macro_f1": 0.637,
       "test_macro_f1_raw": 0.5769,
@@ -397,6 +452,7 @@
       "family": "Complement Naive Bayes",
       "features": "word",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6323,
       "test_macro_f1": 0.6356,
       "test_macro_f1_raw": 0.6206,
@@ -412,6 +468,7 @@
       "family": "Complement Naive Bayes",
       "features": "word",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6305,
       "test_macro_f1": 0.6341,
       "test_macro_f1_raw": 0.6177,
@@ -427,6 +484,7 @@
       "family": "Complement Naive Bayes",
       "features": "word",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.6245,
       "test_macro_f1": 0.6275,
       "test_macro_f1_raw": 0.6032,
@@ -442,6 +500,7 @@
       "family": "Baseline mayoritas",
       "features": "word",
       "web_id": null,
+      "comparison": false,
       "val_macro_f1": 0.2459,
       "test_macro_f1": 0.2467,
       "test_macro_f1_raw": 0.2467,
@@ -450,6 +509,76 @@
         "negative": 0.7402,
         "neutral": 0.0,
         "positive": 0.0
+      }
+    }
+  ],
+  "comparison": [
+    {
+      "id": "indobertweet",
+      "run": "indobertweet",
+      "name": "IndoBERTweet",
+      "features": "subword transformer",
+      "tagline": "Skor tertinggi. Dilatih 15 menit di GPU Colab, model 111 MB, belum dipasang di web.",
+      "fit_seconds": 894,
+      "fit_hardware": "GPU T4 (Colab)",
+      "cpu_ms_per_review_int8": 19.6,
+      "size_mb_int8": 111.3,
+      "metrics": {
+        "val_macro_f1": 0.6843,
+        "test": {
+          "macro_f1": 0.6921,
+          "accuracy": 0.8304,
+          "weighted_f1": 0.8413,
+          "per_class": {
+            "negative": {
+              "precision": 0.8909,
+              "recall": 0.8915,
+              "f1": 0.8912,
+              "support": 21285
+            },
+            "neutral": {
+              "precision": 0.2643,
+              "recall": 0.4167,
+              "f1": 0.3234,
+              "support": 2539
+            },
+            "positive": {
+              "precision": 0.92,
+              "recall": 0.8103,
+              "f1": 0.8617,
+              "support": 12403
+            }
+          },
+          "confusion": [
+            [
+              18976,
+              1778,
+              531
+            ],
+            [
+              1138,
+              1058,
+              343
+            ],
+            [
+              1186,
+              1167,
+              10050
+            ]
+          ]
+        },
+        "test_macro_f1_raw": 0.6363,
+        "polarity_flip_rate": 0.051,
+        "binary_neg_pos_accuracy": 0.9226,
+        "binary_neg_pos_macro_f1": 0.9155,
+        "test_by_app": {
+          "BMKG": 0.7072,
+          "JMO": 0.6972,
+          "KAI": 0.6792,
+          "mobileJKN": 0.6816,
+          "pertamina": 0.6974,
+          "satusehat": 0.6727
+        }
       }
     }
   ]

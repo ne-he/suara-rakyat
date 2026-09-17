@@ -86,7 +86,9 @@ def main() -> None:
             pos = pd.Series(range(len(keys)), index=keys.values)
             per[s] = logits[pos.loc[order.values].values]
         scores[run] = (per["val"], per["test"])
-        cands.append(evaluate_candidate(run, per["val"], per["test"], y, {"features": "transformer", "linear": False, "fit_seconds": None, "members": [{"run": run, "weight": 1.0}]}))
+        colab = REPORTS / f"{run}_colab_run.json"
+        fit = round(json.loads(colab.read_text(encoding="utf-8"))["train_minutes"] * 60) if colab.exists() else None  # GPU T4
+        cands.append(evaluate_candidate(run, per["val"], per["test"], y, {"features": "transformer", "linear": False, "fit_seconds": fit, "members": [{"run": run, "weight": 1.0}]}))
 
     # gabungan skor dua model linear terbaik per set fitur
     by_val = sorted(cands, key=lambda c: c["val"]["macro_f1"], reverse=True)
@@ -109,6 +111,23 @@ def main() -> None:
         s_te = members[0]["weight"] * sa[1] + members[1]["weight"] * sb[1]
         name = f"ens[{a['name']}+{b['name']}]"
         cands.append(evaluate_candidate(name, s_val, s_te, y, {"features": a["features"], "linear": True, "fit_seconds": None, "members": members}))
+
+    # transformer + linear terbaik (hanya untuk laporan, butuh GPU/ONNX jadi tidak dipasang di web)
+    for tr in [c for c in by_val if c["features"] == "transformer"]:
+        lin = linear_top[0]
+        st, sl = scores[tr["name"]], scores[lin["name"]]
+        kt, kl = 1 / st[0].std(), 1 / sl[0].std()
+        best = None
+        for w in [0.3, 0.4, 0.5, 0.6, 0.7, 0.8]:
+            v = w * kt * st[0] + (1 - w) * kl * sl[0]
+            f1 = metrics(y["val"], (v + tune_bias(y["val"], v)).argmax(1))["macro_f1"]
+            if best is None or f1 > best[0]:
+                best = (f1, w)
+        best_w = best[1]
+        members = [{"run": tr["name"], "weight": round(best_w * kt, 6)}, {"run": lin["name"], "weight": round((1 - best_w) * kl, 6)}]
+        s_val = members[0]["weight"] * st[0] + members[1]["weight"] * sl[0]
+        s_te = members[0]["weight"] * st[1] + members[1]["weight"] * sl[1]
+        cands.append(evaluate_candidate(f"ens[{tr['name']}+{lin['name']}]", s_val, s_te, y, {"features": "transformer+wordchar", "linear": False, "fit_seconds": None, "members": members}))
 
     cands.sort(key=lambda c: c["val"]["macro_f1"], reverse=True)
     best = cands[0]

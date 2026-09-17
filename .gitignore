@@ -40,3 +40,6 @@ tools/frames/media/
 
 # video sumber scene (hasilnya ada di web/public/frames)
 /vid/
+
+# hasil unduhan Colab (zip logit dan model ONNX), diimpor lewat ml/scripts/07_indobert_import.py
+/ml/notebooks/output/

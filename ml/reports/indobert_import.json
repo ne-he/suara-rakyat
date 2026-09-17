@@ -1,0 +1,44 @@
+{
+  "source_run": {
+    "model": "indolem/indobertweet-base-uncased",
+    "epochs": 2,
+    "lr": 3e-05,
+    "batch": 64,
+    "max_len": 128,
+    "train_rows": 288775,
+    "train_minutes": 14.9,
+    "val_predict_seconds": 14.5,
+    "val_macro_f1_raw": 0.3332325102285128,
+    "test_predict_seconds": 14.8,
+    "test_macro_f1_raw": 0.3331369663424646
+  },
+  "best_epoch_log": {
+    "eval_loss": 0.41106632351875305,
+    "eval_macro_f1": 0.6366302145270362,
+    "eval_accuracy": 0.858453906572964,
+    "eval_runtime": 12.2912,
+    "eval_samples_per_second": 2952.104,
+    "eval_steps_per_second": 11.553,
+    "epoch": 2.0,
+    "step": 9026
+  },
+  "val": {
+    "macro_f1_as_saved": 0.3332,
+    "macro_f1_recovered": 0.63663,
+    "accuracy_recovered": 0.858454
+  },
+  "test": {
+    "macro_f1_as_saved": 0.3331,
+    "macro_f1_recovered": 0.636264,
+    "accuracy_recovered": 0.861264
+  },
+  "recovery_verified": true,
+  "onnx_int8_sample": {
+    "n": 3000,
+    "size_mb": 111.3,
+    "laptop_cpu_ms_per_review": 19.6,
+    "agreement_with_fp32": 0.9663,
+    "macro_f1_int8": 0.6145,
+    "macro_f1_fp32_same_rows": 0.6366
+  }
+}

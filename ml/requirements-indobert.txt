@@ -1,0 +1,6 @@
+# khusus ml/scripts/07_indobert_import.py (impor hasil Colab), diuji di Python 3.14.3
+torch==2.14.0
+transformers==5.17.0
+tokenizers==0.23.2
+emoji==2.16.0
+onnxruntime==1.30.0

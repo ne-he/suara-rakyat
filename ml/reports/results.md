@@ -1,9 +1,11 @@
 # Hasil perbandingan model
 
-Dipilih berdasarkan macro-F1 validation. Terbaik: `svc_wordchar_C0.1`. Dideploy ke web: `svc_wordchar_C0.1`.
+Dipilih berdasarkan macro-F1 validation. Terbaik: `ens[indobertweet+svc_wordchar_C0.1]`. Dideploy ke web: `svc_wordchar_C0.1`.
 
 | Model | Fitur | Val macro-F1 | Test macro-F1 | Test macro-F1 tanpa geser bias | Test accuracy | F1 negatif | F1 netral | F1 positif | Detik latih |
 |---|---|---|---|---|---|---|---|---|---|
+| ens[indobertweet+svc_wordchar_C0.1] | transformer+wordchar | 0.6868 | 0.6906 | 0.6294 | 0.8343 | 0.894 | 0.313 | 0.865 | - |
+| indobertweet | transformer | 0.6843 | 0.6921 | 0.6363 | 0.8304 | 0.891 | 0.323 | 0.862 | 894 |
 | svc_wordchar_C0.1 | wordchar | 0.6649 | 0.6678 | 0.6122 | 0.8273 | 0.889 | 0.271 | 0.843 | 29.1 |
 | ens[svc_word_C0.1+svc_word_C0.2] | word | 0.6644 | 0.6649 | 0.6093 | 0.8262 | 0.887 | 0.267 | 0.841 | - |
 | svc_word_C0.1 | word | 0.6639 | 0.6657 | 0.6087 | 0.8216 | 0.886 | 0.273 | 0.839 | 20.7 |

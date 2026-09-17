@@ -1,0 +1,12 @@
+{
+  "measured": "2026-09-17",
+  "cpu": "11th Gen Intel(R) Core(TM) i5-11320H @ 3.20GHz",
+  "node": "v24.14.0",
+  "n_texts": 3016,
+  "ms_per_review": {
+    "svm": 0.206,
+    "logreg": 0.191,
+    "nb": 0.185
+  },
+  "ms_all_models": 0.235
+}

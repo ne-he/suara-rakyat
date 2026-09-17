@@ -1,9 +1,11 @@
+import type { CSSProperties } from "react";
 import fs from "node:fs";
 import path from "node:path";
 import Analyzer, { type ModelCard } from "@/components/Analyzer";
 import ModelEvidence, { type Evidence } from "@/components/ModelEvidence";
+import PosterFx from "@/components/PosterFx";
 import ScrollStory, { type Chapter, type FramesManifest } from "@/components/ScrollStory";
-import type { ModelMeta } from "@/lib/model";
+import type { ModelInfo, ModelMeta } from "@/lib/model";
 
 type Site = {
   dataset: {
@@ -27,13 +29,22 @@ type Site = {
     family: string;
     features: string;
     web_id: string | null;
+    comparison: boolean;
     val_macro_f1: number;
     test_macro_f1: number;
     test_macro_f1_raw: number;
     test_accuracy: number;
     test_f1: Record<string, number>;
   }[];
+  comparison: (Pick<ModelInfo, "id" | "name" | "features" | "tagline" | "metrics"> & {
+    fit_seconds: number;
+    fit_hardware: string;
+    cpu_ms_per_review_int8: number | null;
+    size_mb_int8: number | null;
+  })[];
 };
+
+type Speed = { cpu: string; ms_per_review: Record<string, number> };
 
 const REPO_URL = "https://github.com/ne-he/suara-rakyat";
 const TEAM = ["Nehemiah", "Marcel", "Wilson", "Hans", "Daniel"];
@@ -51,11 +62,17 @@ const FEATURE_ID: Record<string, string> = {
   word_noslang: "kata, tanpa kamus slang",
   wordchar: "kata + karakter 2-5 gram",
   transformer: "subword transformer",
+  "transformer+wordchar": "transformer + kata/karakter",
 };
 
 const nf = new Intl.NumberFormat("id-ID");
 const pct = (x: number, d = 1) => `${(x * 100).toFixed(d).replace(".", ",")}%`;
 const dec = (x: number) => x.toFixed(3).replace(".", ",");
+
+function loadSpeed(): Speed | null {
+  const file = path.join(process.cwd(), "data", "speed.json");
+  return fs.existsSync(file) ? (JSON.parse(fs.readFileSync(file, "utf8")) as Speed) : null;
+}
 
 function loadFrames(): FramesManifest | null {
   const file = path.join(process.cwd(), "public", "frames", "manifest.json");
@@ -66,6 +83,7 @@ export default function Home() {
   const site = JSON.parse(fs.readFileSync(path.join(process.cwd(), "data", "site.json"), "utf8")) as Site;
   const meta = JSON.parse(fs.readFileSync(path.join(process.cwd(), "model", "meta.json"), "utf8")) as ModelMeta;
   const frames = loadFrames();
+  const speed = loadSpeed();
   const d = site.dataset;
   const trainN = Object.values(d.split_counts.train).reduce((a, b) => a + b, 0);
   const testN = Object.values(d.split_counts.test).reduce((a, b) => a + b, 0);
@@ -77,6 +95,7 @@ export default function Home() {
   const board = [...site.leaderboard].sort((a, b) => b.val_macro_f1 - a.val_macro_f1);
   const families = [...new Set(board.map((m) => m.family))].filter((f) => f !== "Baseline mayoritas" && f !== "Gabungan skor");
   const best = meta.models.find((m) => m.id === meta.default_model) ?? meta.models[0];
+  const top = site.comparison[0];
 
   const chapters: Chapter[] = [
     {
@@ -85,19 +104,19 @@ export default function Home() {
       body: `${nf.format(d.raw_rows)} ulasan warga untuk enam aplikasi layanan publik. Scroll pelan-pelan.`,
     },
     {
-      kicker: "Ulasan adalah suara",
+      kicker: "Dari kolom ulasan",
       title: "Bintang satu punya cerita",
-      body: "OTP tidak masuk, antrean hilang, saldo tidak muncul. Warga menuliskannya di kolom ulasan, satu per satu.",
+      body: "Kode OTP tidak kunjung masuk, saldo JHT tidak muncul. Keluhan seperti ini ditulis warga di Play Store setiap hari.",
     },
     {
       kicker: "Dibaca mesin",
       title: "Negatif, netral, positif",
-      body: `Tiga model belajar dari ${nf.format(d.unique_texts)} ulasan unik untuk membaca nada setiap suara.`,
+      body: `Model dilatih dengan ${nf.format(trainN)} ulasan unik untuk menebak nada tiap ulasan baru.`,
     },
     {
       kicker: "Giliranmu",
       title: "Sekarang kamu bersuara",
-      body: "Tulis ulasanmu, pilih model pembacanya, lalu lihat kata mana yang paling menentukan.",
+      body: "Tulis ulasanmu dan pilih modelnya. Web akan menandai kata yang paling menentukan hasilnya.",
       cta: { label: "Tulis suaramu", href: "#coba" },
     },
   ];
@@ -110,11 +129,10 @@ export default function Home() {
     macroF1: m.metrics.test.macro_f1,
     accuracy: m.metrics.test.accuracy,
   }));
-  const evidence: Evidence[] = meta.models.map((m) => ({
+  const toEvidence = (m: Pick<ModelInfo, "id" | "name" | "features" | "metrics">) => ({
     id: m.id,
     name: m.name,
     features: m.features,
-    fitSeconds: m.fit_seconds,
     valF1: m.metrics.val_macro_f1,
     testF1: m.metrics.test.macro_f1,
     testF1Raw: m.metrics.test_macro_f1_raw,
@@ -124,10 +142,30 @@ export default function Home() {
     perClass: m.metrics.test.per_class,
     confusion: m.metrics.test.confusion,
     byApp: m.metrics.test_by_app,
-  }));
+  });
+  const evidence: Evidence[] = [
+    ...meta.models.map((m) => ({
+      ...toEvidence(m),
+      live: true,
+      fitSeconds: m.fit_seconds,
+      fitHardware: "CPU laptop",
+      msPerReview: speed?.ms_per_review[m.id] ?? null,
+      speedHardware: "CPU laptop",
+    })),
+    ...site.comparison.map((m) => ({
+      ...toEvidence(m),
+      live: false,
+      note: `${m.name} belum bisa dicoba di formulir atas. Setelah dikompres (ONNX int8) ukurannya ${String(m.size_mb_int8 ?? "?").replace(".", ",")} MB dan butuh sekitar ${String(m.cpu_ms_per_review_int8 ?? "?").replace(".", ",")} ms per ulasan di CPU laptop, jauh lebih berat dari model linear. Skor di bawah dari versi penuhnya.`,
+      fitSeconds: m.fit_seconds,
+      fitHardware: m.fit_hardware,
+      msPerReview: m.cpu_ms_per_review_int8,
+      speedHardware: "CPU laptop, ONNX int8",
+    })),
+  ];
 
   return (
     <main>
+      <PosterFx />
       <a href="#coba" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-putih focus:px-3 focus:py-2">
         Langsung ke formulir
       </a>
@@ -175,7 +213,7 @@ export default function Home() {
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr]">
             <div>
-              <p className="kicker text-merah">Bukti, bukan klaim</p>
+              <p className="kicker text-merah">Hasil uji</p>
               <h2 className="display mt-3 text-6xl sm:text-7xl">Diuji di {nf.format(testN)} ulasan yang belum pernah dilihat.</h2>
               <p className="mt-5 leading-relaxed text-aspal-2">
                 Dari {nf.format(d.raw_rows)} ulasan mentah, {nf.format(d.exact_duplicates)} ternyata duplikat persis, kebanyakan &quot;mantap&quot;
@@ -187,16 +225,27 @@ export default function Home() {
                 {pct(shares.neutral)} data tetap dihitung adil.
               </p>
             </div>
-            <div className="karton self-start rounded-sm p-6">
+            <div className="karton karton-angkat self-start rounded-sm p-6">
               <p className="marker text-2xl text-merah-tua">Kenapa tidak 0,9?</p>
               <p className="mt-3 text-sm leading-relaxed text-aspal">
                 Label diambil dari bintang, dan bintang sering tidak cocok dengan isi. Teks &quot;mantap&quot; saja diberi bintang negatif{" "}
                 {nf.format(site.label_noise.mantap.negative ?? 0)} kali. Di {nf.format(site.label_noise.rows_in_duplicated_texts)} ulasan yang
-                teksnya muncul berulang, tebakan sempurna pun cuma mencapai macro-F1 <b>{dec(site.label_noise.oracle_macro_f1)}</b>.
+                teksnya muncul berulang, tebakan terbaik yang mungkin dari teks saja cuma mencapai macro-F1{" "}
+                <b>{dec(site.label_noise.oracle_macro_f1)}</b>. Batas itu khusus untuk kelompok tersebut, bukan untuk seluruh data test.
               </p>
               <p className="mt-3 text-sm leading-relaxed text-aspal">
-                Model terbaik kami mencapai <b>{dec(best.metrics.test.macro_f1)}</b> dan hanya membalik negatif jadi positif (atau sebaliknya) di{" "}
-                <b>{pct(best.metrics.polarity_flip_rate)}</b> ulasan.
+                {top ? (
+                  <>
+                    Skor tertinggi kami <b>{dec(top.metrics.test.macro_f1)}</b> dari {top.name}. Model di formulir atas ({best.name}) mencapai{" "}
+                    <b>{dec(best.metrics.test.macro_f1)}</b> dan membalik negatif jadi positif (atau sebaliknya) di{" "}
+                    <b>{pct(best.metrics.polarity_flip_rate)}</b> ulasan.
+                  </>
+                ) : (
+                  <>
+                    Model terbaik kami mencapai <b>{dec(best.metrics.test.macro_f1)}</b> dan membalik negatif jadi positif (atau sebaliknya) di{" "}
+                    <b>{pct(best.metrics.polarity_flip_rate)}</b> ulasan.
+                  </>
+                )}
               </p>
             </div>
           </div>
@@ -209,8 +258,8 @@ export default function Home() {
             <p className="kicker text-merah">Papan perbandingan</p>
             <h3 className="display mt-3 text-5xl">{board.length} konfigurasi diadu di data yang sama</h3>
             <p className="mt-3 max-w-3xl text-aspal-2">
-              Model dipilih dari skor validation, bukan test, supaya angka test tetap jujur. Semua dilatih di {nf.format(trainN)} ulasan. Geser bias
-              menyesuaikan ambang kelas di validation agar kelas netral tidak tenggelam.
+              Urutan ditentukan skor validation. Angka test baru dihitung sesudahnya, jadi tidak ikut memengaruhi pilihan. Semua dilatih di{" "}
+              {nf.format(trainN)} ulasan. Geser bias mengatur ambang tiap kelas di validation supaya kelas netral tetap tertebak.
             </p>
             <div className="mt-6 overflow-x-auto rounded-xl border-2 border-aspal bg-white">
               <table className="w-full min-w-[720px] text-left text-sm">
@@ -227,11 +276,14 @@ export default function Home() {
                 </thead>
                 <tbody>
                   {board.map((m) => (
-                    <tr key={m.name} className={`border-b border-garis last:border-0 ${m.web_id ? "bg-merah/5" : ""}`}>
+                    <tr key={m.name} className={`baris border-b border-garis last:border-0 ${m.web_id ? "bg-merah/5" : ""}`}>
                       <td className="px-4 py-2.5">
                         <span className="font-semibold">{m.family}</span>
                         {m.web_id && (
                           <span className="ml-2 rounded-full bg-merah px-2 py-0.5 font-mono text-[10px] uppercase text-putih">ada di web</span>
+                        )}
+                        {m.comparison && (
+                          <span className="ml-2 rounded-full bg-aspal px-2 py-0.5 font-mono text-[10px] uppercase text-putih">pembanding</span>
                         )}
                         <span className="block font-mono text-[11px] text-abu">{m.name}</span>
                       </td>
@@ -258,20 +310,24 @@ export default function Home() {
             {[
               { n: "01", h: "Kumpulkan", p: `${nf.format(d.raw_rows)} ulasan Google Play dari 6 aplikasi pemerintah, ${d.date_min.slice(0, 4)} sampai ${d.date_max.slice(0, 4)} (dataset IGAR).` },
               { n: "02", h: "Bersihkan", p: "Huruf kecil, URL dibuang, huruf berulang dipangkas, singkatan seperti gak, bgt, udh dibakukan. Duplikat digabung." },
-              { n: "03", h: "Adu model", p: `${families.join(", ")}, plus gabungannya. Pemenang dipilih dari skor validation.` },
-              { n: "04", h: "Jalan di web", p: "Bobot tiga model diekspor dan dihitung langsung di server web tanpa GPU. Hasilnya diuji identik dengan versi Python." },
+              { n: "03", h: "Adu model", p: `${families.join(", ")}, plus gabungannya. Urutan diambil dari skor validation.` },
+              { n: "04", h: "Jalan di web", p: "Bobot tiga model linear diekspor dan dihitung di server web tanpa GPU. Hasilnya dicek sama dengan versi Python di 3.018 teks." },
             ].map((s) => (
-              <div key={s.n} className="rounded-xl border-2 border-putih/20 p-6">
+              <div key={s.n} className="poster poster-gelap rounded-xl border-2 border-putih/20 p-6">
                 <span className="font-mono text-sm text-merah">{s.n}</span>
-                <h3 className="display mt-2 text-4xl">{s.h}</h3>
+                <h3 className="display mt-2 text-4xl">
+                  <span className="angka">{s.h}</span>
+                </h3>
                 <p className="mt-2 text-sm leading-relaxed text-putih/75">{s.p}</p>
               </div>
             ))}
           </div>
 
           <div className="mt-10 grid gap-4 lg:grid-cols-2">
-            <div className="rounded-xl border-2 border-putih/20 p-6">
-              <h3 className="display text-4xl">Batasan</h3>
+            <div className="poster poster-gelap rounded-xl border-2 border-putih/20 p-6">
+              <h3 className="display text-4xl">
+                <span className="angka">Batasan</span>
+              </h3>
               <ul className="mt-4 space-y-3 text-sm leading-relaxed text-putih/80">
                 <li>
                   <b className="text-putih">Label berasal dari bintang.</b> Bintang 1-2 dianggap negatif, 3 netral, 4-5 positif. Kadang orang menulis
@@ -288,8 +344,10 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-            <div className="rounded-xl border-2 border-putih/20 p-6">
-              <h3 className="display text-4xl">Sumber data</h3>
+            <div className="poster poster-gelap rounded-xl border-2 border-putih/20 p-6">
+              <h3 className="display text-4xl">
+                <span className="angka">Sumber data</span>
+              </h3>
               <p className="mt-4 text-sm leading-relaxed text-putih/80">
                 Isnan, M. dan Pardamean, B. (2025). <i>IGAR: Indonesian Government App Review Dataset</i>. Mendeley Data, V3.{" "}
                 <a className="underline decoration-merah underline-offset-2" href="https://doi.org/10.17632/7zryc6k76z.3" target="_blank" rel="noreferrer">
@@ -313,10 +371,10 @@ export default function Home() {
       <section id="tim" className="border-t-2 border-aspal px-5 py-16 sm:px-10 sm:py-24">
         <div className="mx-auto max-w-6xl">
           <p className="kicker text-merah">Tim</p>
-          <h2 className="display mt-3 text-6xl sm:text-7xl">Yang bersuara di balik layar</h2>
+          <h2 className="display mt-3 text-6xl sm:text-7xl">Tim pembuat</h2>
           <div className="mt-10 flex flex-wrap gap-5">
             {TEAM.map((name, i) => (
-              <div key={name} className="karton rounded-sm px-6 py-5" style={{ transform: `rotate(${[-3, 2, -1.5, 3, -2][i % 5]}deg)` }}>
+              <div key={name} className="karton karton-angkat rounded-sm px-6 py-5" style={{ "--r": `${[-3, 2, -1.5, 3, -2][i % 5]}deg` } as CSSProperties}>
                 <span className="marker text-3xl text-aspal">{name}</span>
               </div>
             ))}

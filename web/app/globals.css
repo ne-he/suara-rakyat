@@ -122,6 +122,130 @@ body {
   }
 }
 
+/* ---------- efek sorot kartu: papan diangkat saat kursor datang ---------- */
+
+@property --sorot {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+/* di layer components supaya utility Tailwind (shadow, posisi) tetap bisa menimpa */
+@layer components {
+  .poster {
+    --bayang: var(--aspal);
+    --miring: -0.6deg;
+    position: relative;
+    background-image: radial-gradient(280px circle at var(--mx, 50%) var(--my, 30%), color-mix(in srgb, var(--merah) var(--sorot), transparent), transparent 72%);
+    box-shadow: 0 0 0 var(--bayang);
+    transition:
+      transform 420ms cubic-bezier(0.2, 1.15, 0.3, 1),
+      box-shadow 420ms cubic-bezier(0.2, 1, 0.3, 1),
+      border-color 200ms ease,
+      --sorot 350ms ease;
+  }
+  .poster:nth-child(even) {
+    --miring: 0.6deg;
+  }
+  .poster-gelap {
+    --bayang: var(--merah);
+  }
+
+  .angka {
+    display: inline-block;
+    transform-origin: left 80%;
+    transition:
+      transform 450ms cubic-bezier(0.2, 1.4, 0.3, 1),
+      color 250ms ease;
+  }
+
+  .kicker-garis {
+    position: relative;
+    display: inline-block;
+  }
+  .kicker-garis::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -5px;
+    height: 4px;
+    background: linear-gradient(to bottom, var(--merah) 0 50%, #fff 50% 100%);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 450ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  }
+
+  .baris {
+    transition: background-color 200ms ease, box-shadow 200ms ease;
+  }
+
+  .sel {
+    transition:
+      transform 300ms cubic-bezier(0.2, 1.4, 0.3, 1),
+      box-shadow 300ms ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .poster:hover {
+      --sorot: 11%;
+      transform: translate(-4px, -6px) rotate(var(--miring));
+      box-shadow: 8px 10px 0 var(--bayang);
+    }
+    .poster-gelap:hover {
+      --sorot: 22%;
+      border-color: color-mix(in srgb, var(--putih) 55%, transparent);
+    }
+    .poster:hover .angka {
+      transform: scale(1.1);
+      color: var(--merah);
+    }
+    .poster:hover .kicker-garis::after {
+      transform: scaleX(1);
+    }
+    .baris:hover {
+      background-color: var(--kertas);
+      box-shadow: inset 5px 0 0 var(--merah);
+    }
+    .sel:hover {
+      transform: scale(1.08);
+      box-shadow: 4px 4px 0 var(--aspal);
+      z-index: 1;
+    }
+  }
+
+  /* layar sentuh: cukup efek tekan singkat */
+  @media (hover: none) {
+    .poster:active {
+      transform: scale(0.985);
+    }
+  }
+}
+
+/* papan karton yang bisa diangkat (tim, catatan label). Di luar layer karena .karton juga di luar layer */
+.karton-angkat {
+  transform: rotate(var(--r, 0deg));
+  transition:
+    transform 450ms cubic-bezier(0.2, 1.5, 0.3, 1),
+    box-shadow 450ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .karton-angkat:hover {
+    transform: translateY(-10px) rotate(0deg) scale(1.04);
+    box-shadow: 10px 14px 0 var(--aspal);
+  }
+}
+@media (hover: none) {
+  .karton-angkat:active {
+    transform: rotate(var(--r, 0deg)) scale(0.97);
+  }
+}
+
+.sel:focus-visible {
+  outline: 3px solid var(--merah);
+  outline-offset: 2px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -130,7 +254,18 @@ body {
   .rise {
     animation: none;
   }
-  .bar-fill {
+  .bar-fill,
+  .poster,
+  .angka,
+  .kicker-garis::after,
+  .karton-angkat,
+  .sel {
     transition: none;
+  }
+  .poster:hover,
+  .poster:hover .angka,
+  .karton-angkat:hover,
+  .sel:hover {
+    transform: none;
   }
 }

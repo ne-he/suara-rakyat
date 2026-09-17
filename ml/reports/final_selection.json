@@ -1,21 +1,25 @@
 {
   "selected_by": "macro-F1 validation setelah geser bias (test tidak dipakai untuk memilih)",
   "best_overall": {
-    "name": "svc_wordchar_C0.1",
-    "features": "wordchar",
-    "linear": true,
+    "name": "ens[indobertweet+svc_wordchar_C0.1]",
+    "features": "transformer+wordchar",
+    "linear": false,
     "members": [
       {
+        "run": "indobertweet",
+        "weight": 0.307787
+      },
+      {
         "run": "svc_wordchar_C0.1",
-        "weight": 1.0
+        "weight": 0.450533
       }
     ],
     "bias": [
-      -0.04,
-      0.72,
+      -0.13,
+      0.66,
       0.0
     ],
-    "temperature": 0.4333
+    "temperature": 0.4755
   },
   "deploy": {
     "version": "v1",
@@ -173,6 +177,386 @@
     }
   },
   "candidates": [
+    {
+      "name": "ens[indobertweet+svc_wordchar_C0.1]",
+      "features": "transformer+wordchar",
+      "linear": false,
+      "fit_seconds": null,
+      "members": [
+        {
+          "run": "indobertweet",
+          "weight": 0.307787
+        },
+        {
+          "run": "svc_wordchar_C0.1",
+          "weight": 0.450533
+        }
+      ],
+      "bias": [
+        -0.13,
+        0.66,
+        0.0
+      ],
+      "temperature": 0.4755,
+      "val_raw": {
+        "macro_f1": 0.6286,
+        "accuracy": 0.8597,
+        "weighted_f1": 0.8335,
+        "per_class": {
+          "negative": {
+            "precision": 0.8488,
+            "recall": 0.9635,
+            "f1": 0.9025,
+            "support": 21207
+          },
+          "neutral": {
+            "precision": 0.8088,
+            "recall": 0.0633,
+            "f1": 0.1175,
+            "support": 2605
+          },
+          "positive": {
+            "precision": 0.8825,
+            "recall": 0.8497,
+            "f1": 0.8658,
+            "support": 12473
+          }
+        },
+        "confusion": [
+          [
+            20433,
+            20,
+            754
+          ],
+          [
+            1783,
+            165,
+            657
+          ],
+          [
+            1856,
+            19,
+            10598
+          ]
+        ]
+      },
+      "val": {
+        "macro_f1": 0.6868,
+        "accuracy": 0.8306,
+        "weighted_f1": 0.8394,
+        "per_class": {
+          "negative": {
+            "precision": 0.8866,
+            "recall": 0.8955,
+            "f1": 0.891,
+            "support": 21207
+          },
+          "neutral": {
+            "precision": 0.2594,
+            "recall": 0.3747,
+            "f1": 0.3065,
+            "support": 2605
+          },
+          "positive": {
+            "precision": 0.9161,
+            "recall": 0.8155,
+            "f1": 0.8629,
+            "support": 12473
+          }
+        },
+        "confusion": [
+          [
+            18990,
+            1695,
+            522
+          ],
+          [
+            1219,
+            976,
+            410
+          ],
+          [
+            1209,
+            1092,
+            10172
+          ]
+        ]
+      },
+      "val_logloss": 0.4576,
+      "test_raw": {
+        "macro_f1": 0.6294,
+        "accuracy": 0.8629,
+        "weighted_f1": 0.8371,
+        "per_class": {
+          "negative": {
+            "precision": 0.8514,
+            "recall": 0.9644,
+            "f1": 0.9044,
+            "support": 21285
+          },
+          "neutral": {
+            "precision": 0.7959,
+            "recall": 0.0614,
+            "f1": 0.1141,
+            "support": 2539
+          },
+          "positive": {
+            "precision": 0.8874,
+            "recall": 0.8529,
+            "f1": 0.8698,
+            "support": 12403
+          }
+        },
+        "confusion": [
+          [
+            20527,
+            22,
+            736
+          ],
+          [
+            1777,
+            156,
+            606
+          ],
+          [
+            1807,
+            18,
+            10578
+          ]
+        ]
+      },
+      "test": {
+        "macro_f1": 0.6906,
+        "accuracy": 0.8343,
+        "weighted_f1": 0.8433,
+        "per_class": {
+          "negative": {
+            "precision": 0.8906,
+            "recall": 0.897,
+            "f1": 0.8938,
+            "support": 21285
+          },
+          "neutral": {
+            "precision": 0.263,
+            "recall": 0.3856,
+            "f1": 0.3127,
+            "support": 2539
+          },
+          "positive": {
+            "precision": 0.9175,
+            "recall": 0.8186,
+            "f1": 0.8652,
+            "support": 12403
+          }
+        },
+        "confusion": [
+          [
+            19092,
+            1648,
+            545
+          ],
+          [
+            1192,
+            979,
+            368
+          ],
+          [
+            1154,
+            1096,
+            10153
+          ]
+        ]
+      },
+      "test_logloss": 0.4507
+    },
+    {
+      "name": "indobertweet",
+      "features": "transformer",
+      "linear": false,
+      "fit_seconds": 894,
+      "members": [
+        {
+          "run": "indobertweet",
+          "weight": 1.0
+        }
+      ],
+      "bias": [
+        -0.0,
+        1.26,
+        0.0
+      ],
+      "temperature": 1.0224,
+      "val_raw": {
+        "macro_f1": 0.6366,
+        "accuracy": 0.8585,
+        "weighted_f1": 0.8346,
+        "per_class": {
+          "negative": {
+            "precision": 0.8525,
+            "recall": 0.9569,
+            "f1": 0.9017,
+            "support": 21207
+          },
+          "neutral": {
+            "precision": 0.617,
+            "recall": 0.081,
+            "f1": 0.1432,
+            "support": 2605
+          },
+          "positive": {
+            "precision": 0.8769,
+            "recall": 0.8534,
+            "f1": 0.865,
+            "support": 12473
+          }
+        },
+        "confusion": [
+          [
+            20294,
+            75,
+            838
+          ],
+          [
+            1738,
+            211,
+            656
+          ],
+          [
+            1773,
+            56,
+            10644
+          ]
+        ]
+      },
+      "val": {
+        "macro_f1": 0.6843,
+        "accuracy": 0.8248,
+        "weighted_f1": 0.8362,
+        "per_class": {
+          "negative": {
+            "precision": 0.8879,
+            "recall": 0.888,
+            "f1": 0.8879,
+            "support": 21207
+          },
+          "neutral": {
+            "precision": 0.2503,
+            "recall": 0.3939,
+            "f1": 0.3061,
+            "support": 2605
+          },
+          "positive": {
+            "precision": 0.9174,
+            "recall": 0.8073,
+            "f1": 0.8588,
+            "support": 12473
+          }
+        },
+        "confusion": [
+          [
+            18832,
+            1864,
+            511
+          ],
+          [
+            1183,
+            1026,
+            396
+          ],
+          [
+            1195,
+            1209,
+            10069
+          ]
+        ]
+      },
+      "val_logloss": 0.4649,
+      "test_raw": {
+        "macro_f1": 0.6363,
+        "accuracy": 0.8613,
+        "weighted_f1": 0.8377,
+        "per_class": {
+          "negative": {
+            "precision": 0.8559,
+            "recall": 0.9578,
+            "f1": 0.904,
+            "support": 21285
+          },
+          "neutral": {
+            "precision": 0.6099,
+            "recall": 0.0776,
+            "f1": 0.1377,
+            "support": 2539
+          },
+          "positive": {
+            "precision": 0.8785,
+            "recall": 0.8561,
+            "f1": 0.8671,
+            "support": 12403
+          }
+        },
+        "confusion": [
+          [
+            20386,
+            61,
+            838
+          ],
+          [
+            1711,
+            197,
+            631
+          ],
+          [
+            1720,
+            65,
+            10618
+          ]
+        ]
+      },
+      "test": {
+        "macro_f1": 0.6921,
+        "accuracy": 0.8304,
+        "weighted_f1": 0.8413,
+        "per_class": {
+          "negative": {
+            "precision": 0.8909,
+            "recall": 0.8915,
+            "f1": 0.8912,
+            "support": 21285
+          },
+          "neutral": {
+            "precision": 0.2643,
+            "recall": 0.4167,
+            "f1": 0.3234,
+            "support": 2539
+          },
+          "positive": {
+            "precision": 0.92,
+            "recall": 0.8103,
+            "f1": 0.8617,
+            "support": 12403
+          }
+        },
+        "confusion": [
+          [
+            18976,
+            1778,
+            531
+          ],
+          [
+            1138,
+            1058,
+            343
+          ],
+          [
+            1186,
+            1167,
+            10050
+          ]
+        ]
+      },
+      "test_logloss": 0.4576
+    },
     {
       "name": "svc_wordchar_C0.1",
       "features": "wordchar",

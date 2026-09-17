@@ -212,13 +212,29 @@ print("training selesai dalam", round((time.time() - t_train) / 60, 1), "menit")
     code(
         """
 # 6) Prediksi val + test, simpan hasil, langsung cadangkan ke Drive
+# Prediksi sengaja tidak lewat trainer.predict: di transformers 5.x sampler group_by_length ikut
+# dipakai saat evaluasi, jadi urutan logits teracak dan tidak cocok lagi dengan urutan data.
+from torch.utils.data import DataLoader
+
 OUT = "suara_indobert_hasil"
 os.makedirs(OUT, exist_ok=True)
 summary = {"model": MODEL_NAME, "epochs": EPOCHS, "lr": LR, "batch": BATCH, "max_len": MAX_LEN,
            "train_rows": len(train_df), "train_minutes": round((time.time() - t_train) / 60, 1)}
+
+def predict_in_order(ds):
+    dl = DataLoader(ds.remove_columns(["labels"]), batch_size=256, shuffle=False, collate_fn=DataCollatorWithPadding(tok))
+    net = trainer.model.eval()
+    out = []
+    with torch.no_grad():
+        for b in dl:
+            b = {k: v.to(net.device) for k, v in b.items()}
+            with torch.autocast("cuda", dtype=torch.float16, enabled=torch.cuda.is_available()):
+                out.append(net(**b).logits.float().cpu().numpy())
+    return np.concatenate(out)
+
 for name, ds, frame in [("val", ds_val, val_df), ("test", ds_test, test_df)]:
     t0 = time.time()
-    logits = trainer.predict(ds).predictions.astype("float32")
+    logits = predict_in_order(ds).astype("float32")
     summary[f"{name}_predict_seconds"] = round(time.time() - t0, 1)
     np.save(f"{OUT}/{RUN_NAME}_{name}.npy", logits)
     frame[["key"]].to_parquet(f"{OUT}/{RUN_NAME}_{name}_keys.parquet", index=False)
@@ -226,6 +242,11 @@ for name, ds, frame in [("val", ds_val, val_df), ("test", ds_test, test_df)]:
     summary[f"{name}_macro_f1_raw"] = float(f1_score(y, logits.argmax(-1), average="macro"))
     print(name, classification_report(y, logits.argmax(-1), target_names=LABELS, digits=4, zero_division=0))
 summary["log_history"] = trainer.state.log_history
+# cek urutan: skor val di sini harus sama dengan skor eval terbaik saat training
+best_eval = max((e["eval_macro_f1"] for e in trainer.state.log_history if "eval_macro_f1" in e), default=None)
+if best_eval is not None:
+    summary["order_check_ok"] = abs(best_eval - summary["val_macro_f1_raw"]) < 0.005
+    print("cek urutan:", "OK" if summary["order_check_ok"] else "BEDA, laporkan ke tim", round(best_eval, 4), round(summary["val_macro_f1_raw"], 4))
 json.dump(summary, open(f"{OUT}/{RUN_NAME}_run.json", "w"), indent=2)
 shutil.make_archive(OUT, "zip", ".", OUT)
 print({k: v for k, v in summary.items() if k != "log_history"})

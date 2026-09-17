@@ -37,21 +37,31 @@ WEB_MODELS = [
         "run": "svc_wordchar_C0.1",
         "name": "Linear SVM",
         "features": "kata + karakter",
-        "tagline": "Juara di validation. Paling seimbang.",
+        "tagline": "Skor validation tertinggi di antara model yang jalan di web ini.",
     },
     {
         "id": "logreg",
         "run": "lr_wordchar_C2.0",
         "name": "Logistic Regression",
         "features": "kata + karakter",
-        "tagline": "Belajar peluang langsung. Sedikit lebih hati-hati.",
+        "tagline": "Menghitung peluang tiap kelas. Skornya beda tipis dari SVM, latihnya 12 kali lebih lama.",
     },
     {
         "id": "nb",
         "run": "mnb_word_a0.1",
         "name": "Naive Bayes",
         "features": "kata",
-        "tagline": "Paling sederhana dan tercepat dilatih. Pembanding klasik.",
+        "tagline": "Model paling sederhana, dilatih kurang dari 1 detik. Dipakai sebagai pembanding.",
+    },
+]
+# model pembanding: skornya ikut ditampilkan, tapi belum bisa dijalankan di web (butuh server lebih berat)
+COMPARISON_MODELS = [
+    {
+        "id": "indobertweet",
+        "run": "indobertweet",
+        "name": "IndoBERTweet",
+        "features": "subword transformer",
+        "tagline": "Skor tertinggi. Dilatih 15 menit di GPU Colab, model 111 MB, belum dipasang di web.",
     },
 ]
 DEFAULT_ID = "svm"
@@ -90,6 +100,24 @@ def linear_parts(model, n_word: int, n_feat: int) -> tuple[np.ndarray, np.ndarra
     return coef, intercept
 
 
+def test_metrics(cand: dict, y: dict, te: pd.DataFrame) -> dict:
+    """Metrik test untuk panel bukti, dari skor tersimpan + bias hasil tuning validation."""
+    polar = y["test"] != 1
+    s_te = np.load(SCORES / f"{cand['name']}_test.npy").astype(np.float64) + np.array(cand["bias"])
+    pred = s_te.argmax(1)
+    flips = ((y["test"] == 0) & (pred == 2)) | ((y["test"] == 2) & (pred == 0))
+    bin_pred = np.where(s_te[:, 0] >= s_te[:, 2], 0, 2)
+    return {
+        "val_macro_f1": cand["val"]["macro_f1"],
+        "test": cand["test"],
+        "test_macro_f1_raw": cand["test_raw"]["macro_f1"],
+        "polarity_flip_rate": round(float(flips[polar].mean()), 4),
+        "binary_neg_pos_accuracy": round(float((bin_pred[polar] == y["test"][polar]).mean()), 4),
+        "binary_neg_pos_macro_f1": round(float(f1_score(y["test"][polar], bin_pred[polar], average="macro")), 4),
+        "test_by_app": {app: metrics(y["test"][idx], pred[idx])["macro_f1"] for app, idx in te.groupby("app").indices.items()},
+    }
+
+
 def main() -> None:
     sel_all = json.loads(SEL.read_text(encoding="utf-8"))
     cands = {c["name"]: c for c in sel_all["candidates"]}
@@ -116,7 +144,6 @@ def main() -> None:
     y = np.load(ROOT / "data" / "feats" / "y.npz")
     prep = pd.read_parquet(ROOT / "data" / "igar_prepared.parquet")
     te = prep[prep["split"] == "test"].reset_index(drop=True)
-    polar = y["test"] != 1
 
     df_val = prep[prep["split"] == "val"].sample(n=3000, random_state=7)
     texts = TRICKY + [mask_personal(t) for t in df_val["text"].tolist()]
@@ -143,10 +170,6 @@ def main() -> None:
         probs = softmax((scores + bias) / T, axis=1)
         parity[wm["id"]] = [[round(float(v), 6) for v in p] for p in probs]
 
-        s_te = np.load(SCORES / f"{wm['run']}_test.npy").astype(np.float64) + bias
-        pred = s_te.argmax(1)
-        flips = ((y["test"] == 0) & (pred == 2)) | ((y["test"] == 2) & (pred == 0))
-        bin_pred = np.where(s_te[:, 0] >= s_te[:, 2], 0, 2)
         meta_models.append(
             {
                 **wm,
@@ -155,17 +178,7 @@ def main() -> None:
                 "bias": bias.tolist(),
                 "temperature": T,
                 "fit_seconds": cand["fit_seconds"],
-                "metrics": {
-                    "val_macro_f1": cand["val"]["macro_f1"],
-                    "test": cand["test"],
-                    "test_macro_f1_raw": cand["test_raw"]["macro_f1"],
-                    "polarity_flip_rate": round(float(flips[polar].mean()), 4),
-                    "binary_neg_pos_accuracy": round(float((bin_pred[polar] == y["test"][polar]).mean()), 4),
-                    "binary_neg_pos_macro_f1": round(float(f1_score(y["test"][polar], bin_pred[polar], average="macro")), 4),
-                    "test_by_app": {
-                        app: metrics(y["test"][idx], pred[idx])["macro_f1"] for app, idx in te.groupby("app").indices.items()
-                    },
-                },
+                "metrics": test_metrics(cand, y, te),
             }
         )
 
@@ -193,7 +206,23 @@ def main() -> None:
         {"text": t, "probs": {m["id"]: parity[m["id"]][i] for m in WEB_MODELS}} for i, t in enumerate(texts)
     ]
     (ROOT / "web" / "scripts" / "parity_samples.json").write_text(json.dumps(samples, ensure_ascii=False), encoding="utf-8")
-    write_site_data(sel_all)
+    comparison = []
+    onnx = json.loads((ROOT / "ml" / "reports" / "indobert_import.json").read_text(encoding="utf-8")).get("onnx_int8_sample", {})
+    for cm in COMPARISON_MODELS:
+        if cm["run"] not in cands:
+            continue
+        cand = cands[cm["run"]]
+        comparison.append(
+            {
+                **cm,
+                "fit_seconds": cand["fit_seconds"],
+                "fit_hardware": "GPU T4 (Colab)",
+                "cpu_ms_per_review_int8": onnx.get("laptop_cpu_ms_per_review"),
+                "size_mb_int8": onnx.get("size_mb"),
+                "metrics": test_metrics(cand, y, te),
+            }
+        )
+    write_site_data(sel_all, comparison)
     sizes = {p.name: round(p.stat().st_size / 1e6, 2) for p in sorted(WEB_MODEL.iterdir())}
     print(json.dumps({"n_word": n_word, "n_char": n_char, "files_mb": sizes}, indent=2))
 
@@ -216,17 +245,19 @@ def family(name: str) -> str:
     return name
 
 
-def write_site_data(sel_all: dict) -> None:
+def write_site_data(sel_all: dict, comparison: list[dict]) -> None:
     """Data halaman: ringkasan dataset, papan peringkat, plafon label."""
     audit = json.loads((ROOT / "ml" / "reports" / "data_audit.json").read_text(encoding="utf-8"))
     noise = json.loads((ROOT / "ml" / "reports" / "label_noise.json").read_text(encoding="utf-8"))
     web_runs = {m["run"]: m["id"] for m in WEB_MODELS}
+    comparison_runs = {m["run"] for m in comparison}
     board = [
         {
             "name": c["name"],
             "family": family(c["name"]),
             "features": c["features"],
             "web_id": web_runs.get(c["name"]),
+            "comparison": c["name"] in comparison_runs,
             "val_macro_f1": c["val"]["macro_f1"],
             "test_macro_f1": c["test"]["macro_f1"],
             "test_macro_f1_raw": c["test_raw"]["macro_f1"],
@@ -253,6 +284,7 @@ def write_site_data(sel_all: dict) -> None:
             "mantap": noise["example_mixed"].get("mantap", {}),
         },
         "leaderboard": board,
+        "comparison": comparison,
     }
     (ROOT / "web" / "data").mkdir(parents=True, exist_ok=True)
     (ROOT / "web" / "data" / "site.json").write_text(json.dumps(site, indent=2, ensure_ascii=False), encoding="utf-8")

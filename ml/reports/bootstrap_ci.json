@@ -1,15 +1,51 @@
 {
-  "test_macro_f1_ci95": [
-    0.6621,
-    0.6741
-  ],
-  "diff_vs_svc_word_C0.1_ci95": [
-    -0.0008,
-    0.005
-  ],
-  "diff_vs_cnb_word_a0.1_ci95": [
-    0.0271,
-    0.0374
-  ],
-  "bootstrap": 1000
+  "bootstrap": 1000,
+  "test_macro_f1_ci95": {
+    "svc_wordchar_C0.1": [
+      0.6616,
+      0.6743
+    ],
+    "indobertweet": [
+      0.6861,
+      0.6981
+    ],
+    "lr_wordchar_C2.0": [
+      0.6568,
+      0.6688
+    ],
+    "mnb_word_a0.1": [
+      0.6455,
+      0.6568
+    ],
+    "svc_word_C0.1": [
+      0.6598,
+      0.6718
+    ],
+    "cnb_word_a0.1": [
+      0.6305,
+      0.6407
+    ]
+  },
+  "diff_ci95": {
+    "indobertweet - svc_wordchar_C0.1": [
+      0.0186,
+      0.0296
+    ],
+    "svc_wordchar_C0.1 - lr_wordchar_C2.0": [
+      0.0013,
+      0.0094
+    ],
+    "svc_wordchar_C0.1 - mnb_word_a0.1": [
+      0.0117,
+      0.0221
+    ],
+    "svc_wordchar_C0.1 - svc_word_C0.1": [
+      -0.001,
+      0.0048
+    ],
+    "svc_wordchar_C0.1 - cnb_word_a0.1": [
+      0.027,
+      0.0375
+    ]
+  }
 }

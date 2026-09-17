@@ -197,6 +197,15 @@ function run(info: ModelInfo, w: Float32Array, toks: string[], entries: Entry[],
   };
 }
 
+/** Prediksi satu model saja (dipakai uji kecepatan per model). */
+export function predictOne(text: string, id: string): Prediction {
+  const { meta, coef } = loadModels();
+  const info = meta.models.find((m) => m.id === id);
+  if (!info) throw new Error(`model ${id} tidak ada`);
+  const { toks, entries } = featurize(text);
+  return run(info, coef.get(id)!, toks, entries, meta.labels);
+}
+
 /** Prediksi semua model sekaligus (fitur dihitung sekali). */
 export function predictAll(text: string): Record<string, Prediction> {
   const { meta, coef } = loadModels();

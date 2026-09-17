@@ -18,9 +18,16 @@ Semua dites di 36.227 ulasan unik yang tidak pernah dilihat saat training.
 
 "Polaritas terbalik" artinya ulasan negatif terbaca positif atau sebaliknya. Rentang bootstrap 95% untuk macro-F1 Linear SVM: 0,662 sampai 0,674.
 
-Ketiganya dipilih dari 27 konfigurasi yang diadu (tabel lengkap di `ml/reports/results.md`). Beda Linear SVM dengan SVM fitur kata saja tidak signifikan (selisih bootstrap 95%: -0,001 sampai 0,005). Beda dengan Complement Naive Bayes signifikan (0,027 sampai 0,037).
+Tabel lengkap 29 konfigurasi ada di `ml/reports/results.md`. Selisih macro-F1 test (bootstrap berpasangan 1.000 kali, rentang 95%, `ml/reports/bootstrap_ci.json`):
 
-Ketiga model memakai satu mesin fitur yang sama, jadi satu request menghitung fitur sekali lalu menjalankan ketiganya. Rata-rata di laptop: sekitar 0,7 ms untuk tiga model sekaligus.
+| Perbandingan | Selisih | Signifikan |
+|---|---|---|
+| IndoBERTweet dikurangi Linear SVM | 0,019 sampai 0,030 | ya |
+| Linear SVM dikurangi Logistic Regression | 0,001 sampai 0,009 | ya, tapi tipis |
+| Linear SVM dikurangi Naive Bayes | 0,012 sampai 0,022 | ya |
+| Linear SVM kata + karakter dikurangi SVM kata saja | -0,001 sampai 0,005 | tidak |
+
+Ketiga model memakai satu mesin fitur yang sama, jadi satu request menghitung fitur sekali lalu menjalankan ketiganya. Kecepatan baca per ulasan di laptop (11th Gen Intel(R) Core(TM) i5-11320H @ 3.20GHz, `npm run bench`): Linear SVM 0,21 ms, Logistic Regression 0,19 ms, Naive Bayes 0,18 ms, ketiganya sekaligus 0,23 ms.
 
 ## Data dan cara membersihkannya
 
@@ -87,7 +94,7 @@ Uji kemulusan di Chromium dengan GPU Intel Iris Xe, scroll roda mouse naik turun
 ```
 ml/
   suara_ml/          normalisasi teks, fitur TF-IDF, metrik
-  scripts/           01_prepare sampai 06_label_noise, generator notebook Colab
+  scripts/           01_prepare sampai 08_bootstrap, generator notebook Colab
   notebooks/         indobert_colab.ipynb (fine-tune IndoBERT di GPU Colab)
   reports/           audit data, hasil semua run, seleksi final, confusion matrix
 web/
@@ -96,7 +103,7 @@ web/
   lib/               port TypeScript normalisasi dan inferensi 3 model
   model/             bobot model hasil export
   data/              ringkasan dataset dan papan peringkat untuk halaman
-  scripts/           uji paritas
+  scripts/           uji paritas (npm run parity) dan uji kecepatan (npm run bench)
 tools/frames/        pemotong video jadi frame + scenes.json (potongan dan porsi scroll)
 ```
 
@@ -112,6 +119,7 @@ python 02_features.py
 python 03_models.py
 python 06_label_noise.py
 python 04_final.py
+python 08_bootstrap.py
 python 05_export_web.py
 ```
 
@@ -121,16 +129,40 @@ Web:
 cd web
 npm install
 npm run parity
+npm run bench
 npm run dev
 ```
 
 `03_models.py` makan waktu sekitar 1 jam di CPU 8 core. Paling lama LightGBM (18 menit) dan Logistic Regression kata + karakter C=8 (16 menit).
 
-## IndoBERT
+## IndoBERT (pembanding)
 
-Notebook `ml/notebooks/indobert_colab.ipynb` melatih IndoBERTweet di split yang sama persis. Dirancang untuk sekali Run all lalu ditinggal: izin Google Drive dan upload data ada di sel paling atas, hasil langsung dicadangkan ke Drive, lalu dua zip terunduh otomatis. Logit validation dan test dari zip hasil dimasukkan ke `data/scores/`, lalu `04_final.py` otomatis membandingkannya.
+Notebook `ml/notebooks/indobert_colab.ipynb` melatih IndoBERTweet (`indolem/indobertweet-base-uncased`) di split yang sama persis: 2 epoch, learning rate 3e-5, batch 64, panjang maksimal 128 token. Training di GPU T4 Colab makan 15 menit.
 
-Notebook sudah diuji jalan dari awal sampai akhir di laptop dengan model mini (transformers 5.17, torch 2.14). Status training IndoBERT penuh: belum dijalankan.
+| | IndoBERTweet | Linear SVM (web) |
+|---|---|---|
+| Val macro-F1 | 0,684 | 0,665 |
+| Test macro-F1 | **0,692** | 0,668 |
+| Test macro-F1 tanpa geser bias | 0,636 | 0,612 |
+| Akurasi test | 83,0% | 82,7% |
+| F1 netral | 0,323 | 0,271 |
+| Waktu latih | 15 menit (GPU T4) | 29 detik (CPU laptop) |
+| Kecepatan baca per ulasan (CPU laptop) | 19,6 ms (ONNX int8) | 0,21 ms |
+| Ukuran model | 111,3 MB (int8) | sekitar 9 MB bobot + kosakata |
+
+IndoBERTweet unggul sekitar 0,02 macro-F1 dan selisihnya signifikan. Model ini belum dipasang di web karena jauh lebih berat. Versi int8 setuju dengan versi penuh di 96,6% dari 3.000 ulasan test, tapi macro-F1 turun dari 0,637 ke 0,615 di sampel itu (tanpa geser bias).
+
+Catatan soal run Colab: di transformers 5.16 sampler `group_by_length` ikut dipakai `trainer.predict`, jadi logit yang tersimpan teracak urutannya dan skor yang tercetak di notebook (0,333) salah. Sampler itu memakai seed tetap, jadi `ml/scripts/07_indobert_import.py` membangun ulang urutannya. Hasilnya terbukti benar karena macro-F1 dan akurasi validation sama persis dengan log evaluasi saat training (0,63663 dan 85,85%). Notebook sudah diperbaiki: prediksi sekarang memakai DataLoader berurutan dan ada cek otomatis terhadap log training.
+
+Cara mengimpor hasil Colab: unzip kedua file ke `data/indobert/`, lalu
+
+```bash
+pip install -r ml/requirements-indobert.txt
+python ml/scripts/07_indobert_import.py
+python ml/scripts/04_final.py
+python ml/scripts/08_bootstrap.py
+python ml/scripts/05_export_web.py
+```
 
 ## Batasan
 

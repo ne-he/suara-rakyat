@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   // file bobot model dibaca lewat fs saat runtime, jadi wajib ikut dibundel ke fungsi serverless
   outputFileTracingIncludes: {
     "/api/predict": ["./model/**/*"],
+    "/api/predict-batch": ["./model/**/*"],
   },
   poweredByHeader: false,
   async headers() {

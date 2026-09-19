@@ -1,0 +1,9 @@
+{
+  "catatan": "IndoBERTweet ONNX int8 di CPU laptop i5-11320H. Angka berubah cukup jauh tergantung jumlah thread dan beban laptop, jadi dicatat apa adanya.",
+  "satu_ulasan_per_panggilan_8_thread_ms": 19.6,
+  "satu_ulasan_per_panggilan_2_thread_ms": 27.0,
+  "batch_32_acak_2_thread_ms": 99.1,
+  "kenapa_batch_lebih_lambat": "batch diisi ulasan acak, jadi semua baris ikut dipanjangkan sampai ulasan terpanjang di batch itu",
+  "n_sampel": 600,
+  "diukur": "2026-09-18"
+}

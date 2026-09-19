@@ -246,13 +246,51 @@ body {
   outline-offset: 2px;
 }
 
+/* pita ulasan berjalan */
+.pita-jalan {
+  animation: pita 80s linear infinite;
+  will-change: transform;
+}
+.pita:hover .pita-jalan,
+.pita:focus-within .pita-jalan {
+  animation-play-state: paused;
+}
+
+@keyframes pita {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* batang tunggu saat model di server sedang membaca */
+.jalan {
+  animation: jalan 1.4s ease-in-out infinite;
+}
+
+@keyframes jalan {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
   .stamp,
-  .rise {
+  .rise,
+  .pita-jalan,
+  .jalan {
     animation: none;
+  }
+  .pita {
+    overflow-x: auto;
   }
   .bar-fill,
   .poster,

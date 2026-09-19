@@ -1,0 +1,16 @@
+{
+  "labels": [
+    "negative",
+    "neutral",
+    "positive"
+  ],
+  "bias": [
+    0.03,
+    1.62,
+    0.0
+  ],
+  "temperature": 0.687,
+  "max_len": 128,
+  "run": "indobertweet_int8",
+  "catatan": "dibuat ml/scripts/05_export_web.py, bias dan suhu di-tune di validation"
+}

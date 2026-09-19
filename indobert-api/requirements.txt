@@ -1,0 +1,7 @@
+# versi yang diuji di laptop (Python 3.14.3, Windows 11)
+fastapi==0.141.1
+uvicorn==0.53.0
+onnxruntime==1.30.0
+tokenizers==0.23.2
+numpy==2.5.3
+emoji==2.16.0

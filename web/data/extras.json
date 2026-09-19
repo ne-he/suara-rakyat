@@ -1,0 +1,818 @@
+{
+ "ticker": [
+  {
+   "text": "Lumayan membantu kalau untuk hari biasa...tapi untuk keperluan lebaran benar benar mengecewakan.....",
+   "label": "neutral",
+   "app": "KAI",
+   "stars": 3
+  },
+  {
+   "text": "Kiatlah setiap minggu update, kebanggaan untuk kita bersama",
+   "label": "negative",
+   "app": "mobileJKN",
+   "stars": 1
+  },
+  {
+   "text": "Ini gara² lu mama gw harus antrian panjang dasar apk sampah",
+   "label": "negative",
+   "app": "pertamina",
+   "stars": 1
+  },
+  {
+   "text": "Harus lebih dikembangkan lagi rinci demi rinci...",
+   "label": "neutral",
+   "app": "BMKG",
+   "stars": 3
+  },
+  {
+   "text": "Setelah di upgrade mau liat saldo aja kok ga bisa hedeee ini knp pula.parah.",
+   "label": "negative",
+   "app": "JMO",
+   "stars": 1
+  },
+  {
+   "text": "Setelah update malah saldo tidak ada,mau pengkinian data GK bisa😩😩BPJS app sangat ribet, bikin puyeng",
+   "label": "negative",
+   "app": "JMO",
+   "stars": 1
+  },
+  {
+   "text": "Semoga uldeting lok zona merah",
+   "label": "positive",
+   "app": "satusehat",
+   "stars": 5
+  },
+  {
+   "text": "udah dicoba beberapa kali tetep gabisa liat sertifikat nya lewat apk maupun web, gimana ni?",
+   "label": "negative",
+   "app": "satusehat",
+   "stars": 1
+  },
+  {
+   "text": "Dak bisa di download, percuma",
+   "label": "negative",
+   "app": "BMKG",
+   "stars": 1
+  },
+  {
+   "text": "Cukup informatif lah dan sangat membantu",
+   "label": "neutral",
+   "app": "JMO",
+   "stars": 3
+  },
+  {
+   "text": "Gw download cuma mau komen, Banyak yang komplain wkwkwkwk.",
+   "label": "neutral",
+   "app": "pertamina",
+   "stars": 3
+  },
+  {
+   "text": "Payah setelah update susah login, sampe beberapa kali ubah password",
+   "label": "negative",
+   "app": "KAI",
+   "stars": 1
+  },
+  {
+   "text": "Kami sangat membutuhkan info tentang kejadian gempa",
+   "label": "positive",
+   "app": "BMKG",
+   "stars": 4
+  },
+  {
+   "text": "Kenapa ya notifikasinya Tidak muncul blutut padahaltaktif terus",
+   "label": "negative",
+   "app": "satusehat",
+   "stars": 1
+  },
+  {
+   "text": "Di update buknya tmbah bagus, mlah tmbah gajels",
+   "label": "negative",
+   "app": "JMO",
+   "stars": 1
+  },
+  {
+   "text": "saya coba daftar subsidi tepat. ketika bagian paling akhir kok eror ya min ?",
+   "label": "negative",
+   "app": "pertamina",
+   "stars": 1
+  },
+  {
+   "text": "Sayang terlalu sering update",
+   "label": "positive",
+   "app": "mobileJKN",
+   "stars": 5
+  },
+  {
+   "text": "gak bisa kebuka.. jelek aplikasinya",
+   "label": "negative",
+   "app": "BMKG",
+   "stars": 1
+  },
+  {
+   "text": "Sederhana dan mudah digunakan. Sangat membantu",
+   "label": "positive",
+   "app": "pertamina",
+   "stars": 5
+  },
+  {
+   "text": "Trim's bnyak untuk aplilkasinya",
+   "label": "positive",
+   "app": "BMKG",
+   "stars": 5
+  },
+  {
+   "text": "Ada option pilih tempat duduk, tapi tidak berfungsi",
+   "label": "negative",
+   "app": "KAI",
+   "stars": 2
+  },
+  {
+   "text": "lumayan tp sayang satu aplikasi tdk bisa cek yg lain",
+   "label": "neutral",
+   "app": "mobileJKN",
+   "stars": 3
+  },
+  {
+   "text": "Mau melanjutkan pasti ada kata MOHON COBA KEMBALI",
+   "label": "negative",
+   "app": "KAI",
+   "stars": 2
+  },
+  {
+   "text": "Pergantian paskes,lebih mudah menggunakan mobile jkn",
+   "label": "positive",
+   "app": "mobileJKN",
+   "stars": 5
+  },
+  {
+   "text": "saya belum sepenuhnya tau mafaat aplikasi ini",
+   "label": "neutral",
+   "app": "satusehat",
+   "stars": 3
+  },
+  {
+   "text": "Bolak balik trs aplikasinya jadi gak bisa lihat tagihan dll.tau gini ga perlu di perbarui",
+   "label": "negative",
+   "app": "mobileJKN",
+   "stars": 1
+  },
+  {
+   "text": "Biar semakin gampang dalam segala pengurusan",
+   "label": "positive",
+   "app": "JMO",
+   "stars": 5
+  },
+  {
+   "text": "Ga repot lg kalo mau plg kampung",
+   "label": "positive",
+   "app": "KAI",
+   "stars": 5
+  },
+  {
+   "text": "Kendalanya di pengkinian data ter lalu ribet. Ujung-ujungnya cancel lagi",
+   "label": "positive",
+   "app": "JMO",
+   "stars": 5
+  },
+  {
+   "text": "Aplikasi bagus .. tapi pilih bangkunya ngaco gambarnya",
+   "label": "positive",
+   "app": "KAI",
+   "stars": 4
+  }
+ ],
+ "trend": {
+  "min_rows_per_period": 100,
+  "apps": {
+   "BMKG": [
+    {
+     "period": "2012-K2",
+     "n": 11,
+     "negative": 0,
+     "neutral": 1,
+     "positive": 10
+    },
+    {
+     "period": "2012-K3",
+     "n": 5,
+     "negative": 0,
+     "neutral": 1,
+     "positive": 4
+    },
+    {
+     "period": "2012-K4",
+     "n": 10,
+     "negative": 1,
+     "neutral": 1,
+     "positive": 8
+    },
+    {
+     "period": "2013-K1",
+     "n": 12,
+     "negative": 1,
+     "neutral": 1,
+     "positive": 10
+    },
+    {
+     "period": "2013-K2",
+     "n": 11,
+     "negative": 1,
+     "neutral": 0,
+     "positive": 10
+    },
+    {
+     "period": "2013-K3",
+     "n": 14,
+     "negative": 1,
+     "neutral": 0,
+     "positive": 13
+    },
+    {
+     "period": "2013-K4",
+     "n": 19,
+     "negative": 0,
+     "neutral": 1,
+     "positive": 18
+    },
+    {
+     "period": "2014-K1",
+     "n": 35,
+     "negative": 6,
+     "neutral": 3,
+     "positive": 26
+    },
+    {
+     "period": "2014-K2",
+     "n": 71,
+     "negative": 2,
+     "neutral": 7,
+     "positive": 62
+    },
+    {
+     "period": "2014-K3",
+     "n": 87,
+     "negative": 10,
+     "neutral": 4,
+     "positive": 73
+    },
+    {
+     "period": "2014-K4",
+     "n": 130,
+     "negative": 11,
+     "neutral": 9,
+     "positive": 110
+    },
+    {
+     "period": "2015-K1",
+     "n": 266,
+     "negative": 21,
+     "neutral": 6,
+     "positive": 239
+    },
+    {
+     "period": "2015-K2",
+     "n": 251,
+     "negative": 14,
+     "neutral": 25,
+     "positive": 212
+    },
+    {
+     "period": "2015-K3",
+     "n": 231,
+     "negative": 23,
+     "neutral": 21,
+     "positive": 187
+    },
+    {
+     "period": "2015-K4",
+     "n": 168,
+     "negative": 20,
+     "neutral": 19,
+     "positive": 129
+    }
+   ],
+   "JMO": [
+    {
+     "period": "2021-K3",
+     "n": 23672,
+     "negative": 7847,
+     "neutral": 1232,
+     "positive": 14593
+    },
+    {
+     "period": "2021-K4",
+     "n": 31678,
+     "negative": 6963,
+     "neutral": 1362,
+     "positive": 23353
+    },
+    {
+     "period": "2022-K1",
+     "n": 27675,
+     "negative": 4918,
+     "neutral": 1095,
+     "positive": 21662
+    },
+    {
+     "period": "2022-K2",
+     "n": 33430,
+     "negative": 8563,
+     "neutral": 1300,
+     "positive": 23567
+    },
+    {
+     "period": "2022-K3",
+     "n": 33916,
+     "negative": 6675,
+     "neutral": 1500,
+     "positive": 25741
+    },
+    {
+     "period": "2022-K4",
+     "n": 24960,
+     "negative": 4670,
+     "neutral": 1120,
+     "positive": 19170
+    },
+    {
+     "period": "2023-K1",
+     "n": 24669,
+     "negative": 4692,
+     "neutral": 1045,
+     "positive": 18932
+    }
+   ],
+   "KAI": [
+    {
+     "period": "2014-K3",
+     "n": 163,
+     "negative": 12,
+     "neutral": 10,
+     "positive": 141
+    },
+    {
+     "period": "2014-K4",
+     "n": 157,
+     "negative": 9,
+     "neutral": 12,
+     "positive": 136
+    },
+    {
+     "period": "2015-K1",
+     "n": 336,
+     "negative": 29,
+     "neutral": 27,
+     "positive": 280
+    },
+    {
+     "period": "2015-K2",
+     "n": 505,
+     "negative": 67,
+     "neutral": 41,
+     "positive": 397
+    },
+    {
+     "period": "2015-K3",
+     "n": 703,
+     "negative": 234,
+     "neutral": 73,
+     "positive": 396
+    },
+    {
+     "period": "2015-K4",
+     "n": 423,
+     "negative": 186,
+     "neutral": 37,
+     "positive": 200
+    },
+    {
+     "period": "2016-K1",
+     "n": 445,
+     "negative": 215,
+     "neutral": 51,
+     "positive": 179
+    },
+    {
+     "period": "2016-K2",
+     "n": 542,
+     "negative": 281,
+     "neutral": 56,
+     "positive": 205
+    },
+    {
+     "period": "2016-K3",
+     "n": 720,
+     "negative": 279,
+     "neutral": 81,
+     "positive": 360
+    },
+    {
+     "period": "2016-K4",
+     "n": 719,
+     "negative": 398,
+     "neutral": 75,
+     "positive": 246
+    },
+    {
+     "period": "2017-K1",
+     "n": 675,
+     "negative": 396,
+     "neutral": 73,
+     "positive": 206
+    },
+    {
+     "period": "2017-K2",
+     "n": 526,
+     "negative": 281,
+     "neutral": 65,
+     "positive": 180
+    },
+    {
+     "period": "2017-K3",
+     "n": 487,
+     "negative": 214,
+     "neutral": 72,
+     "positive": 201
+    },
+    {
+     "period": "2017-K4",
+     "n": 910,
+     "negative": 605,
+     "neutral": 107,
+     "positive": 198
+    }
+   ],
+   "mobileJKN": [
+    {
+     "period": "2016-K2",
+     "n": 54,
+     "negative": 16,
+     "neutral": 6,
+     "positive": 32
+    },
+    {
+     "period": "2016-K3",
+     "n": 389,
+     "negative": 117,
+     "neutral": 62,
+     "positive": 210
+    },
+    {
+     "period": "2016-K4",
+     "n": 391,
+     "negative": 139,
+     "neutral": 50,
+     "positive": 202
+    },
+    {
+     "period": "2017-K1",
+     "n": 412,
+     "negative": 77,
+     "neutral": 71,
+     "positive": 264
+    },
+    {
+     "period": "2017-K2",
+     "n": 547,
+     "negative": 86,
+     "neutral": 65,
+     "positive": 396
+    },
+    {
+     "period": "2017-K3",
+     "n": 507,
+     "negative": 115,
+     "neutral": 74,
+     "positive": 318
+    },
+    {
+     "period": "2017-K4",
+     "n": 989,
+     "negative": 327,
+     "neutral": 144,
+     "positive": 518
+    },
+    {
+     "period": "2018-K1",
+     "n": 1324,
+     "negative": 460,
+     "neutral": 220,
+     "positive": 644
+    },
+    {
+     "period": "2018-K2",
+     "n": 1602,
+     "negative": 503,
+     "neutral": 120,
+     "positive": 979
+    },
+    {
+     "period": "2018-K3",
+     "n": 1778,
+     "negative": 916,
+     "neutral": 196,
+     "positive": 666
+    },
+    {
+     "period": "2018-K4",
+     "n": 3951,
+     "negative": 1012,
+     "neutral": 296,
+     "positive": 2643
+    },
+    {
+     "period": "2019-K1",
+     "n": 1691,
+     "negative": 708,
+     "neutral": 150,
+     "positive": 833
+    },
+    {
+     "period": "2019-K2",
+     "n": 5104,
+     "negative": 621,
+     "neutral": 314,
+     "positive": 4169
+    },
+    {
+     "period": "2019-K3",
+     "n": 8635,
+     "negative": 1178,
+     "neutral": 549,
+     "positive": 6908
+    },
+    {
+     "period": "2019-K4",
+     "n": 9138,
+     "negative": 2094,
+     "neutral": 566,
+     "positive": 6478
+    },
+    {
+     "period": "2020-K1",
+     "n": 15682,
+     "negative": 5548,
+     "neutral": 1226,
+     "positive": 8908
+    },
+    {
+     "period": "2020-K2",
+     "n": 16177,
+     "negative": 6105,
+     "neutral": 1217,
+     "positive": 8855
+    },
+    {
+     "period": "2020-K3",
+     "n": 10728,
+     "negative": 4994,
+     "neutral": 773,
+     "positive": 4961
+    },
+    {
+     "period": "2020-K4",
+     "n": 12675,
+     "negative": 6512,
+     "neutral": 754,
+     "positive": 5409
+    },
+    {
+     "period": "2021-K1",
+     "n": 5663,
+     "negative": 3172,
+     "neutral": 345,
+     "positive": 2146
+    },
+    {
+     "period": "2021-K2",
+     "n": 9824,
+     "negative": 4659,
+     "neutral": 609,
+     "positive": 4556
+    },
+    {
+     "period": "2021-K3",
+     "n": 11314,
+     "negative": 6399,
+     "neutral": 659,
+     "positive": 4256
+    },
+    {
+     "period": "2021-K4",
+     "n": 3528,
+     "negative": 1424,
+     "neutral": 130,
+     "positive": 1974
+    }
+   ],
+   "pertamina": [
+    {
+     "period": "2017-K3",
+     "n": 18,
+     "negative": 3,
+     "neutral": 2,
+     "positive": 13
+    },
+    {
+     "period": "2017-K4",
+     "n": 17,
+     "negative": 1,
+     "neutral": 2,
+     "positive": 14
+    },
+    {
+     "period": "2018-K1",
+     "n": 5,
+     "negative": 0,
+     "neutral": 1,
+     "positive": 4
+    },
+    {
+     "period": "2018-K2",
+     "n": 8,
+     "negative": 2,
+     "neutral": 2,
+     "positive": 4
+    },
+    {
+     "period": "2018-K3",
+     "n": 3927,
+     "negative": 787,
+     "neutral": 477,
+     "positive": 2663
+    },
+    {
+     "period": "2018-K4",
+     "n": 4841,
+     "negative": 746,
+     "neutral": 635,
+     "positive": 3460
+    },
+    {
+     "period": "2019-K1",
+     "n": 3261,
+     "negative": 691,
+     "neutral": 307,
+     "positive": 2263
+    },
+    {
+     "period": "2019-K2",
+     "n": 1379,
+     "negative": 226,
+     "neutral": 129,
+     "positive": 1024
+    },
+    {
+     "period": "2019-K3",
+     "n": 609,
+     "negative": 134,
+     "neutral": 45,
+     "positive": 430
+    },
+    {
+     "period": "2019-K4",
+     "n": 184,
+     "negative": 97,
+     "neutral": 16,
+     "positive": 71
+    },
+    {
+     "period": "2020-K1",
+     "n": 909,
+     "negative": 288,
+     "neutral": 83,
+     "positive": 538
+    },
+    {
+     "period": "2020-K2",
+     "n": 2641,
+     "negative": 977,
+     "neutral": 168,
+     "positive": 1496
+    },
+    {
+     "period": "2020-K3",
+     "n": 2955,
+     "negative": 1185,
+     "neutral": 219,
+     "positive": 1551
+    },
+    {
+     "period": "2020-K4",
+     "n": 3054,
+     "negative": 736,
+     "neutral": 221,
+     "positive": 2097
+    },
+    {
+     "period": "2021-K1",
+     "n": 669,
+     "negative": 164,
+     "neutral": 49,
+     "positive": 456
+    },
+    {
+     "period": "2021-K2",
+     "n": 876,
+     "negative": 204,
+     "neutral": 49,
+     "positive": 623
+    },
+    {
+     "period": "2021-K3",
+     "n": 514,
+     "negative": 178,
+     "neutral": 45,
+     "positive": 291
+    },
+    {
+     "period": "2021-K4",
+     "n": 1416,
+     "negative": 228,
+     "neutral": 67,
+     "positive": 1121
+    },
+    {
+     "period": "2022-K1",
+     "n": 570,
+     "negative": 254,
+     "neutral": 34,
+     "positive": 282
+    },
+    {
+     "period": "2022-K2",
+     "n": 33128,
+     "negative": 29991,
+     "neutral": 513,
+     "positive": 2624
+    },
+    {
+     "period": "2022-K3",
+     "n": 35310,
+     "negative": 34244,
+     "neutral": 111,
+     "positive": 955
+    }
+   ],
+   "satusehat": [
+    {
+     "period": "2020-K1",
+     "n": 102,
+     "negative": 42,
+     "neutral": 6,
+     "positive": 54
+    },
+    {
+     "period": "2020-K2",
+     "n": 13487,
+     "negative": 4007,
+     "neutral": 1429,
+     "positive": 8051
+    },
+    {
+     "period": "2020-K3",
+     "n": 774,
+     "negative": 281,
+     "neutral": 51,
+     "positive": 442
+    },
+    {
+     "period": "2020-K4",
+     "n": 340,
+     "negative": 88,
+     "neutral": 20,
+     "positive": 232
+    },
+    {
+     "period": "2021-K1",
+     "n": 1617,
+     "negative": 490,
+     "neutral": 149,
+     "positive": 978
+    },
+    {
+     "period": "2021-K2",
+     "n": 6093,
+     "negative": 2262,
+     "neutral": 509,
+     "positive": 3322
+    },
+    {
+     "period": "2021-K3",
+     "n": 144708,
+     "negative": 61436,
+     "neutral": 9446,
+     "positive": 73826
+    },
+    {
+     "period": "2021-K4",
+     "n": 23575,
+     "negative": 12329,
+     "neutral": 1461,
+     "positive": 9785
+    }
+   ]
+  },
+  "total_rows": 617722
+ }
+}

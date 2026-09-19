@@ -61,9 +61,20 @@ COMPARISON_MODELS = [
         "run": "indobertweet",
         "name": "IndoBERTweet",
         "features": "subword transformer",
-        "tagline": "Skor tertinggi. Dilatih 15 menit di GPU Colab, model 111 MB, belum dipasang di web.",
+        "tagline": "Skor tertinggi. Dilatih 15 menit di GPU Colab, versi penuh 445 MB, dipakai sebagai pembanding di laporan.",
+        "live": False,
+    },
+    {
+        "id": "indobertweet_int8",
+        "run": "indobertweet_int8",
+        "name": "IndoBERTweet int8",
+        "features": "subword transformer",
+        "tagline": "Versi ringan IndoBERTweet yang bisa dipasang di server kecil. Lebih akurat dari model linear, tapi jauh lebih lambat.",
+        "live": True,  # inilah yang dijalankan folder indobert-api
     },
 ]
+# model server IndoBERT: bias dan suhu ini yang dipakai indobert-api/app.py
+API_RUN = "indobertweet_int8"
 DEFAULT_ID = "svm"
 
 TRICKY = [
@@ -212,15 +223,36 @@ def main() -> None:
         if cm["run"] not in cands:
             continue
         cand = cands[cm["run"]]
+        int8 = cm["run"].endswith("_int8")
         comparison.append(
             {
                 **cm,
                 "fit_seconds": cand["fit_seconds"],
                 "fit_hardware": "GPU T4 (Colab)",
-                "cpu_ms_per_review_int8": onnx.get("laptop_cpu_ms_per_review"),
-                "size_mb_int8": onnx.get("size_mb"),
+                "cpu_ms_per_review": onnx.get("laptop_cpu_ms_per_review") if int8 else None,
+                "size_mb": onnx.get("size_mb") if int8 else 445.0,
                 "metrics": test_metrics(cand, y, te),
             }
+        )
+    # bias dan suhu untuk server IndoBERT (indobert-api)
+    if API_RUN in cands:
+        api = ROOT / "indobert-api" / "config.json"
+        api.parent.mkdir(exist_ok=True)
+        api.write_text(
+            json.dumps(
+                {
+                    "labels": LABELS,
+                    "bias": cands[API_RUN]["bias"],
+                    "temperature": cands[API_RUN]["temperature"],
+                    "max_len": 128,
+                    "run": API_RUN,
+                    "catatan": "dibuat ml/scripts/05_export_web.py, bias dan suhu di-tune di validation",
+                },
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+            newline="\n",
         )
     write_site_data(sel_all, comparison)
     sizes = {p.name: round(p.stat().st_size / 1e6, 2) for p in sorted(WEB_MODEL.iterdir())}
@@ -258,11 +290,14 @@ def write_site_data(sel_all: dict, comparison: list[dict]) -> None:
             "features": c["features"],
             "web_id": web_runs.get(c["name"]),
             "comparison": c["name"] in comparison_runs,
+            "fit_seconds": c["fit_seconds"],
             "val_macro_f1": c["val"]["macro_f1"],
             "test_macro_f1": c["test"]["macro_f1"],
             "test_macro_f1_raw": c["test_raw"]["macro_f1"],
             "test_accuracy": c["test"]["accuracy"],
             "test_f1": {k: v["f1"] for k, v in c["test"]["per_class"].items()},
+            "test_precision_macro": round(sum(v["precision"] for v in c["test"]["per_class"].values()) / 3, 4),
+            "test_recall_macro": round(sum(v["recall"] for v in c["test"]["per_class"].values()) / 3, 4),
         }
         for c in sel_all["candidates"]
     ]

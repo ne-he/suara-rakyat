@@ -1,32 +1,14 @@
 import { loadModels, predictAll } from "@/lib/model";
+import { clientIp, limited, tooMany } from "@/lib/ratelimit";
 
 export const runtime = "nodejs";
 
 const MAX_CHARS = 2000;
 const MAX_BODY_BYTES = 8_000;
-const WINDOW_MS = 60_000;
-const MAX_PER_WINDOW = 60;
-
-// Pembatas laju sederhana per instance serverless (best effort, bukan pengganti WAF).
-const hits = new Map<string, { count: number; start: number }>();
-
-function limited(ip: string): boolean {
-  const now = Date.now();
-  const h = hits.get(ip);
-  if (!h || now - h.start > WINDOW_MS) {
-    hits.set(ip, { count: 1, start: now });
-    if (hits.size > 5000) hits.clear();
-    return false;
-  }
-  h.count += 1;
-  return h.count > MAX_PER_WINDOW;
-}
+const MAX_PER_MINUTE = 60;
 
 export async function POST(request: Request) {
-  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "anon";
-  if (limited(ip)) {
-    return Response.json({ error: "Terlalu banyak permintaan, coba lagi sebentar." }, { status: 429 });
-  }
+  if (limited("predict", clientIp(request), MAX_PER_MINUTE)) return tooMany();
 
   const raw = await request.text();
   if (raw.length > MAX_BODY_BYTES) {

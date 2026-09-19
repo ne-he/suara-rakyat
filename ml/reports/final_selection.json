@@ -558,6 +558,194 @@
       "test_logloss": 0.4576
     },
     {
+      "name": "indobertweet_int8",
+      "features": "transformer",
+      "linear": false,
+      "fit_seconds": 894,
+      "members": [
+        {
+          "run": "indobertweet_int8",
+          "weight": 1.0
+        }
+      ],
+      "bias": [
+        0.03,
+        1.62,
+        0.0
+      ],
+      "temperature": 0.687,
+      "val_raw": {
+        "macro_f1": 0.6073,
+        "accuracy": 0.854,
+        "weighted_f1": 0.825,
+        "per_class": {
+          "negative": {
+            "precision": 0.846,
+            "recall": 0.9577,
+            "f1": 0.8984,
+            "support": 21207
+          },
+          "neutral": {
+            "precision": 0.9667,
+            "recall": 0.0334,
+            "f1": 0.0646,
+            "support": 2605
+          },
+          "positive": {
+            "precision": 0.869,
+            "recall": 0.849,
+            "f1": 0.8589,
+            "support": 12473
+          }
+        },
+        "confusion": [
+          [
+            20311,
+            1,
+            895
+          ],
+          [
+            1816,
+            87,
+            702
+          ],
+          [
+            1881,
+            2,
+            10590
+          ]
+        ]
+      },
+      "val": {
+        "macro_f1": 0.6778,
+        "accuracy": 0.8188,
+        "weighted_f1": 0.8309,
+        "per_class": {
+          "negative": {
+            "precision": 0.8839,
+            "recall": 0.8839,
+            "f1": 0.8839,
+            "support": 21207
+          },
+          "neutral": {
+            "precision": 0.2408,
+            "recall": 0.3873,
+            "f1": 0.2969,
+            "support": 2605
+          },
+          "positive": {
+            "precision": 0.9146,
+            "recall": 0.7983,
+            "f1": 0.8525,
+            "support": 12473
+          }
+        },
+        "confusion": [
+          [
+            18744,
+            1918,
+            545
+          ],
+          [
+            1211,
+            1009,
+            385
+          ],
+          [
+            1252,
+            1264,
+            9957
+          ]
+        ]
+      },
+      "val_logloss": 0.4843,
+      "test_raw": {
+        "macro_f1": 0.6085,
+        "accuracy": 0.8556,
+        "weighted_f1": 0.8273,
+        "per_class": {
+          "negative": {
+            "precision": 0.8477,
+            "recall": 0.9565,
+            "f1": 0.8988,
+            "support": 21285
+          },
+          "neutral": {
+            "precision": 0.9886,
+            "recall": 0.0343,
+            "f1": 0.0662,
+            "support": 2539
+          },
+          "positive": {
+            "precision": 0.8704,
+            "recall": 0.8506,
+            "f1": 0.8604,
+            "support": 12403
+          }
+        },
+        "confusion": [
+          [
+            20359,
+            0,
+            926
+          ],
+          [
+            1807,
+            87,
+            645
+          ],
+          [
+            1852,
+            1,
+            10550
+          ]
+        ]
+      },
+      "test": {
+        "macro_f1": 0.6837,
+        "accuracy": 0.8228,
+        "weighted_f1": 0.8352,
+        "per_class": {
+          "negative": {
+            "precision": 0.8888,
+            "recall": 0.8847,
+            "f1": 0.8867,
+            "support": 21285
+          },
+          "neutral": {
+            "precision": 0.2492,
+            "recall": 0.4108,
+            "f1": 0.3102,
+            "support": 2539
+          },
+          "positive": {
+            "precision": 0.9151,
+            "recall": 0.8009,
+            "f1": 0.8542,
+            "support": 12403
+          }
+        },
+        "confusion": [
+          [
+            18831,
+            1881,
+            573
+          ],
+          [
+            1147,
+            1043,
+            349
+          ],
+          [
+            1209,
+            1261,
+            9933
+          ]
+        ]
+      },
+      "test_logloss": 0.4792
+    },
+    {
       "name": "svc_wordchar_C0.1",
       "features": "wordchar",
       "linear": true,

@@ -22,9 +22,11 @@ REPORTS = ROOT / "ml" / "reports"
 SCORES = ROOT / "data" / "scores"
 FEATS = ROOT / "data" / "feats"
 N_BOOT = 1000
-MODELS = ["svc_wordchar_C0.1", "indobertweet", "lr_wordchar_C2.0", "mnb_word_a0.1", "svc_word_C0.1", "cnb_word_a0.1"]
+MODELS = ["svc_wordchar_C0.1", "indobertweet", "indobertweet_int8", "lr_wordchar_C2.0", "mnb_word_a0.1", "svc_word_C0.1", "cnb_word_a0.1"]
 PAIRS = [
     ("indobertweet", "svc_wordchar_C0.1"),
+    ("indobertweet_int8", "svc_wordchar_C0.1"),
+    ("indobertweet", "indobertweet_int8"),
     ("svc_wordchar_C0.1", "lr_wordchar_C2.0"),
     ("svc_wordchar_C0.1", "mnb_word_a0.1"),
     ("svc_wordchar_C0.1", "svc_word_C0.1"),

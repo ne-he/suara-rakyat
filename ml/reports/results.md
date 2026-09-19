@@ -6,6 +6,7 @@ Dipilih berdasarkan macro-F1 validation. Terbaik: `ens[indobertweet+svc_wordchar
 |---|---|---|---|---|---|---|---|---|---|
 | ens[indobertweet+svc_wordchar_C0.1] | transformer+wordchar | 0.6868 | 0.6906 | 0.6294 | 0.8343 | 0.894 | 0.313 | 0.865 | - |
 | indobertweet | transformer | 0.6843 | 0.6921 | 0.6363 | 0.8304 | 0.891 | 0.323 | 0.862 | 894 |
+| indobertweet_int8 | transformer | 0.6778 | 0.6837 | 0.6085 | 0.8228 | 0.887 | 0.310 | 0.854 | 894 |
 | svc_wordchar_C0.1 | wordchar | 0.6649 | 0.6678 | 0.6122 | 0.8273 | 0.889 | 0.271 | 0.843 | 29.1 |
 | ens[svc_word_C0.1+svc_word_C0.2] | word | 0.6644 | 0.6649 | 0.6093 | 0.8262 | 0.887 | 0.267 | 0.841 | - |
 | svc_word_C0.1 | word | 0.6639 | 0.6657 | 0.6087 | 0.8216 | 0.886 | 0.273 | 0.839 | 20.7 |

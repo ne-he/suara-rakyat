@@ -9,6 +9,10 @@
       0.6861,
       0.6981
     ],
+    "indobertweet_int8": [
+      0.6775,
+      0.6895
+    ],
     "lr_wordchar_C2.0": [
       0.6568,
       0.6688
@@ -30,6 +34,14 @@
     "indobertweet - svc_wordchar_C0.1": [
       0.0186,
       0.0296
+    ],
+    "indobertweet_int8 - svc_wordchar_C0.1": [
+      0.0101,
+      0.0211
+    ],
+    "indobertweet - indobertweet_int8": [
+      0.0046,
+      0.0118
     ],
     "svc_wordchar_C0.1 - lr_wordchar_C2.0": [
       0.0013,

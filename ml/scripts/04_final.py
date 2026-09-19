@@ -86,7 +86,7 @@ def main() -> None:
             pos = pd.Series(range(len(keys)), index=keys.values)
             per[s] = logits[pos.loc[order.values].values]
         scores[run] = (per["val"], per["test"])
-        colab = REPORTS / f"{run}_colab_run.json"
+        colab = REPORTS / f"{run.removesuffix('_int8')}_colab_run.json"
         fit = round(json.loads(colab.read_text(encoding="utf-8"))["train_minutes"] * 60) if colab.exists() else None  # GPU T4
         cands.append(evaluate_candidate(run, per["val"], per["test"], y, {"features": "transformer", "linear": False, "fit_seconds": fit, "members": [{"run": run, "weight": 1.0}]}))
 
@@ -113,7 +113,7 @@ def main() -> None:
         cands.append(evaluate_candidate(name, s_val, s_te, y, {"features": a["features"], "linear": True, "fit_seconds": None, "members": members}))
 
     # transformer + linear terbaik (hanya untuk laporan, butuh GPU/ONNX jadi tidak dipasang di web)
-    for tr in [c for c in by_val if c["features"] == "transformer"]:
+    for tr in [c for c in by_val if c["features"] == "transformer" and not c["name"].endswith("_int8")]:
         lin = linear_top[0]
         st, sl = scores[tr["name"]], scores[lin["name"]]
         kt, kl = 1 / st[0].std(), 1 / sl[0].std()

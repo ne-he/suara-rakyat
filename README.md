@@ -6,6 +6,15 @@ Projek AOL mata kuliah Software Engineering. Tim: Nehemiah, Marcel, Wilson, Hans
 
 Web: https://suara-rakyat-xi.vercel.app
 
+Isi web:
+
+| Halaman | Isi |
+|---|---|
+| `/` | cerita scroll, pita ulasan asli, formulir satu ulasan dengan pilihan model, tren keluhan per kuartal, panel bukti per model, papan perbandingan |
+| `/massal` | tempel atau unggah CSV sampai 1.000 ulasan, ringkasan nada, kata pendorong, unduh hasil CSV |
+| `/dashboard` | perbandingan semua model: kecepatan, akurasi, presisi, grafik skor vs waktu latih, unduh tabel CSV dan grafik PNG atau SVG |
+| `/kuesioner` | kuesioner SUS untuk evaluasi subjektif plus alat rekap jawaban tim |
+
 ## Tiga model di web
 
 Semua dites di 36.227 ulasan unik yang tidak pernah dilihat saat training.
@@ -94,7 +103,7 @@ Uji kemulusan di Chromium dengan GPU Intel Iris Xe, scroll roda mouse naik turun
 ```
 ml/
   suara_ml/          normalisasi teks, fitur TF-IDF, metrik
-  scripts/           01_prepare sampai 08_bootstrap, generator notebook Colab
+  scripts/           01_prepare sampai 10_indobert_int8_eval, generator notebook Colab
   notebooks/         indobert_colab.ipynb (fine-tune IndoBERT di GPU Colab)
   reports/           audit data, hasil semua run, seleksi final, confusion matrix
 web/
@@ -104,7 +113,9 @@ web/
   model/             bobot model hasil export
   data/              ringkasan dataset dan papan peringkat untuk halaman
   scripts/           uji paritas (npm run parity) dan uji kecepatan (npm run bench)
+  app/massal, app/dashboard, app/kuesioner    halaman cek massal, dashboard model, kuesioner SUS
 tools/frames/        pemotong video jadi frame + scenes.json (potongan dan porsi scroll)
+indobert-api/        server IndoBERTweet int8 (FastAPI + onnxruntime + Dockerfile)
 ```
 
 ## Menjalankan ulang
@@ -121,7 +132,10 @@ python 06_label_noise.py
 python 04_final.py
 python 08_bootstrap.py
 python 05_export_web.py
+python 09_web_extras.py
 ```
+
+`09_web_extras.py` menyiapkan pita ulasan, data tren per kuartal, dan file contoh untuk cek massal.
 
 Web:
 
@@ -164,6 +178,25 @@ python ml/scripts/08_bootstrap.py
 python ml/scripts/05_export_web.py
 ```
 
+## Server IndoBERT (opsional)
+
+Model linear cukup ringan untuk ikut di server web. IndoBERTweet tidak, jadi versi int8-nya dijalankan sebagai server sendiri di folder `indobert-api` (FastAPI + onnxruntime), lalu web memanggilnya lewat route `/api/predict-indobert`. Kalau alamat servernya tidak diisi, web tetap jalan dengan tiga model linear saja.
+
+Skor versi int8 di test: macro-F1 0,684 (rentang bootstrap 95% 0,677 sampai 0,690), akurasi 82,3%, F1 netral 0,310. Bedanya dengan Linear SVM 0,010 sampai 0,021, jadi tetap unggul. Turun dari versi penuh sekitar 0,008 macro-F1 karena pembulatan int8.
+
+Jalan di laptop:
+
+```bash
+mkdir -p indobert-api/model
+cp data/indobert/suara_indobert_onnx_int8/model-int8.onnx indobert-api/model/
+cp data/indobert/suara_indobert_onnx_int8/tokenizer/tokenizer.json indobert-api/model/
+cd indobert-api && pip install -r requirements.txt && uvicorn app:app --port 7860
+```
+
+Lalu isi `web/.env.local` dengan `INDOBERT_URL=http://127.0.0.1:7860` dan jalankan ulang web. Detail endpoint ada di `indobert-api/README.md`.
+
+Catatan hosting (dicek 18 Sep 2026 di dokumentasi resmi Hugging Face): membuat Space baru bertipe Docker atau Gradio sekarang butuh akun berbayar, hanya Static Space yang gratis. Alternatif gratis yang tersisa: server kecil di Render (mati sendiri setelah 15 menit menganggur, bangun lagi sekitar satu menit) atau menjalankan server ini di laptop saat presentasi.
+
 ## Batasan
 
 - Label berasal dari bintang, bukan anotasi manusia.
@@ -171,6 +204,9 @@ python ml/scripts/05_export_web.py
 - Data berhenti di 2023. Istilah atau fitur aplikasi yang lebih baru bisa belum dikenali.
 - Info BMKG dan KAI Access datanya sedikit, jadi skor per aplikasi keduanya paling goyah.
 - Hasil model bukan penilaian resmi instansi mana pun.
+- Cek massal mengirim teks ke server untuk dihitung lalu dibuang. Tidak ada yang disimpan, tapi jangan unggah data pribadi.
+- Kuesioner SUS tidak menyimpan jawaban. Rekap dilakukan manual lewat tempel data di halaman yang sama.
+- Pita ulasan di halaman depan memakai ulasan asli yang sudah disaring (tanpa angka panjang, tautan, kata kasar, penanda lokasi) lalu dibaca manual satu per satu.
 
 ## Sumber data
 

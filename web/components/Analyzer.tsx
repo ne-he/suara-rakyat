@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { unduhKartu } from "@/lib/kartu";
 
 type Label = "negative" | "neutral" | "positive";
 type Prediction = {
@@ -9,6 +10,7 @@ type Prediction = {
   probs: Record<Label, number>;
   tokens: { token: string; weight: number }[];
   empty: boolean;
+  explained?: boolean;
 };
 type ApiResult = { default: string; results: Record<string, Prediction>; ms: number };
 
@@ -19,6 +21,7 @@ export type ModelCard = {
   tagline: string;
   macroF1: number;
   accuracy: number;
+  remote?: boolean;
 };
 
 const LABEL_ID: Record<Label, string> = { negative: "Negatif", neutral: "Netral", positive: "Positif" };
@@ -35,14 +38,19 @@ const SAMPLES = [
 const MAX = 2000;
 const dec = (x: number) => x.toFixed(3).replace(".", ",");
 
-export default function Analyzer({ models, defaultId }: { models: ModelCard[]; defaultId: string }) {
+export default function Analyzer({ models, defaultId, remote }: { models: ModelCard[]; defaultId: string; remote?: ModelCard }) {
+  const all = remote ? [...models, remote] : models;
   const [text, setText] = useState("");
   const [selected, setSelected] = useState(defaultId);
   const [data, setData] = useState<ApiResult | null>(null);
+  const [jauh, setJauh] = useState<{ state: "idle" | "loading" | "ok" | "error"; result?: Prediction; error?: string }>({ state: "idle" });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [stampKey, setStampKey] = useState(0);
+  const [sertakanTeks, setSertakanTeks] = useState(true);
+  const [dikirim, setDikirim] = useState("");
   const areaRef = useRef<HTMLTextAreaElement>(null);
+  const jalan = useRef(0);
 
   async function analyze(value = text) {
     if (!value.trim()) {
@@ -50,8 +58,26 @@ export default function Analyzer({ models, defaultId }: { models: ModelCard[]; d
       areaRef.current?.focus();
       return;
     }
+    const tiket = ++jalan.current;
     setLoading(true);
     setError(null);
+    setDikirim(value);
+    if (remote) {
+      setJauh({ state: "loading" });
+      // model besar dipanggil terpisah supaya tiga model cepat tetap tampil duluan
+      fetch("/api/predict-indobert", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: value }),
+      })
+        .then(async (res) => {
+          const json = await res.json();
+          if (tiket !== jalan.current) return;
+          if (!res.ok) setJauh({ state: "error", error: json.error ?? "Server IndoBERT tidak menjawab." });
+          else setJauh({ state: "ok", result: { ...json, model: remote.id } as Prediction });
+        })
+        .catch(() => tiket === jalan.current && setJauh({ state: "error", error: "Server IndoBERT tidak bisa dihubungi." }));
+    }
     try {
       const res = await fetch("/api/predict", {
         method: "POST",
@@ -60,6 +86,7 @@ export default function Analyzer({ models, defaultId }: { models: ModelCard[]; d
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Gagal membaca ulasan.");
+      if (tiket !== jalan.current) return;
       setData(json as ApiResult);
       setStampKey((k) => k + 1);
     } catch (e) {
@@ -74,7 +101,10 @@ export default function Analyzer({ models, defaultId }: { models: ModelCard[]; d
     if (data) setStampKey((k) => k + 1);
   }
 
-  const result = data?.results[selected] ?? null;
+  const hasil: Record<string, Prediction> = { ...(data?.results ?? {}), ...(jauh.state === "ok" && jauh.result ? { [remote!.id]: jauh.result } : {}) };
+  const result = hasil[selected] ?? null;
+  const menungguJauh = remote?.id === selected && jauh.state === "loading";
+  const gagalJauh = remote?.id === selected && jauh.state === "error";
   const maxAbs = result ? Math.max(1e-9, ...result.tokens.map((t) => Math.abs(t.weight))) : 1;
   const topDrivers = result
     ? [...result.tokens]
@@ -83,15 +113,16 @@ export default function Analyzer({ models, defaultId }: { models: ModelCard[]; d
         .filter((t, i, arr) => arr.findIndex((x) => x.token === t.token) === i)
         .slice(0, 4)
     : [];
-  const agree = data ? new Set(Object.values(data.results).map((r) => r.label)).size === 1 : false;
+  const labels = Object.values(hasil).map((r) => r.label);
+  const agree = labels.length > 1 && new Set(labels).size === 1;
 
   return (
     <div className="grid gap-8 lg:grid-cols-[1.05fr_1fr]">
       <div>
         <fieldset>
           <legend className="kicker text-abu">1. Pilih model pembaca</legend>
-          <div className="mt-3 grid gap-3 sm:grid-cols-3">
-            {models.map((m, i) => {
+          <div className={`mt-3 grid gap-3 ${remote ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}>
+            {all.map((m, i) => {
               const on = m.id === selected;
               return (
                 <label
@@ -101,9 +132,9 @@ export default function Analyzer({ models, defaultId }: { models: ModelCard[]; d
                   }`}
                 >
                   <input type="radio" name="model" value={m.id} checked={on} onChange={() => pick(m.id)} className="sr-only" />
-                  {i === 0 && (
+                  {(i === 0 || m.remote) && (
                     <span className="absolute -top-2.5 right-3 rounded-full bg-merah px-2 py-0.5 font-mono text-[10px] uppercase text-putih">
-                      terbaik di web
+                      {m.remote ? "server terpisah" : "terbaik di web"}
                     </span>
                   )}
                   <span className="display block text-2xl">
@@ -179,20 +210,31 @@ export default function Analyzer({ models, defaultId }: { models: ModelCard[]; d
       </div>
 
       <div aria-live="polite" className="lg:pt-8">
-        {!result && (
+        {!result && !menungguJauh && !gagalJauh && (
           <div className="flex h-full min-h-64 flex-col justify-center rounded-xl border-2 border-dashed border-aspal/25 p-6 text-center">
             <p className="display text-4xl text-aspal/30">Hasil muncul di sini</p>
             <p className="mt-2 text-sm text-abu">Pilih model, tulis ulasan, lalu tekan Suarakan.</p>
           </div>
         )}
-        {result && data && (
+        {(menungguJauh || gagalJauh) && (
+          <div className="mb-4 rounded-xl border-2 border-dashed border-aspal/40 bg-putih p-5">
+            <p className="kicker text-abu">{remote?.name}</p>
+            <p className="mt-2 text-sm text-aspal-2">
+              {menungguJauh
+                ? "Sedang dibaca di server terpisah. Kalau servernya baru bangun, ini bisa sampai satu menit."
+                : `${jauh.error} Model lain di atas tetap bisa dipakai.`}
+            </p>
+            {menungguJauh && <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-kertas"><div className="jalan h-full w-1/3 rounded-full bg-merah" /></div>}
+          </div>
+        )}
+        {result && (
           <section className="rise rounded-xl border-2 border-aspal bg-white p-5 shadow-[6px_6px_0_var(--aspal)]">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
-                <p className="kicker text-abu">Dibaca oleh {models.find((m) => m.id === selected)?.name}</p>
+                <p className="kicker text-abu">Dibaca oleh {all.find((m) => m.id === selected)?.name}</p>
                 <p className="mt-1 text-sm text-aspal-2">
                   Keyakinan {Math.round(result.probs[result.label] * 100)}%
-                  <span className="text-abu"> · 3 model dalam {data.ms} ms</span>
+                  {data && <span className="text-abu"> · {models.length} model cepat dalam {data.ms} ms</span>}
                 </p>
               </div>
               <div
@@ -249,15 +291,39 @@ export default function Analyzer({ models, defaultId }: { models: ModelCard[]; d
                     {topDrivers.map((t) => `"${t.token}"`).join(", ")}
                   </p>
                 )}
+                {result.explained === false && <p className="mt-2 text-xs text-abu">Ulasan ini terlalu panjang untuk dihitung kata penentunya di server.</p>}
               </div>
             )}
 
-            <div className="mt-6 border-t-2 border-dashed border-aspal/20 pt-4">
-              <p className="kicker text-abu">{agree ? "Ketiga model sepakat" : "Ketiga model tidak sepakat"}</p>
-              <div className="mt-3 grid grid-cols-3 gap-2">
-                {models.map((m) => {
-                  const r = data.results[m.id];
+            <div className="mt-6 flex flex-wrap items-center gap-3 border-t-2 border-dashed border-aspal/20 pt-4">
+              <button
+                type="button"
+                onClick={() =>
+                  unduhKartu({
+                    label: result.label,
+                    probs: result.probs,
+                    modelName: all.find((m) => m.id === selected)?.name ?? selected,
+                    text: sertakanTeks ? dikirim : undefined,
+                    drivers: topDrivers.map((t) => t.token),
+                  })
+                }
+                className="rounded-sm bg-aspal px-4 py-2 text-sm text-putih shadow-[3px_3px_0_var(--merah)] transition hover:-translate-y-0.5"
+              >
+                Unduh kartu hasil
+              </button>
+              <label className="flex items-center gap-2 text-xs text-abu">
+                <input type="checkbox" checked={sertakanTeks} onChange={(e) => setSertakanTeks(e.target.checked)} className="h-4 w-4 accent-[var(--merah)]" />
+                sertakan teks ulasan di kartu
+              </label>
+            </div>
+
+            <div className="mt-4 border-t-2 border-dashed border-aspal/20 pt-4">
+              <p className="kicker text-abu">{agree ? "Semua model sepakat" : "Model tidak sepakat"}</p>
+              <div className={`mt-3 grid gap-2 ${all.length > 3 ? "grid-cols-2" : "grid-cols-3"}`}>
+                {all.map((m) => {
+                  const r = hasil[m.id];
                   const on = m.id === selected;
+                  const nunggu = m.remote && jauh.state === "loading";
                   return (
                     <button
                       key={m.id}
@@ -266,10 +332,10 @@ export default function Analyzer({ models, defaultId }: { models: ModelCard[]; d
                       className={`rounded-lg border-2 p-2.5 text-left transition duration-300 hover:-translate-y-0.5 ${on ? "border-aspal bg-kertas" : "border-transparent bg-kertas/60 hover:border-aspal/40"}`}
                     >
                       <span className="block truncate text-[11px] text-abu">{m.name}</span>
-                      <span className="display block text-xl" style={{ color: COLOR[r.label] }}>
-                        {LABEL_ID[r.label]}
+                      <span className="display block text-xl" style={{ color: r ? COLOR[r.label] : "var(--abu)" }}>
+                        {r ? LABEL_ID[r.label] : nunggu ? "menunggu" : "tidak ada"}
                       </span>
-                      <span className="font-mono text-[11px]">{Math.round(r.probs[r.label] * 100)}%</span>
+                      <span className="font-mono text-[11px]">{r ? `${Math.round(r.probs[r.label] * 100)}%` : ""}</span>
                     </button>
                   );
                 })}

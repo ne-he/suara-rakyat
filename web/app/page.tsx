@@ -4,6 +4,9 @@ import path from "node:path";
 import Analyzer, { type ModelCard } from "@/components/Analyzer";
 import ModelEvidence, { type Evidence } from "@/components/ModelEvidence";
 import PosterFx from "@/components/PosterFx";
+import { SiteFooter } from "@/components/SiteHeader";
+import SuaraTicker, { type TickerItem } from "@/components/SuaraTicker";
+import TrendChart, { type TrendData } from "@/components/TrendChart";
 import ScrollStory, { type Chapter, type FramesManifest } from "@/components/ScrollStory";
 import type { ModelInfo, ModelMeta } from "@/lib/model";
 
@@ -37,14 +40,16 @@ type Site = {
     test_f1: Record<string, number>;
   }[];
   comparison: (Pick<ModelInfo, "id" | "name" | "features" | "tagline" | "metrics"> & {
+    live: boolean;
     fit_seconds: number;
     fit_hardware: string;
-    cpu_ms_per_review_int8: number | null;
-    size_mb_int8: number | null;
+    cpu_ms_per_review: number | null;
+    size_mb: number | null;
   })[];
 };
 
 type Speed = { cpu: string; ms_per_review: Record<string, number> };
+type Extras = { ticker: TickerItem[]; trend: TrendData };
 
 const REPO_URL = "https://github.com/ne-he/suara-rakyat";
 const TEAM = ["Nehemiah", "Marcel", "Wilson", "Hans", "Daniel"];
@@ -69,6 +74,11 @@ const nf = new Intl.NumberFormat("id-ID");
 const pct = (x: number, d = 1) => `${(x * 100).toFixed(d).replace(".", ",")}%`;
 const dec = (x: number) => x.toFixed(3).replace(".", ",");
 
+function loadExtras(): Extras | null {
+  const file = path.join(process.cwd(), "data", "extras.json");
+  return fs.existsSync(file) ? (JSON.parse(fs.readFileSync(file, "utf8")) as Extras) : null;
+}
+
 function loadSpeed(): Speed | null {
   const file = path.join(process.cwd(), "data", "speed.json");
   return fs.existsSync(file) ? (JSON.parse(fs.readFileSync(file, "utf8")) as Speed) : null;
@@ -84,6 +94,9 @@ export default function Home() {
   const meta = JSON.parse(fs.readFileSync(path.join(process.cwd(), "model", "meta.json"), "utf8")) as ModelMeta;
   const frames = loadFrames();
   const speed = loadSpeed();
+  const extras = loadExtras();
+  // model besar hanya muncul kalau alamat servernya sudah diisi di env (INDOBERT_URL)
+  const remoteReady = Boolean(process.env.INDOBERT_URL);
   const d = site.dataset;
   const trainN = Object.values(d.split_counts.train).reduce((a, b) => a + b, 0);
   const testN = Object.values(d.split_counts.test).reduce((a, b) => a + b, 0);
@@ -121,6 +134,19 @@ export default function Home() {
     },
   ];
 
+  const remoteModel = site.comparison.find((m) => m.live);
+  const remoteCard: ModelCard | undefined =
+    remoteReady && remoteModel
+      ? {
+          id: remoteModel.id,
+          name: remoteModel.name,
+          features: remoteModel.features,
+          tagline: "Paling akurat. Jalan di server terpisah, jadi jawabannya lebih lama, apalagi kalau servernya baru bangun.",
+          macroF1: remoteModel.metrics.test.macro_f1,
+          accuracy: remoteModel.metrics.test.accuracy,
+          remote: true,
+        }
+      : undefined;
   const cards: ModelCard[] = meta.models.map((m) => ({
     id: m.id,
     name: m.name,
@@ -155,11 +181,13 @@ export default function Home() {
     ...site.comparison.map((m) => ({
       ...toEvidence(m),
       live: false,
-      note: `${m.name} belum bisa dicoba di formulir atas. Setelah dikompres (ONNX int8) ukurannya ${String(m.size_mb_int8 ?? "?").replace(".", ",")} MB dan butuh sekitar ${String(m.cpu_ms_per_review_int8 ?? "?").replace(".", ",")} ms per ulasan di CPU laptop, jauh lebih berat dari model linear. Skor di bawah dari versi penuhnya.`,
+      note: m.live
+        ? `${m.name} jalan di server terpisah (folder indobert-api), bukan di server web ini. Ukurannya ${String(m.size_mb ?? "?").replace(".", ",")} MB dan butuh sekitar ${String(m.cpu_ms_per_review ?? "?").replace(".", ",")} ms per ulasan di CPU laptop, sekitar 90 kali lebih lambat dari model linear.${remoteReady ? " Sudah bisa dicoba di formulir atas." : " Belum dinyalakan di web ini."}`
+        : `${m.name} versi penuh (${String(m.size_mb ?? "?").replace(".", ",")} MB) butuh GPU untuk cepat, jadi dipakai sebagai pembanding di laporan saja. Versi ringannya ada di baris berikutnya.`,
       fitSeconds: m.fit_seconds,
       fitHardware: m.fit_hardware,
-      msPerReview: m.cpu_ms_per_review_int8,
-      speedHardware: "CPU laptop, ONNX int8",
+      msPerReview: m.cpu_ms_per_review,
+      speedHardware: m.live ? "CPU laptop, ONNX int8" : "belum diukur",
     })),
   ];
 
@@ -173,15 +201,17 @@ export default function Home() {
       <div className="relative">
         <header className="absolute inset-x-0 top-0 z-20 px-5 pt-5 sm:px-10">
           <div className="mx-auto flex max-w-6xl items-center justify-between">
-            <a href="#" className="display flex items-center gap-2 text-2xl text-putih">
+            <a href="#" className="display flex shrink-0 items-center gap-2 text-2xl text-putih">
               <span className="inline-block h-5 w-7 border border-putih/80 bg-[linear-gradient(to_bottom,var(--merah)_50%,#fff_50%)]" aria-hidden />
-              Suara Rakyat
+              <span className="hidden sm:inline">Suara Rakyat</span>
+              <span className="sm:hidden">SR</span>
             </a>
-            <nav className="flex gap-4 text-sm text-putih/90 sm:gap-6">
+            <nav className="flex gap-3 text-xs text-putih/90 sm:gap-6 sm:text-sm">
               <a href="#coba" className="hover:text-white">Coba</a>
-              <a href="#bukti" className="hover:text-white">Bukti</a>
-              <a href="#tim" className="hidden hover:text-white sm:inline">Tim</a>
-              <a href={REPO_URL} target="_blank" rel="noreferrer" className="hover:text-white">
+              <a href="/massal" className="hover:text-white">Massal</a>
+              <a href="/dashboard" className="hover:text-white">Dashboard</a>
+              <a href="/kuesioner" className="hidden hover:text-white sm:inline">Kuesioner</a>
+              <a href={REPO_URL} target="_blank" rel="noreferrer" className="hidden hover:text-white sm:inline">
                 Kode
               </a>
             </nav>
@@ -190,7 +220,7 @@ export default function Home() {
         <ScrollStory manifest={frames} chapters={chapters} shares={shares} />
       </div>
 
-      <div className="bendera" />
+      {extras && <SuaraTicker items={extras.ticker} />}
 
       <section id="coba" className="scroll-mt-4 px-5 py-16 sm:px-10 sm:py-24">
         <div className="mx-auto max-w-6xl">
@@ -204,10 +234,26 @@ export default function Home() {
             Tiga model membaca ulasan yang sama sekaligus. Pilih salah satu untuk lihat alasannya, atau bandingkan ketiganya di bawah hasil.
           </p>
           <div className="mt-10">
-            <Analyzer models={cards} defaultId={meta.default_model} />
+            <Analyzer models={cards} defaultId={meta.default_model} remote={remoteCard} />
           </div>
         </div>
       </section>
+
+      {extras && (
+        <section id="tren" className="border-t-2 border-aspal px-5 py-16 sm:px-10 sm:py-20">
+          <div className="mx-auto max-w-6xl">
+            <p className="kicker text-merah">Tren keluhan</p>
+            <h2 className="display mt-3 text-6xl sm:text-7xl">Naik turunnya keluhan warga</h2>
+            <p className="mt-5 max-w-3xl text-lg text-aspal-2">
+              Porsi ulasan bintang 1 dan 2 tiap kuartal, dihitung dari {nf.format(extras.trend.total_rows)} ulasan mentah. Ini label asli dari bintang,
+              jadi bukan hasil tebakan model.
+            </p>
+            <div className="poster mt-8 rounded-xl border-2 border-aspal bg-white p-4 sm:p-6">
+              <TrendChart data={extras.trend} defaultApp="pertamina" />
+            </div>
+          </div>
+        </section>
+      )}
 
       <section id="bukti" className="border-t-2 border-aspal bg-kertas px-5 py-16 sm:px-10 sm:py-24">
         <div className="mx-auto max-w-6xl">
@@ -382,13 +428,7 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="bendera" />
-      <footer className="px-5 py-6 text-xs text-abu sm:px-10">
-        <div className="mx-auto flex max-w-6xl flex-col gap-2 sm:flex-row sm:justify-between">
-          <span>Suara Rakyat {meta.version} · projek AOL Software Engineering</span>
-          <span>Hasil model bukan penilaian resmi instansi mana pun.</span>
-        </div>
-      </footer>
+      <SiteFooter version={meta.version} />
     </main>
   );
 }

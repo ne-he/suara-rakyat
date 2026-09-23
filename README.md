@@ -12,7 +12,7 @@ Isi web:
 |---|---|
 | `/` | cerita scroll, pita ulasan asli, formulir satu ulasan dengan pilihan model, tren keluhan per kuartal, panel bukti per model, papan perbandingan |
 | `/massal` | tempel atau unggah CSV sampai 1.000 ulasan, ringkasan nada, kata pendorong, unduh hasil CSV |
-| `/dashboard` | perbandingan semua model: kecepatan, akurasi, presisi, grafik skor vs waktu latih, unduh tabel CSV dan grafik PNG atau SVG |
+| `/dashboard` | perbandingan semua model, contoh label yang bertabrakan, uji tahan bahasa, pembanding dari penelitian lain, unduh tabel CSV dan grafik PNG atau SVG |
 | `/kuesioner` | kuesioner SUS untuk evaluasi subjektif plus alat rekap jawaban tim |
 
 ## Tiga model di web
@@ -58,6 +58,33 @@ Label bintang itu berisik. Teks "mantap" diberi bintang negatif 295 kali dan net
 
 Geser bias kelas (dipilih di validation) menaikkan F1 netral Linear SVM di test dari 0,09 ke 0,27, dengan biaya akurasi turun dari 85,0% ke 82,7%.
 
+## Evaluasi tambahan
+
+Tiga bukti di luar skor macro-F1 biasa, semuanya tampil di halaman `/dashboard`.
+
+**Label yang bertabrakan** (`ml/scripts/11_label_kotor.py`). Ada 3.260 teks unik yang mendapat lebih dari satu label bintang, mencakup 224.664 ulasan. Contoh: kata "lambat" muncul 122 kali, 76 diberi bintang negatif dan 20 diberi bintang positif. Ini batas yang tidak bisa dilewati model mana pun.
+
+**Uji tahan bahasa** (`ml/eval/uji_tahan.csv`, `ml/scripts/12_uji_tahan.py`). 60 kalimat disusun tim untuk menguji salah ketik, bahasa gaul, negasi, sindiran, pujian yang bercampur keluhan, pertanyaan netral, ulasan pendek, dan emoji. Kalimat dan labelnya buatan tim, jadi ini uji tambahan, bukan tolok ukur resmi.
+
+| Model | Akurasi 60 kalimat | Paling lemah di |
+|---|---|---|
+| IndoBERTweet int8 | 78,3% | pertanyaan dan saran |
+| Naive Bayes | 76,7% | pujian campur keluhan |
+| Logistic Regression | 71,7% | pujian campur keluhan |
+| Linear SVM | 68,3% | pujian campur keluhan dan sindiran |
+
+**Pembanding dari penelitian lain** (`ml/scripts/13_pembanding_luar.py`). Paper resmi dataset IGAR melaporkan kesepakatan label bintang dengan VADER sebesar kappa 0,33 dan kecocokan 58,65%. Hitungan ulang kami dari berkas yang sama: kappa 0,3338 dan kecocokan 58,65%. Baseline paper (TF-IDF 5.000 fitur, LinearSVC bawaan) juga kami jalankan ulang:
+
+| Cara membagi data | F1 tertimbang | Macro-F1 |
+|---|---|---|
+| Acak, ulasan kembar dibiarkan (mirip setelan paper) | 0,845 | 0,602 |
+| Kunci teks, ulasan kembar digabung (setelan kami) | 0,798 | 0,574 |
+| Model web kami di setelan kami | 0,830 | 0,668 |
+
+Jadi jarak antara angka paper (0,81 sampai 0,92 per aplikasi) dan angka kami muncul dari dua hal: metrik tertimbang lawan macro, dan ulasan kembar yang bocor antar bagian data. VADER sendiri, kalau dipakai sebagai model di data test kami, hanya mencapai macro-F1 0,437 dengan akurasi 50,4%.
+
+**Dibaca ulang manusia** (`ml/anotasi/`). Pembuat dataset menulis bahwa tiap ulasan hanya dinilai satu orang lewat bintang. `14_anotasi_siapkan.py` menyiapkan 300 ulasan test untuk dibaca ulang lima anggota tim tanpa melihat bintangnya, `15_anotasi_hitung.py` menghitung kappa Fleiss antar pembaca dan skor tiap model terhadap label pembaca. Begitu `web/data/anotasi.json` ada, bagiannya muncul sendiri di dashboard.
+
 ## Cara model dipilih
 
 1. Semua model dilatih di train (288.775 teks).
@@ -102,8 +129,10 @@ Uji kemulusan di Chromium dengan GPU Intel Iris Xe, scroll roda mouse naik turun
 
 ```
 ml/
-  suara_ml/          normalisasi teks, fitur TF-IDF, metrik
-  scripts/           01_prepare sampai 10_indobert_int8_eval, generator notebook Colab
+  suara_ml/          normalisasi teks, fitur TF-IDF, metrik, pemanggil model web dan IndoBERT
+  scripts/           01_prepare sampai 15_anotasi_hitung, generator notebook Colab
+  eval/              kalimat uji tahan bahasa buatan tim
+  anotasi/           lembar anotasi manusia, kunci, dan folder hasil
   notebooks/         indobert_colab.ipynb (fine-tune IndoBERT di GPU Colab)
   reports/           audit data, hasil semua run, seleksi final, confusion matrix
 web/
@@ -116,7 +145,10 @@ web/
   app/massal, app/dashboard, app/kuesioner    halaman cek massal, dashboard model, kuesioner SUS
 tools/frames/        pemotong video jadi frame + scenes.json (potongan dan porsi scroll)
 indobert-api/        server IndoBERTweet int8 (FastAPI + onnxruntime + Dockerfile)
+docs/diagram/        kerangka berpikir, use case, class diagram, sequence (SVG + PNG) dan skrip pembuatnya
 ```
+
+Draf laporan dan bahan presentasi ada di folder `laporan/` yang sengaja tidak ikut ke repo publik.
 
 ## Menjalankan ulang
 
@@ -133,9 +165,19 @@ python 04_final.py
 python 08_bootstrap.py
 python 05_export_web.py
 python 09_web_extras.py
+python 11_label_kotor.py
+python 12_uji_tahan.py
+python 13_pembanding_luar.py
+python 14_anotasi_siapkan.py
 ```
 
-`09_web_extras.py` menyiapkan pita ulasan, data tren per kuartal, dan file contoh untuk cek massal.
+`09_web_extras.py` menyiapkan pita ulasan, data tren per kuartal, dan file contoh untuk cek massal. Skrip 11 sampai 13 mengisi bagian bukti tambahan di dashboard. Skrip 14 membuat lembar anotasi, dan `15_anotasi_hitung.py` dijalankan setelah lembarnya terisi. Skrip 12 dan 14 memanggil model web lewat `web/scripts/label-file.ts`, jadi `npm install` di folder `web` harus sudah dijalankan.
+
+Diagram untuk laporan dibuat terpisah:
+
+```bash
+python docs/diagram/buat_diagram.py
+```
 
 Web:
 
@@ -203,6 +245,7 @@ Catatan hosting (dicek 18 Sep 2026 di dokumentasi resmi Hugging Face): membuat S
 - Model membaca pola kata. Sarkasme dan konteks panjang bisa salah baca.
 - Data berhenti di 2023. Istilah atau fitur aplikasi yang lebih baru bisa belum dikenali.
 - Info BMKG dan KAI Access datanya sedikit, jadi skor per aplikasi keduanya paling goyah.
+- Bukan suara seluruh warga. Yang terbaca hanya pengguna Android yang menyempatkan menulis ulasan, dan orang yang sedang kesal atau sangat puas lebih sering menulis. Ulasan dari iOS dan media sosial tidak ikut.
 - Hasil model bukan penilaian resmi instansi mana pun.
 - Cek massal mengirim teks ke server untuk dihitung lalu dibuang. Tidak ada yang disimpan, tapi jangan unggah data pribadi.
 - Kuesioner SUS tidak menyimpan jawaban. Rekap dilakukan manual lewat tempel data di halaman yang sama.
@@ -211,5 +254,7 @@ Catatan hosting (dicek 18 Sep 2026 di dokumentasi resmi Hugging Face): membuat S
 ## Sumber data
 
 Isnan, M. dan Pardamean, B. (2025). IGAR: Indonesian Government App Review Dataset. Mendeley Data, V3. https://doi.org/10.17632/7zryc6k76z.3. Lisensi CC BY 4.0.
+
+Artikel datanya: Isnan, M. dan Pardamean, B. (2026). IGAR: Indonesian government applications review for sentiment analysis dataset. Data in Brief, 66, 112708. https://doi.org/10.1016/j.dib.2026.112708
 
 Perubahan dari data asli: teks dinormalisasi, duplikat digabung dengan label mayoritas, teks berlabel seri dibuang. Contoh teks ulasan yang ikut di repo sudah disamarkan (deret angka 6 digit atau lebih dan alamat email).

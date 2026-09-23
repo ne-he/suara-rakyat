@@ -183,7 +183,7 @@ export default function Home() {
       ...toEvidence(m),
       live: false,
       note: m.live
-        ? `${m.name} jalan di server terpisah (folder indobert-api), bukan di server web ini. Ukurannya ${String(m.size_mb ?? "?").replace(".", ",")} MB dan butuh sekitar ${String(m.cpu_ms_per_review ?? "?").replace(".", ",")} ms per ulasan di CPU laptop, sekitar 90 kali lebih lambat dari model linear.${remoteReady ? " Sudah bisa dicoba di formulir atas." : " Belum dinyalakan di web ini."}`
+        ? `${m.name} jalan di server terpisah (folder indobert-api), bukan di server web ini. Ukurannya ${String(m.size_mb ?? "?").replace(".", ",")} MB dan butuh sekitar ${String(m.cpu_ms_per_review ?? "?").replace(".", ",")} ms per ulasan di CPU laptop, sekitar 95 kali lebih lambat dari model linear.${remoteReady ? " Sudah bisa dicoba di formulir atas." : " Belum dinyalakan di web ini."}`
         : `${m.name} versi penuh (${String(m.size_mb ?? "?").replace(".", ",")} MB) butuh GPU untuk cepat, jadi dipakai sebagai pembanding di laporan saja. Versi ringannya ada di baris berikutnya.`,
       fitSeconds: m.fit_seconds,
       fitHardware: m.fit_hardware,

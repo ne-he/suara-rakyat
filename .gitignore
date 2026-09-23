@@ -7,6 +7,9 @@ dataset/*
 # catatan kerja internal
 /_notes/
 
+# draf laporan dan bahan presentasi (bukan untuk repo publik)
+/laporan/
+
 # python
 __pycache__/
 *.pyc

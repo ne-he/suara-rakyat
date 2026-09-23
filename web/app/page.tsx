@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import fs from "node:fs";
 import path from "node:path";
+import Link from "next/link";
 import Analyzer, { type ModelCard } from "@/components/Analyzer";
 import ModelEvidence, { type Evidence } from "@/components/ModelEvidence";
 import PosterFx from "@/components/PosterFx";
@@ -376,8 +377,17 @@ export default function Home() {
               </h3>
               <ul className="mt-4 space-y-3 text-sm leading-relaxed text-putih/80">
                 <li>
+                  <b className="text-putih">Bukan suara seluruh rakyat.</b> Yang terbaca di sini hanya warga yang memakai Android, membuka Play
+                  Store, lalu menyempatkan diri menulis. Orang yang sedang kesal atau sangat puas lebih sering menulis daripada yang biasa saja, dan
+                  ulasan dari iOS maupun media sosial tidak ikut terhitung. Anggap ini satu sinyal publik, bukan hasil survei warga.
+                </li>
+                <li>
                   <b className="text-putih">Label berasal dari bintang.</b> Bintang 1-2 dianggap negatif, 3 netral, 4-5 positif. Kadang orang menulis
-                  keluhan tapi memberi bintang 5.
+                  keluhan tapi memberi bintang 5.{" "}
+                  <Link href="/dashboard#label" className="underline decoration-merah underline-offset-2">
+                    Contohnya ada di dashboard
+                  </Link>
+                  .
                 </li>
                 <li>
                   <b className="text-putih">Netral paling sulit.</b> Ulasan bintang 3 sering berisi pujian dan keluhan sekaligus.

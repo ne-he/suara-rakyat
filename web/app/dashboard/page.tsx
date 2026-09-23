@@ -2,10 +2,20 @@ import fs from "node:fs";
 import path from "node:path";
 import type { Metadata } from "next";
 import Link from "next/link";
+import {
+  KartuAnotasi,
+  KartuLabelKotor,
+  KartuPembanding,
+  KartuUjiTahan,
+  type Anotasi,
+  type LabelKotor,
+  type Pembanding,
+  type UjiTahan,
+} from "@/components/BuktiTambahan";
 import { BoardTable, MainTable, PerClassF1, ScoreVsTime, SpeedBars, type BoardRow, type MainModel } from "@/components/DashboardCharts";
 import SiteHeader, { SiteFooter } from "@/components/SiteHeader";
 import type { ModelInfo, ModelMeta } from "@/lib/model";
-import { nf } from "@/lib/fmt";
+import { dec, nf } from "@/lib/fmt";
 
 export const metadata: Metadata = {
   title: "Dashboard model · Suara Rakyat",
@@ -19,8 +29,12 @@ type Comparison = Pick<ModelInfo, "id" | "name" | "features" | "tagline" | "metr
   cpu_ms_per_review: number | null;
   size_mb: number | null;
 };
-type Site = { leaderboard: BoardRow[]; comparison: Comparison[] };
+type Site = { leaderboard: BoardRow[]; comparison: Comparison[]; label_noise: { oracle_macro_f1: number } };
 type Speed = { cpu: string; measured: string; ms_per_review: Record<string, number>; ms_all_models: number };
+
+function bacaOpsional<T>(berkas: string): T | null {
+  return fs.existsSync(berkas) ? (JSON.parse(fs.readFileSync(berkas, "utf8")) as T) : null;
+}
 
 const FEATURE_ID: Record<string, string> = {
   word: "kata 1-2 gram",
@@ -34,8 +48,11 @@ const FEATURE_ID: Record<string, string> = {
 export default function Dashboard() {
   const site = JSON.parse(fs.readFileSync(path.join(process.cwd(), "data", "site.json"), "utf8")) as Site;
   const meta = JSON.parse(fs.readFileSync(path.join(process.cwd(), "model", "meta.json"), "utf8")) as ModelMeta;
-  const speedFile = path.join(process.cwd(), "data", "speed.json");
-  const speed = fs.existsSync(speedFile) ? (JSON.parse(fs.readFileSync(speedFile, "utf8")) as Speed) : null;
+  const speed = bacaOpsional<Speed>(path.join(process.cwd(), "data", "speed.json"));
+  const labelKotor = bacaOpsional<LabelKotor>(path.join(process.cwd(), "data", "label.json"));
+  const uji = bacaOpsional<UjiTahan>(path.join(process.cwd(), "data", "uji.json"));
+  const pembanding = bacaOpsional<Pembanding>(path.join(process.cwd(), "data", "pembanding.json"));
+  const anotasi = bacaOpsional<Anotasi>(path.join(process.cwd(), "data", "anotasi.json"));
 
   const macro = (m: { metrics: ModelInfo["metrics"] }, k: "precision" | "recall") =>
     (["negative", "neutral", "positive"] as const).reduce((s, l) => s + m.metrics.test.per_class[l][k], 0) / 3;
@@ -79,6 +96,7 @@ export default function Dashboard() {
     })),
   ];
   const board = [...site.leaderboard].sort((a, b) => b.val_macro_f1 - a.val_macro_f1);
+  const deploy = meta.models.find((m) => m.id === meta.default_model) ?? meta.models[0];
   const juara = models.reduce((a, b) => (b.macroF1 > a.macroF1 ? b : a));
 
   return (
@@ -96,6 +114,24 @@ export default function Dashboard() {
             {board.length} konfigurasi diadu di data yang sama. Halaman ini memakai angka yang sama persis dengan laporan, jadi tabel dan grafiknya
             bisa langsung diambil untuk bab Hasil.
           </p>
+          <nav aria-label="Loncat ke bagian" className="mt-5 flex flex-wrap gap-2 text-sm">
+            {[
+              { href: "#label", teks: "Label kotor", ada: !!labelKotor },
+              { href: "#uji", teks: "Uji tahan bahasa", ada: !!uji },
+              { href: "#pembanding", teks: "Pembanding penelitian lain", ada: !!pembanding },
+              { href: "#anotasi", teks: "Dibaca ulang manusia", ada: !!anotasi },
+            ]
+              .filter((x) => x.ada)
+              .map((x) => (
+                <a
+                  key={x.href}
+                  href={x.href}
+                  className="rounded-full border-2 border-aspal/30 px-4 py-1 transition duration-300 hover:-translate-y-0.5 hover:border-aspal hover:bg-white"
+                >
+                  {x.teks}
+                </a>
+              ))}
+          </nav>
 
           <section className="mt-12">
             <h2 className="display text-4xl">Model utama</h2>
@@ -135,6 +171,70 @@ export default function Dashboard() {
               </div>
             </div>
           </section>
+
+          {labelKotor && (
+            <section id="label" className="mt-14 scroll-mt-20">
+              <h2 className="display text-4xl">Seberapa kotor labelnya</h2>
+              <p className="mt-2 max-w-3xl text-sm text-aspal-2">
+                Label di dataset ini berasal dari bintang, bukan dari orang yang membaca teksnya. Teks yang sama persis bisa mendapat bintang 1 dari
+                satu orang dan bintang 5 dari orang lain. Di baris ulasan yang teksnya kembar, tebakan sempurna dari teks saja hanya sampai macro-F1{" "}
+                {dec(site.label_noise.oracle_macro_f1)}. Angka model di halaman ini harus dibaca dengan batas itu.
+              </p>
+              <div className="mt-5">
+                <KartuLabelKotor d={labelKotor} />
+              </div>
+            </section>
+          )}
+
+          {uji && (
+            <section id="uji" className="mt-14 scroll-mt-20">
+              <h2 className="display text-4xl">Uji tahan bahasa</h2>
+              <p className="mt-2 max-w-3xl text-sm text-aspal-2">
+                Skor rata-rata menyembunyikan kelemahan yang khas bahasa sehari-hari. {uji.n} kalimat disusun tim untuk menguji salah ketik, bahasa
+                gaul, kalimat bernegasi, sindiran, pujian yang bercampur keluhan, pertanyaan netral, ulasan sangat pendek, dan emoji. Kalimat dan
+                label acuannya buatan tim, bukan dari dataset, jadi ini uji tambahan, bukan tolok ukur resmi.
+              </p>
+              <div className="mt-5">
+                <KartuUjiTahan d={uji} />
+              </div>
+            </section>
+          )}
+
+          {pembanding && (
+            <section id="pembanding" className="mt-14 scroll-mt-20">
+              <h2 className="display text-4xl">Pembanding dari penelitian lain</h2>
+              <p className="mt-2 max-w-3xl text-sm text-aspal-2">
+                Paper resmi dataset ini melaporkan akurasi 0,81 sampai 0,92 per aplikasi. Angka itu jauh di atas macro-F1 kami, dan alasannya ada
+                dua. Pertama, skor tertimbang dikuasai kelas besar, sedangkan macro-F1 memberi bobot sama ke kelas netral yang hanya 7 persen data.
+                Kedua, paper tidak menyebut cara memisah data, dan kalau ulasan kembar dibiarkan tersebar acak, teks yang sama bisa muncul di latih
+                dan uji sekaligus. Kolom replikasi memakai setelan paper, kolom split kami memakai kunci teks yang anti bocor.
+              </p>
+              <div className="mt-5">
+                <KartuPembanding
+                  d={pembanding}
+                  kami={{
+                    macroF1: deploy.metrics.test.macro_f1,
+                    f1Weighted: deploy.metrics.test.weighted_f1,
+                    accuracy: deploy.metrics.test.accuracy,
+                  }}
+                />
+              </div>
+            </section>
+          )}
+
+          {anotasi && (
+            <section id="anotasi" className="mt-14 scroll-mt-20">
+              <h2 className="display text-4xl">Dibaca ulang manusia</h2>
+              <p className="mt-2 max-w-3xl text-sm text-aspal-2">
+                Pembuat dataset menulis sendiri bahwa tiap ulasan hanya punya satu penilai, yaitu penulisnya lewat bintang. Tim membaca ulang{" "}
+                {nf.format(anotasi.butir_disiapkan)} ulasan test tanpa melihat bintangnya, supaya terlihat seberapa sering pembaca manusia sepakat
+                dan seberapa jauh bintang dari pembacaan manusia.
+              </p>
+              <div className="mt-5">
+                <KartuAnotasi d={anotasi} />
+              </div>
+            </section>
+          )}
 
           <section className="mt-14">
             <h2 className="display text-4xl">Papan perbandingan lengkap</h2>

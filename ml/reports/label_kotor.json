@@ -1,0 +1,105 @@
+{
+  "min_kemunculan": 40,
+  "teks_unik": 362292,
+  "teks_muncul_ulang": 12988,
+  "teks_label_bertabrakan": 3260,
+  "baris_di_teks_bertabrakan": 224664,
+  "contoh": [
+    {
+      "teks": "Biasa",
+      "n": 41,
+      "negative": 15,
+      "neutral": 12,
+      "positive": 14,
+      "bintang_rata": 2.88
+    },
+    {
+      "teks": "biasa aja",
+      "n": 70,
+      "negative": 23,
+      "neutral": 21,
+      "positive": 26,
+      "bintang_rata": 3.07
+    },
+    {
+      "teks": "B aja",
+      "n": 52,
+      "negative": 19,
+      "neutral": 10,
+      "positive": 23,
+      "bintang_rata": 3.12
+    },
+    {
+      "teks": "Coba dulu",
+      "n": 356,
+      "negative": 69,
+      "neutral": 119,
+      "positive": 168,
+      "bintang_rata": 3.41
+    },
+    {
+      "teks": "cukup",
+      "n": 148,
+      "negative": 21,
+      "neutral": 56,
+      "positive": 71,
+      "bintang_rata": 3.53
+    },
+    {
+      "teks": "coba dlu",
+      "n": 42,
+      "negative": 6,
+      "neutral": 15,
+      "positive": 21,
+      "bintang_rata": 3.55
+    },
+    {
+      "teks": "Bingung",
+      "n": 50,
+      "negative": 29,
+      "neutral": 6,
+      "positive": 15,
+      "bintang_rata": 2.44
+    },
+    {
+      "teks": "Lumayanlah",
+      "n": 40,
+      "negative": 2,
+      "neutral": 14,
+      "positive": 24,
+      "bintang_rata": 3.83
+    },
+    {
+      "teks": "Baru coba",
+      "n": 57,
+      "negative": 10,
+      "neutral": 12,
+      "positive": 35,
+      "bintang_rata": 3.7
+    },
+    {
+      "teks": "Susah masuknya..",
+      "n": 66,
+      "negative": 41,
+      "neutral": 8,
+      "positive": 17,
+      "bintang_rata": 2.36
+    },
+    {
+      "teks": "Lumayan",
+      "n": 1014,
+      "negative": 81,
+      "neutral": 302,
+      "positive": 631,
+      "bintang_rata": 3.79
+    },
+    {
+      "teks": "lambat",
+      "n": 122,
+      "negative": 76,
+      "neutral": 26,
+      "positive": 20,
+      "bintang_rata": 2.1
+    }
+  ]
+}

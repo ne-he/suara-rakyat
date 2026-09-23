@@ -1,0 +1,301 @@
+no,app,ulasan,label_bintang,bintang_rata,n_ulasan_sama,svm,logreg,nb,indobert
+1,satusehat,Ini baru ok tpi donlood y dri gogle klo,positive,5.0,1,positive,positive,positive,positive
+2,pertamina,"Sudah daftar, kenapa waktu masuk aplikasi nya kadang keluar sendiri...??? Udah gtu metode pembayarannya di arahkan ke link aja, apa gak bisa yg lain..???",negative,1.0,1,negative,negative,negative,negative
+3,JMO,"Kenapa ga bisa cek saldo terus.. udah lumayan lama Keterangannya tidak terhubung ke server mulu, harus nanya kemana ini",neutral,3.0,1,negative,negative,negative,negative
+4,satusehat,Tidak canggih aplikasinya...putar-putar membingungkan..mohon disempurnahkan lagi aplikasi pedulilindungi,negative,1.0,1,negative,negative,negative,negative
+5,satusehat,Tolong di perbaikin lagi. Knpa sertifikat vaksin bisa tidak di tampilkn . Padahal sudah vaksin ke 1 dan ke 2 apa nunggu yng ke 3..,neutral,3.0,1,negative,negative,negative,neutral
+6,mobileJKN,Aplikasi ini amat sangat membantu.. karena kami bisa jadi tahu tentang data kami dengan cepat.. Mobile JKN.. tetap semangat... !!!👍,positive,5.0,1,positive,positive,positive,positive
+7,mobileJKN,Mantab bagus ok,positive,5.0,1,positive,positive,positive,positive
+8,mobileJKN,Memudahkan pelayanan kesehatan,positive,5.0,3,positive,positive,positive,positive
+9,pertamina,"Sering eror, sering keluar sendiri, terus pendaftaran juga ribet. Intinya RIBET!",negative,1.0,1,negative,negative,negative,negative
+10,mobileJKN,Belum menjangkau didaerah terpencil,neutral,3.0,1,positive,positive,positive,positive
+11,satusehat,Mohon direvisi..masa nama ktp sesuai nik..tapi diaplikasi nama orang lain...makanya donloud bracode nggk mungkin bisa..tlg direvisi lagi..nama vaksin yohanto..kq yg muncul dipeduli lindungi nama wagiman...kq bisa?,negative,1.0,1,negative,negative,negative,negative
+12,JMO,Proses lebih mudah lewat apk ini,positive,5.0,1,positive,positive,positive,positive
+13,satusehat,Cukup mudah untuk vaksin ke satu dan ke dua,positive,5.0,1,positive,positive,positive,positive
+14,mobileJKN,Ini kenapa susah amat mau login juga. Captca nya ga muncul,neutral,3.0,1,negative,negative,negative,negative
+15,mobileJKN,Aplikasi nya bagus dpt membantu masyarakat yg ingin mengetahui informasi bpjs,positive,5.0,1,positive,positive,positive,positive
+16,JMO,Aplikasi JMO👍👍👍👍👍,positive,5.0,1,positive,positive,positive,positive
+17,pertamina,Kenapa udah update scan ataupun uplod tetep ngg bisa... Ini sebenarnya bisa bikin aplikasi apa ngg... Sih.. Sungguh mengecewakan,negative,1.0,1,negative,negative,negative,negative
+18,satusehat,"tolong di benerin lgi ya ini pas saya isi keluar dari aplikasi trs, saya jga emosi lama lama.... :))",negative,2.0,1,negative,negative,negative,negative
+19,JMO,Mantap sekali jmo ini,positive,5.0,1,positive,positive,positive,positive
+20,mobileJKN,Kenapa aplikasi jkn saya harus selalu di update ya? Jadi repot saya karena memori hp gak cukup klo terus2 n diupdate.,neutral,3.0,1,neutral,neutral,neutral,neutral
+21,mobileJKN,"Aplikasi mobile jkn sering berhenti dan sering tidak selesai sewaktu saya mau login, saya dah nencoba di beberapa handphone dan hasilnya tetap mobile jkn berhenti begitu saja",negative,2.0,1,negative,negative,negative,negative
+22,satusehat,"masuknya susah buat ngisi tanggal lahir tidak bisa, aplikasinya tidak sempurna, buru buru launching",negative,1.0,1,negative,negative,negative,negative
+23,satusehat,Kadang nggak akurat. Saya tinggal di desa mertoyudan kok yg muncul notif kalai saya d banyurojo,neutral,3.0,1,negative,negative,neutral,neutral
+24,JMO,mantap n sukses selalu ...👍👍,positive,5.0,1,positive,positive,positive,positive
+25,satusehat,"Saya sdh vaksin 1 tgl 18 Mar 21 dapat sertifikat, Vaksin ke 2 tgl 1 Apr 21 blm dapat sertifikat hingga hari ini",negative,1.0,1,negative,negative,neutral,positive
+26,JMO,"pelayanan dan aplikasi sangat baik, dan sangat membantu",positive,5.0,1,positive,positive,positive,positive
+27,pertamina,fersi terbaru malah tdk bsa upload sama sekali nota pembayaran...,neutral,3.0,1,negative,negative,negative,negative
+28,satusehat,"Kemarin 2 pas check in warnanya hijau,tp sekarang knp kok jd kuning trus tiap check in.trus belum di check out ehhh...udah check out sendiri.tolong dong diperbaharui lg nih aplikasi.",neutral,3.0,1,negative,negative,neutral,negative
+29,pertamina,"Ribet, payah, parah",negative,1.0,1,negative,negative,negative,negative
+30,satusehat,JANGAN SERING DI PERBARUI,neutral,3.0,1,positive,positive,neutral,positive
+31,pertamina,Aplikasi ga jelas bikin susah Masyarakat,negative,1.0,1,negative,negative,negative,negative
+32,JMO,Aplikasi eror banyak cengkonek 5 menit apaan 3hari 3 malam belum kerlar² keluar sendiri kembali sendiri disuruh ulang bagus,negative,1.0,1,negative,negative,negative,negative
+33,mobileJKN,"Kenapa selalu minta d perbaharui, pdhal baru d perbaharui.",neutral,3.0,1,negative,negative,negative,neutral
+34,JMO,Kenapa gak Max 1MB aja..!!!!!!,neutral,3.0,1,neutral,neutral,neutral,negative
+35,mobileJKN,Lebih di tingkatkan lagi pelayanannya agar lebih baik,neutral,3.0,1,positive,positive,positive,positive
+36,JMO,JMO lebih mantap,positive,5.0,2,positive,positive,positive,positive
+37,JMO,"Saat pengkinian data sedang di input, aplikasi JMO tiba-tiba kembali ke menu awal dan menyebabkan akun saya terblokir berkali2. Tolong di lakukan perbaikan jika memang ada BUG pada aplikasi ini.",negative,1.0,1,negative,neutral,neutral,negative
+38,mobileJKN,Tolong captcha nya dong ga muncul2 ih,neutral,3.0,1,negative,negative,negative,negative
+39,pertamina,Di kota kendari kok gak ada di pilihan spbu yg tersedia? tolong dong kendari juga masukin,negative,1.0,1,neutral,neutral,neutral,neutral
+40,pertamina,Transaksinya kadang agak lama gak enak sama yang lain lg antrian,neutral,3.0,1,neutral,neutral,neutral,neutral
+41,pertamina,Masuk aja gak bisa aplikasi apa ini,positive,4.0,1,negative,negative,negative,negative
+42,JMO,good aplication proses,positive,5.0,1,positive,positive,positive,positive
+43,JMO,Saya lebih senang dgn apk jmo,positive,5.0,1,positive,positive,positive,positive
+44,JMO,Haruuus lebih diperbaiki kembali dengan performa lg tingkat tinggi,neutral,3.0,1,neutral,neutral,neutral,positive
+45,JMO,banyak menu yg masih dalam pengembangan semoga cepat selesai,neutral,3.0,1,positive,positive,positive,positive
+46,mobileJKN,bpjs sangat membantu rakyat,positive,5.0,1,positive,positive,positive,positive
+47,satusehat,Kenapa sertifikat saya belum ada saya sudah suntik 2 kali,neutral,3.0,1,negative,negative,neutral,negative
+48,KAI,Ko belom masuk kode vertifikasi melalui sms ya udah coba berulang2,neutral,3.0,1,neutral,neutral,neutral,neutral
+49,satusehat,"Udh di update kalah hese..kumaha? Daftar ters, lengkapi NIK,..kitu we..",negative,1.0,1,negative,negative,negative,negative
+50,mobileJKN,"Fitur faskes gigi tidak muncul dan jawabannya itu"" mlulu",neutral,3.0,1,negative,negative,neutral,negative
+51,pertamina,Apk tak berguna.. Sama kaya..... Yg sekarang menyulitkan masyarakat kecil... Cari uang susah.. Paraahhhhh,negative,1.0,1,negative,negative,negative,negative
+52,pertamina,Untuk pembayaran di SPBU tolong di buat lebih simpel lagi,positive,5.0,1,neutral,neutral,positive,positive
+53,pertamina,Sangat jelek bikin susah rakyat,negative,1.0,1,negative,negative,negative,negative
+54,JMO,Aplikasi ini bermanfaat,positive,5.0,4,positive,positive,positive,positive
+55,satusehat,Ok banget dah..👍👍,positive,5.0,1,positive,positive,positive,positive
+56,JMO,Alert bermasalah coba lagi.. coba lagi.. coba lagi,neutral,3.0,1,negative,negative,negative,negative
+57,JMO,Sangat membantu sekali trimakasih,positive,5.0,7,positive,positive,positive,positive
+58,satusehat,Kembang kan terus,positive,5.0,1,positive,positive,positive,positive
+59,satusehat,Urgenisitas bagi yangbersangkutan Mendukung proses program pemerintah,positive,4.0,1,positive,positive,positive,positive
+60,pertamina,"Buat Oppo f1 force close sendiri,",neutral,3.0,1,negative,negative,negative,negative
+61,JMO,"Apk tidak berguna bikin pusing tidak bisa login,di apk sebelumnya tidak ada masalah dan lacar2 saja permainan klasik managemnt👎",negative,1.0,1,negative,negative,negative,negative
+62,JMO,tambah mantap aplikasi nya,positive,5.0,1,positive,positive,positive,positive
+63,pertamina,Agak lemot.tolong dibprrbsiki,positive,4.0,1,neutral,positive,neutral,neutral
+64,JMO,sangat bermanfaat dan user friendly top,positive,5.0,1,positive,positive,positive,positive
+65,mobileJKN,"setiap ingin login ke aplikasi, secara menakjubkan aplikasi berhenti (tidak mau login) udah reset password juga masih tetep tidak bisa login. ada gangguan kah? masa aplikasi sekelas nasional kaya gini?",neutral,3.0,1,negative,negative,negative,negative
+66,mobileJKN,Bagus walau kadang suka eror,positive,4.0,1,positive,positive,positive,positive
+67,satusehat,"Pas mau masulin data nama,NIK,email,Nomer televon bisa tapi pas ngisi tanggal lahir ngak bisa jadibpas mau seken barkot jadi ngak bisa",neutral,3.0,1,negative,negative,neutral,negative
+68,satusehat,Sudah vaksin masih saja sertifikat vaksin tidak tersedia???,negative,1.0,1,negative,negative,negative,negative
+69,JMO,Tolong perbaiki lgi aplikasi nya bagus tapi banyak gangguannya padahal internet normal,neutral,3.0,1,negative,negative,negative,negative
+70,pertamina,"Aplikasi kurang bagus masih lemot , Wala",negative,1.0,1,negative,negative,negative,negative
+71,satusehat,"Vaksin ke 1 muncul sertifikatnya tpi vaksin ke 2 blm muncul"" gimana ya",positive,5.0,1,neutral,positive,neutral,neutral
+72,JMO,"4 dulu ya, klu berhasil baru 5 bintang nya",positive,4.0,1,positive,positive,neutral,positive
+73,JMO,liat kartu bpjs nya aja loding trus ga kebuka2,neutral,3.0,1,negative,negative,negative,negative
+74,mobileJKN,Kenapa musti diperbarui setiap kali saya ingin membuka mobil jkn saya ini,neutral,3.0,1,neutral,neutral,neutral,negative
+75,mobileJKN,Aman dan mempermudah pasien,negative,2.0,1,positive,positive,positive,positive
+76,JMO,aplikasi sangat baik dan membantu,positive,5.0,1,positive,positive,positive,positive
+77,mobileJKN,Kenapa saat saya daftar aktivasi akun gagal terus ya. Notifnya transaksi belum dapat diproses saat input no hp dan email,negative,1.0,1,negative,negative,negative,neutral
+78,satusehat,Ngeborosin baterai nih......,neutral,3.0,1,negative,negative,negative,negative
+79,mobileJKN,"Udah diperbarui, eh gak lama perbarui lageehh",negative,1.0,1,negative,negative,negative,negative
+80,mobileJKN,Oke banget mobile jkn,positive,5.0,1,positive,positive,positive,positive
+81,pertamina,Nyusahin doang Rakyat bisanya. Di SPBU gak boleh main HP bos,negative,1.0,1,negative,negative,negative,negative
+82,mobileJKN,"Parah,,mau aktifasi pas mau masukin no hp keteranganya tutup sementara buka lagi jam 09.00 tanggal 04 november 2020... Ini sudah tgl 4 november 2020 jam 09.50 . KOK MASIH GA BISA MIN PARAAAAAAH",negative,1.0,1,negative,negative,negative,negative
+83,mobileJKN,"Dikit2 update, bikin gak nyaman aja",negative,1.0,1,negative,negative,negative,negative
+84,mobileJKN,Sudah abdit terbaru tapi susah login nya,neutral,3.0,1,positive,positive,negative,positive
+85,JMO,"Aku beri bintang 3 dlu, soal nya aplikasi nya blm aku buka",neutral,3.0,1,neutral,neutral,neutral,neutral
+86,KAI,rebutan klo pesan tiket mudik,positive,5.0,1,positive,positive,neutral,positive
+87,pertamina,Bagaimana pendapat anda selaku yang memiliki app.... Apa anda mempunyai solusi dari semua situasi? Masyarakat banyak yang mengeluh apa akan ada perubahan atau hanya menunggu semua ricuh dan rusuh?,negative,1.0,1,negative,negative,negative,negative
+88,mobileJKN,"Bagus aplikasinya,cuma kenapa tiap buka update terus yak,heran🙄😑",neutral,3.0,1,neutral,neutral,neutral,neutral
+89,JMO,Suka logout sendiri,neutral,3.0,1,negative,negative,negative,negative
+90,JMO,Sangat mengecewakan😏😏,negative,1.0,1,negative,negative,negative,negative
+91,JMO,"Mantap aplikasih nya,bisah cek saldo bpjs",negative,2.0,1,positive,positive,positive,positive
+92,pertamina,Aturan bikin ribet!!!,negative,1.0,1,negative,negative,negative,negative
+93,satusehat,Aku suka banget sama kamu,neutral,3.0,1,positive,positive,positive,positive
+94,pertamina,Penjahat itu tak pernah membangun negara Mereka hanya memperkaya diri sambil merusak negara ~ Nelson Mandela,negative,1.0,1,negative,negative,negative,negative
+95,mobileJKN,Sekarang fiturnya makin sip. Loginnya gampang,positive,5.0,1,positive,positive,positive,positive
+96,JMO,bagus bisa membantu info,positive,4.0,1,positive,positive,positive,positive
+97,satusehat,"Kami sangat terbantu sekali dengan adanya peduliLindungi ini,,terimakasih sekali peduliLindungi,,,",positive,4.0,1,positive,positive,positive,positive
+98,satusehat,Beberapa kali intal aplikasi ini hasill nya kurang,neutral,3.0,1,negative,negative,negative,neutral
+99,mobileJKN,Bagus mempermudah kita daftar ke faskes,positive,4.0,1,positive,positive,positive,positive
+100,KAI,"Kok malah gabisa booking kalo pake wifi. Pakai paket datapun sering tulisannya ""mohon cek koneksi internet"", padahal paketan nyala --"" mohon diperbaiki",negative,2.0,1,negative,neutral,negative,negative
+101,satusehat,Kasi 3 dulu klo bagus di tambahin,neutral,3.0,1,neutral,neutral,neutral,neutral
+102,satusehat,"Saya sudah vaksin, di app tertulis jg sudah vaksin dosis pertama, tp kenapa sertifikat nya belum keluar jg ya ? Please, masih bisa kerja yg baik kan ya ?",negative,1.0,1,negative,neutral,neutral,neutral
+103,satusehat,"Isi tanggal lahir ko susah, udah update, bongkar pasang aplikasi tetap gk bisa... Gak ada cs bantuan... Kumaha atuh iyeu teh",positive,5.0,1,negative,negative,negative,negative
+104,mobileJKN,Admin mohon maaf .saya login kok gagal terus ini aplikasi lagi eror atau gimana?,neutral,3.0,1,negative,negative,negative,negative
+105,satusehat,Terima kasih kominfo dan pemerintah telah berupaya maksimal melindungi rakyatnya.. aplikasi ini semoga bisa membantu memutus rantai penyebaran covid 19,positive,5.0,1,positive,positive,positive,positive
+106,JMO,"Gimana ni kog ngak sesuai nomor yang di kartu bpjs di pengisian ketik ulang nomor kartu sesuai tnpa sensor,solusi nya bapak/ibu yang bertugas di bpjs.",neutral,3.0,1,neutral,positive,neutral,negative
+107,JMO,oke mantap.saya tdk komentar,positive,5.0,1,positive,positive,positive,positive
+108,JMO,Menu cek saldo nya dimana ya? Kok gak ada...???,neutral,3.0,1,neutral,negative,neutral,neutral
+109,pertamina,Sangat mudah untuk untuk transaksi pembelian BBM,positive,5.0,1,positive,positive,positive,positive
+110,satusehat,"Isi tgl lahir berkali2 gagal, alasannya formatnya salah. Pdhal kan situ yg bikin programnya.",negative,1.0,1,negative,negative,negative,negative
+111,satusehat,Bagaimana cara ubah data kita ya? Nama Mariana di sertifikat Moriana?,negative,1.0,1,positive,positive,positive,neutral
+112,pertamina,Semoga bermanfaat buat kita semua 🙏🙏🙏,positive,5.0,1,positive,positive,positive,positive
+113,satusehat,Alikasi ini sangat membantu,neutral,3.0,1,positive,positive,positive,positive
+114,pertamina,Knp harus update terus yaa..???,neutral,3.0,1,negative,neutral,negative,neutral
+115,mobileJKN,"slalu muncul harus update mobile JKN, tetapi pas di buka tidak ada tulisan update/tidak bisa d update",neutral,3.0,1,negative,negative,negative,neutral
+116,mobileJKN,"kenapa susah masuk,selalu ada tulisan anda sudah mencapai batas",neutral,3.0,1,negative,negative,negative,negative
+117,mobileJKN,Wajib minta update..tapi ga mau di download,negative,1.0,1,negative,negative,negative,negative
+118,mobileJKN,"Dengan Aplikasi Ini, Mudah Untuk Menunjukan identitas Peserta JKN KIS",positive,5.0,1,positive,positive,positive,positive
+119,mobileJKN,Di dowload malah kgk bisa di buka buang2 kuota Apk kaya gini amat Parah!!,negative,1.0,1,negative,negative,negative,negative
+120,mobileJKN,Rumit giliran mau dipake harus diupgrade diperbaharui susah,negative,1.0,1,negative,negative,negative,negative
+121,JMO,sering keluar sendiri /bug,negative,1.0,1,negative,negative,negative,negative
+122,satusehat,Aplikasi tidak berfungsi.. Guobloook...!,negative,1.0,1,negative,negative,negative,negative
+123,pertamina,G bisa terhubung ke link ajah.. udah berapa x di coba tetep g bisa!!! Solusinya gmn bozz??,neutral,3.0,1,negative,neutral,negative,negative
+124,pertamina,Aplilasi gak jelas,negative,1.0,1,negative,negative,negative,negative
+125,JMO,Lancar untuk klaimnya,positive,5.0,1,positive,positive,positive,positive
+126,mobileJKN,"Update terbaru malah susah login...., payah",negative,1.0,1,negative,negative,negative,negative
+127,satusehat,Saya sangat senang dengan Apl ini.,positive,4.0,1,positive,positive,positive,positive
+128,satusehat,Saya kasi 3 aja dulu kalo akurat baru,neutral,3.0,1,neutral,neutral,neutral,neutral
+129,satusehat,"Tolong bantu cara login, setiap klik link dari SMS pasti harus login atau daftar. Giliran daftar gabisa gagal mulu.. Bruhh",positive,5.0,1,negative,negative,negative,negative
+130,JMO,"sangat membantu pelayanan untuk publik, aplikasi juga cepat, fast respon dalam pengkinian data",positive,5.0,1,positive,positive,positive,positive
+131,JMO,"Baru pasang aplikasi tapi langsung disuruh perbarui aplikasi Saya klik perbarui aplikasi tapi gak bisa masuk ""gimana maksudnya ini""🤔🤔🤔",negative,1.0,1,negative,neutral,negative,negative
+132,pertamina,"Ga bisa di ajak Mabar,grafik kurang hd",negative,1.0,1,negative,negative,negative,negative
+133,satusehat,Sebaiknya informasi mengenai tanggal vaksin ke 2 di cantumkan,neutral,3.0,1,positive,neutral,positive,positive
+134,JMO,Aplikasi nya jelek betul.kita butuh kan untuk klem jht tidak bisa loding sam sekali.kantor bpjs ketenaga kerjaan perbaikin ini aplikasi.,negative,1.0,1,negative,negative,positive,negative
+135,pertamina,terdapat banyak bug,negative,1.0,1,negative,negative,negative,negative
+136,satusehat,Semua lancar dpt di akses di peduliLindungi tadinya ragu,positive,5.0,1,positive,positive,positive,positive
+137,JMO,Susah masuknya..kode otp gak.valid terus....gimn donk ini...,negative,2.0,1,negative,negative,negative,negative
+138,pertamina,Terlalu sulit bagiku mengisi bensin lupa bawa handphone,negative,1.0,1,negative,negative,positive,negative
+139,satusehat,Knpa ya gak bisa di isi permulir padahal aku udah aktifkan semua tpi tetapa aja gak bisa masuk,negative,1.0,1,negative,negative,negative,negative
+140,pertamina,"Ngebantu banget untuk aku yang jarang bawa cash dan kalo tiba-tiba kehabisan bensin tapi gak bawa uang bisa bayar pakai pembayaran digital,,",positive,5.0,1,positive,positive,positive,positive
+141,satusehat,"Perbaiki aplikasinya, Tersemat notif terjadi kesalahan aplikasi terus, Akun saya juga terlogout sendiri, login kembali tidak bisa, Sekelas aplikasi resmi negara, app maintenance dan call center seyogyanya lebih responsif",neutral,3.0,1,negative,negative,negative,negative
+142,satusehat,Login nya lelet,neutral,3.0,1,negative,negative,negative,negative
+143,mobileJKN,Gimana ini aplikasinya terhenti terus...,neutral,3.0,1,negative,negative,negative,negative
+144,JMO,Data udah di isi bener salah Mulu sih . Aplikasi ngga guna... Gue udah bayar 12 bulan sia dia doang...,negative,1.0,1,negative,negative,negative,negative
+145,satusehat,Bagus kita bisa cari info klinik yg terdaftar dgn Kemenkes untuk repit dan anti gen,positive,5.0,1,positive,positive,positive,positive
+146,satusehat,"Bukannya makin mudah malah ribet, mau ke akun sendiri aja susah banget, padahal signal on, pakai wifi juga ga bisa , ampun, mau buru buru kerja jdi ribett",negative,1.0,1,negative,negative,negative,negative
+147,pertamina,arep daftar my pertamina we erar eror,negative,1.0,1,negative,negative,negative,negative
+148,pertamina,Joss semakin simple dan mudah dalam pelayanan.,positive,5.0,1,positive,positive,positive,positive
+149,JMO,Cek saldo di sebelah mana ya...? Sy cari2 di menu tidak ada pilihan cek saldo. Mohon dibantuu,neutral,3.0,1,neutral,neutral,neutral,neutral
+150,satusehat,Sementara bintang 3 kalu bagus 5 bintang,neutral,3.0,1,neutral,neutral,neutral,neutral
+151,satusehat,"Aplikasi tidak dapat d gunakan,, spertinya belum sempurna. Terlalu tergesa gesa memunculkan aplikasi yg malah belum siap",negative,1.0,1,negative,negative,negative,negative
+152,satusehat,"Ini aplikasi gimana sih! Sertifikat saya kok malah gak muncul ya, padahal udah vaksin dan udah dpt sms. Tapi ga ada sertifikat muncull. Ini gimana ya?kok gada tanggapanya. Telpoon ke 119 malah sibuk trs. Gada jawaban",negative,1.0,1,negative,negative,negative,negative
+153,satusehat,divaksin pertama panas dingin 2 minggu,positive,5.0,1,negative,negative,neutral,positive
+154,JMO,Good.. cukup membantu,positive,4.0,1,positive,positive,positive,positive
+155,JMO,Pengkinian datanya..kok eror..terus..ya,positive,4.0,1,negative,negative,negative,neutral
+156,pertamina,Install aplikasi cuman buat kasih repiew hehehe,negative,1.0,1,negative,negative,negative,negative
+157,satusehat,tanggal lahir tidak bisa di isi mohon diperbaiki,neutral,3.0,1,negative,negative,neutral,negative
+158,JMO,saya suka apk ini. saya kasih 3 bintang ya,neutral,3.0,1,neutral,neutral,neutral,neutral
+159,satusehat,Sy baru gunakan sekali hari ini. Jadi bintang 3 dulu ya.,neutral,3.0,1,neutral,neutral,neutral,neutral
+160,pertamina,Alhamdulilah utk di wilayah sy bs mu pertamina dikepulauan Riau karimun n poin sy sdh lumayan jg semoga berkah Amiin😇😇😇,positive,5.0,1,positive,positive,positive,positive
+161,satusehat,Cetak kartu blom tersedia,neutral,3.0,1,positive,positive,neutral,neutral
+162,JMO,Malah gg bisa login haddew.......,negative,1.0,1,negative,negative,negative,negative
+163,JMO,Gak jelas setelah di update kok jd gak bisa liat saldo tp login bisa....alasan data tidak terdaftar,negative,1.0,1,negative,negative,negative,negative
+164,satusehat,"Sempet was-was karna no hp yg daftar vaksin dan di pedulilindungi beda,tp Alhamdulillah setelah vaksin pertama 2hari kemudian setifikat vaksin sudah ada dipedulilindungi,semoga vaksin kedua bisa selancar yg pertama.",positive,5.0,1,positive,positive,neutral,positive
+165,satusehat,"Sering crash, aplikasi nya bagus, tp sering bgt crash, malah gabisa dibuka LG, pas awal doang",neutral,3.0,1,negative,negative,negative,negative
+166,pertamina,Dua dulu... Kalo asyik nambah bintangnya,negative,2.0,1,negative,negative,negative,negative
+167,mobileJKN,Terllu sring updte..,neutral,3.0,1,neutral,neutral,neutral,neutral
+168,mobileJKN,"Mantap,, pelayan an cepat dan mudah.",positive,5.0,1,positive,positive,positive,positive
+169,satusehat,Ikut peraturan pemerintah,positive,5.0,1,negative,negative,negative,positive
+170,satusehat,"Sangat berguna utk memudahkan kami soal kesehatan,BRAVO,,,,👌👍👍",positive,5.0,1,positive,positive,positive,positive
+171,JMO,sangat membantu...trrima kasih,positive,5.0,1,positive,positive,positive,positive
+172,JMO,"sekarang JMO,makin lbih baik.. Mantap",positive,5.0,1,positive,positive,positive,positive
+173,JMO,Alamat gmail tidak terdapatar padahal sudah benar dan password pun sudah benar tapi kenapah akun tidak di temukan makin di update makin tidak jelas,negative,2.0,1,negative,negative,negative,negative
+174,satusehat,Knp ya sebelum nya kan saya hps apk ini karena mau di perbarui saya lupa nggak di logout terus selakarang mau masuk lagi nggak bisa knp ya... Padahal no nya sama,neutral,3.0,1,negative,negative,negative,neutral
+175,satusehat,Ikutan aja ah ... Kaya warga +62 biar bisa buka hasil vaksin,neutral,3.0,1,negative,negative,negative,negative
+176,JMO,semoga cairin nya lebih gampang,positive,4.0,1,positive,positive,positive,positive
+177,satusehat,Aplikasi server susah login👎🏼,negative,1.0,1,negative,negative,negative,negative
+178,mobileJKN,Terima kasih bpjs kesehatan atas infonya bagi saya yg baru beralih status...,positive,5.0,1,positive,positive,positive,positive
+179,mobileJKN,Habis di upgrade malah susah di gunakan di perbaiki lagi,negative,1.0,1,negative,negative,negative,negative
+180,pertamina,Beberapa kali saya mau bayar pakai my pertamina tapi sering tidak bisa.. Kata petugas SPBU nya lagi trobel lg gak bisa melayani..,negative,1.0,1,neutral,neutral,neutral,neutral
+181,JMO,JMO (Jamsostek Mobile) - Klaim is the best,positive,5.0,1,positive,positive,positive,positive
+182,mobileJKN,Saya binggung sama aplikasi ini saya SDH Bayah kok masih muncul tagihan y,neutral,3.0,1,negative,neutral,neutral,negative
+183,mobileJKN,"Setiap bulan, setiap mau bayar, aplikasi nya minta di upgrade ulang terus hmmm😌 tapi yaudahlah gpp deh 😊",positive,4.0,1,negative,negative,negative,neutral
+184,mobileJKN,"Cukup membantu, tapi kenapa puskesmas tidak buka 24 jam setiap hari",neutral,3.0,1,positive,positive,positive,positive
+185,satusehat,Kenapa ya tidak bisa log.in...invalid signatur...ada yg bsa bantu..padahal nomor yg dimasukkan sudah bnr,neutral,3.0,1,negative,negative,negative,negative
+186,mobileJKN,3 bintang dulu belum tau,neutral,3.0,1,neutral,neutral,neutral,neutral
+187,satusehat,Oke sukses selalu,positive,5.0,1,positive,positive,positive,positive
+188,satusehat,gak bisa di akses insert tanggal lahirnya,negative,1.0,1,negative,negative,neutral,negative
+189,satusehat,lanjutin donwlod swkarang ini.,negative,1.0,1,negative,negative,negative,positive
+190,satusehat,Sangat membantu dngn ada nya apk PeduliLindungi,positive,5.0,1,positive,positive,positive,positive
+191,satusehat,Gimana ini datanya saya sudah vaksin 2 kali tapi sertifikat ke 2 kok belum ada kosong.tolong solusinya biar sertifikat ke 2 muncul .,neutral,3.0,1,negative,negative,negative,neutral
+192,mobileJKN,"Sejak update, cuma masuk ke apk saja LOLAAAAA alias LOADING LAMAAAAAAAAA. Fix it's",neutral,3.0,1,negative,negative,negative,negative
+193,mobileJKN,error terussss. cek premi gabisa terus,neutral,3.0,1,negative,negative,negative,negative
+194,mobileJKN,Bagaimana cara mengecek saya anggota bpjs pbi,neutral,3.0,1,positive,positive,positive,positive
+195,satusehat,"Hai min, sebaiknya kalau NIK KKnya satu. Digaungkan aja data vaksin kedalam satu aplikasi kepala keluarga. Biar mudah dalam pengecekannya",positive,5.0,1,positive,positive,positive,neutral
+196,mobileJKN,"Bagus,cukup membantu... trimksh",positive,5.0,1,positive,positive,positive,positive
+197,JMO,lumayan bagus sih ..cuman kdang perlu jaringan internet yg kuat pisan,neutral,3.0,1,positive,positive,neutral,positive
+198,satusehat,"Ukuran font harus kecil, kalo gede menu ini aplikasinya jd gk komplit gk bisa daftar",neutral,3.0,1,negative,negative,negative,negative
+199,JMO,Sangat membatu kita mengetahui kondisi BPJS kita dalam kondisi apapun Kedepannya makin lebih baik dalam fitur pelayanan aplikasi biar makin top kedepanya,positive,5.0,1,positive,positive,positive,positive
+200,pertamina,kemarin2 sy mau upload nota bensin kok tërtolak. Tërtulis info TIDAK BISA krn SUDAH DI DAFTAR.,neutral,3.0,1,negative,neutral,neutral,neutral
+201,mobileJKN,Kenapa ini mau login masukin kode aja susah?,negative,1.0,1,negative,negative,negative,negative
+202,satusehat,Respon kurang cepat dan tanggap,negative,1.0,1,positive,positive,positive,negative
+203,mobileJKN,"Kalau update jangan suruh login lagi dong ,bikin ribet,app lain biasa otomatis",neutral,3.0,1,negative,negative,negative,negative
+204,pertamina,"Aplikasi keluar terus dan meminta muat ulang, bahkan sering kali error",neutral,3.0,1,negative,negative,negative,negative
+205,satusehat,Sy sudah vaksin ke 2 tetapi di cek sertifikat vaksin tidak ada,neutral,3.0,1,negative,negative,negative,negative
+206,satusehat,Saya sudah selesai vaksin 1&2 tpi sampai sekarang sertivikat vaksin saya tidak dapat di akses dri peduli lindungi,negative,1.0,1,negative,negative,negative,negative
+207,JMO,Trimakasih telah membantu jaminan hari tua saya.,positive,4.0,1,positive,positive,positive,positive
+208,KAI,"Banyak membatu saya, trimakasih",positive,4.0,1,positive,positive,positive,positive
+209,JMO,JMO sangat membantu Saya dlam pengecekan data BPJS KETENAGAKERJAAN,positive,5.0,1,positive,positive,positive,positive
+210,satusehat,Kok pas dibuka aplikasinya keluar sendiri,negative,1.0,1,negative,negative,negative,negative
+211,mobileJKN,Aplikasi ini sangat membantu masyarakat dalam mengekses layanan BPJS kesehatan,positive,5.0,1,positive,positive,positive,positive
+212,JMO,Baru donload langsung minta di perbaharui apa apaan,negative,1.0,1,negative,negative,negative,negative
+213,JMO,lebih much dalam pengecekan saldo,positive,5.0,1,positive,positive,positive,positive
+214,JMO,"Makin kesini makin gk jelas nih aplikasi, login aja susah bgt.. alamat email salah terus padah sudah jelas2 tersimpan email dan sandinya..",negative,1.0,1,negative,negative,negative,negative
+215,pertamina,"Apkilasi rusak! Bikin ribet aja! Gmna coba kalau pas bensin habis, kuota habis, batrai habis, Bilang saja kalau mau naikin harga BBM dengan cara ngilangin pertalit dan beralih semua ke pertamax tanpa di demo masyarakat.",negative,1.0,1,negative,negative,negative,negative
+216,JMO,Setelah di update loading aplikasi terasa sangat berat. Mohon diperbaiki ga bisa ngebuka apa2. Perbaikan tapi malah bikin susah.,negative,1.0,1,negative,negative,negative,negative
+217,satusehat,"Saya sudah vaksin tadi pagi kenapa di akun saya,, saya belum terdaftar vaksin mohon bantuannya",neutral,3.0,1,neutral,positive,neutral,neutral
+218,satusehat,masuk berkali kali data KTP Sam nik sudah tp ga masuk masuk aruuuuuuhhhh,negative,1.0,1,negative,negative,negative,negative
+219,mobileJKN,Mohon developernya di ganti aplikasinya error terus dari Habib di mekkah sampai pulang kembali ke Indonesia. Ahlan wa sahlan ya habibana...,negative,1.0,1,negative,negative,negative,negative
+220,mobileJKN,Setiap buka aplikasinya di suruh updet terus. Padahal udah di updet.,neutral,3.0,1,negative,negative,negative,negative
+221,mobileJKN,Udah beberapa kali minta di update terus,neutral,3.0,1,negative,negative,negative,negative
+222,satusehat,Kenapa setelah close aplikasi selalu ada notifikasi aktifkan lokasi anda.,neutral,3.0,1,negative,negative,negative,neutral
+223,satusehat,"Bagus dan membantu. Tapi waktu daftar awal.. masukin tgl lahir terlalu ribet, harus ngetik manual.... klo bisa dibuat lbh simple",positive,4.0,1,neutral,neutral,neutral,neutral
+224,JMO,"𝐊𝐞𝐧𝐚𝐩𝐚 𝐤𝐨 𝐬𝐮𝐬𝐚 𝐛𝐞𝐭𝐮𝐥.𝐤𝐢𝐭𝐚 𝐬𝐮𝐝𝐚 𝐢𝐤𝐮𝐭 𝐜𝐚𝐫𝐚𝐧𝐭𝐚 𝐝𝐚𝐫𝐢 𝐚𝐰𝐚𝐥 𝐤𝐨,𝐭𝐞𝐭𝐚𝐩 𝐧𝐠𝐠𝐚 𝐛𝐢𝐬𝐚.𝐫𝐮𝐛𝐚 𝐢𝐭𝐮𝐥𝐚𝐡.𝐫𝐮𝐛𝐚 𝐢𝐧𝐢𝐥𝐚𝐡𝐡𝐡 𝐓𝐞𝐭𝐚𝐩 𝐧𝐠𝐠𝐚 𝐛𝐢𝐬𝐚",negative,1.0,1,negative,negative,negative,negative
+225,mobileJKN,kenapa ga bisa dibuka aplikasi ini harus update ke versi terbaru tapi diupdate ga bisa2 gmn ini,positive,5.0,1,negative,negative,negative,negative
+226,KAI,sering error pas mau mlih tmpt duduk..mhon di tindak lanjuti,neutral,3.0,1,neutral,neutral,neutral,neutral
+227,pertamina,Apaan sih stumbul gai udah game kaku disconek mulu mana komunitasnya suka nyindir game lain hadehh game burik gak usah ngatain game orang burik😐😏,negative,1.0,1,negative,negative,negative,negative
+228,KAI,Kok tiket saya ga bisa di bayar ya. Terus pas mau di bayar kok kode booking ga ada. Gara2 itu saya jd susah cari tiket lagi karna udh pada habis tiket nya.,negative,1.0,1,negative,neutral,neutral,negative
+229,pertamina,"Lelet banget ya udah 1bln ini malah gak bs bayar pakai non tunai di pertamina. Pelayan SPBU jg banyak yg gak mau terima pembayaran non tunai krn lemot transaksi lama, bilangnya error gk bs di pakai.",negative,1.0,1,negative,negative,negative,negative
+230,satusehat,Tidak bisa untuk memeriksa sertifikat vaksin. Padahal saya sdh 2x vaksin tapi dikatakan nama di permintaan pemeriksaan dibilang tidak valid,negative,1.0,1,negative,negative,neutral,negative
+231,JMO,"Baru aktifkan, dan untuk sementara masih pelajari aplikasi ini",neutral,3.0,1,neutral,neutral,positive,positive
+232,pertamina,Semoga Tambah Barokah,positive,4.0,1,positive,positive,positive,positive
+233,JMO,Aplikasi ini sangat membantu saya 1000%berhasil,positive,5.0,1,positive,positive,positive,positive
+234,satusehat,Sertifikat vaksin tdk keluar atas nama firda ramdiani,neutral,3.0,1,negative,negative,negative,positive
+235,JMO,Update terusss tapi tetep aja lemot pollll,negative,1.0,1,negative,negative,negative,negative
+236,mobileJKN,Perbaruan trs !!! Susah buat masuk pdhl udh setuju di perbaruin tpi keterangan perbaruan ny TDK ada,neutral,3.0,1,negative,negative,negative,negative
+237,mobileJKN,Knp setellah d perbarui malah tmbh gini.. mau pndah faskes melalui online.. faskesnya terbatas.. pilihannya tidak banyak.. :(,neutral,3.0,1,neutral,neutral,neutral,neutral
+238,satusehat,"Nguras batre hp, kalo ga buat kerja gua ga kan download",negative,1.0,1,negative,negative,negative,negative
+239,mobileJKN,Kenapa ya setelah update minta login pas login gak bisa no peserta tdk terdaftar pas coba mau daftar no sudah terdaftar ini gimana sih bingung gak jelas,neutral,3.0,1,negative,negative,negative,negative
+240,satusehat,Masok kok lama si,neutral,3.0,1,negative,positive,negative,positive
+241,satusehat,"Ini tanggal lahir di sertifikat beda sama di KTP, gmn cara komplen nya ya",neutral,3.0,1,negative,negative,neutral,negative
+242,pertamina,"cashless.. ngepasin barcode, loading lumayan, udh gitu belakang antrian banyak. makin takikardi woyyy.. pdhl mah santai aja. gw nya yg ga nyantai wkwk",positive,5.0,1,negative,neutral,neutral,negative
+243,mobileJKN,Sangatl membantu..!,positive,5.0,1,positive,positive,positive,positive
+244,pertamina,"Aplikasi gak berfaedah, apa lagi untuk di daerah...",negative,2.0,1,negative,negative,negative,negative
+245,pertamina,"Buat Bapak"" Atau Ibu"" Yang Ngasih Rating 1 Ke Apk Ini KALO GAPTEK GAPTEK AJA GAUSAH NURUNIN RATING EMNG KALIAN KIRA UPLOAD APLIKASI GAK BAYAR? MIKIR DONG PANTES GAK MAJU MAJU INDONESIA 80%ORANG ORANG GAPTEK",positive,5.0,1,negative,negative,negative,negative
+246,mobileJKN,Puas dengan pelayanannya... Dan ditingkatkan lagi,positive,5.0,1,positive,positive,positive,positive
+247,pertamina,Yang gampang dibikin susah... Yang susah diuangkan.,negative,1.0,1,negative,negative,negative,negative
+248,JMO,Alhamdulillah akhir nya bisa login juga bintang nya saya tambah kan sudah bisa lihat saldo bpjs saya makasih..,positive,5.0,1,positive,positive,positive,positive
+249,mobileJKN,Gima sih mau bayar pertama aja ribet nya mita ampun harus sesuai dengan tangal yg di tentukan gak bisa apa kalau langsung bayar hati itu juga bingun padahal udah mau di gunakan bpjs nya solusinya dong,negative,2.0,1,negative,negative,negative,negative
+250,satusehat,"Good dan sangat mmbantu dlm program vaksinasi masional, aksesnyapun cpt dlm mmbuka sertifikat vaksin berikut jadwal vaksin selanjutnya.",positive,5.0,1,positive,positive,positive,positive
+251,mobileJKN,Diupdate malah gak jelas.,negative,1.0,1,negative,negative,negative,negative
+252,pertamina,Scan selalu gagal...??,neutral,3.0,1,negative,negative,negative,negative
+253,pertamina,Tidak ada manfaat nya...,negative,1.0,1,negative,negative,negative,negative
+254,JMO,"Suka ada,aplikasi jmo praktis mau klem jht ..gak pake ribet asal data,sesuai ya",positive,5.0,1,positive,positive,positive,positive
+255,pertamina,"mantab, Pertamina selalu terdepan",positive,5.0,1,positive,positive,positive,positive
+256,JMO,Kurang mudah di pahami. Aplikasi suka Ng leg.. keluar sendiri.,neutral,3.0,1,negative,negative,negative,negative
+257,satusehat,Sangat membantu aplikasi ini bagus banget,positive,5.0,1,positive,positive,positive,positive
+258,JMO,3 dulu kalau bagus tambah lagi,neutral,3.0,1,neutral,neutral,neutral,neutral
+259,JMO,good jamsostek gak perlu ribet,positive,5.0,1,positive,positive,positive,positive
+260,JMO,Trimakasih jmo jdi lebih mudah mengurus jamsostek,positive,5.0,1,positive,positive,positive,positive
+261,JMO,JMO Sekarang sudah bagus,positive,5.0,1,positive,positive,positive,positive
+262,JMO,Mempermuda cek saldo,neutral,3.0,1,positive,positive,positive,positive
+263,pertamina,"Lebih simpel,praktis dan aman.",positive,5.0,1,positive,positive,positive,positive
+264,satusehat,saya belum mendapatkan sertipikat vaksinasi ke dua,negative,1.0,1,positive,positive,positive,positive
+265,pertamina,Aplikasi paling buruk yg pernah saya download.,negative,1.0,1,negative,negative,negative,negative
+266,satusehat,Knp yaa... Gak bisa terbuka di hpq,positive,5.0,1,negative,negative,negative,neutral
+267,satusehat,Srh Up date trs payahhhj......,negative,1.0,1,negative,negative,negative,negative
+268,JMO,Gak bs di akses,neutral,3.0,1,negative,negative,negative,negative
+269,pertamina,Kiranya ada kasikarunia,positive,5.0,1,positive,positive,positive,positive
+270,pertamina,Ojo keseringen update.cek gg bingung gawene,positive,5.0,1,negative,negative,negative,negative
+271,satusehat,Mohon di tingkatkan lagi. Seharusnya 1 aplikasi bisa untuk 1 keluarga jadi gak harus banyak penggunaan handphone. Terimakasih,neutral,3.0,1,neutral,neutral,neutral,positive
+272,JMO,bintang 3 aja soalnya setiap mau masuk apk disuruh login terus,neutral,3.0,1,neutral,neutral,neutral,neutral
+273,JMO,Mantap sekali.. ringkas.. cepat dan Quick respon..,positive,5.0,1,positive,positive,positive,positive
+274,JMO,"Aplikasi tolol, buat login aj kadang bisa kadang gak bisa....",negative,1.0,1,negative,negative,negative,negative
+275,satusehat,Bgs membantu kita spy lebih waspada,positive,5.0,1,positive,positive,positive,positive
+276,satusehat,Ok bgt lah pokoknya,neutral,3.0,1,positive,positive,positive,positive
+277,mobileJKN,"y sangat membantu, jadi saat dibutuhkan ketika sakit/berobat kita tidak perlu repot untuk mencari dan membawa semua kartu bpjs yg menjadi tanggungan kita, cukup buka aplikasi dan lihatkan ke petugas fasyankes.",positive,5.0,1,positive,positive,positive,positive
+278,satusehat,"Susah bener mau login padahal jaringan bagus, sekalinya masuk sertifikat belum di cetak padahal Dah ada sebelumnya",neutral,3.0,1,negative,negative,negative,negative
+279,satusehat,Selalu minta di perbaharui mulu,neutral,3.0,1,negative,negative,negative,neutral
+280,pertamina,terlalu pembaruan versi,neutral,3.0,1,negative,negative,negative,neutral
+281,JMO,tidak perlu ribet dan antri ke kantor cabang,neutral,3.0,1,positive,positive,positive,positive
+282,JMO,D suruh pengkinian data malah ga jelas,negative,1.0,1,negative,negative,negative,negative
+283,mobileJKN,"Terima kasih telah menyediakan aplikasi yang sangat membantu ini, pertama kali daftar dan login semua lancar, lanjut ganti faskes juga lancar, terima kasih Aplikasi mudah,cepat, dan akurat",positive,5.0,1,positive,positive,positive,positive
+284,mobileJKN,Sering banget update,negative,1.6,10,negative,negative,negative,negative
+285,mobileJKN,Sangat membantu sekali infonya untuk kesehatan bagi para mereka yang sudah purna bakti...,positive,5.0,1,positive,positive,positive,positive
+286,satusehat,aplikasi crash. Tidak bisa masuk menu. Langsung force close. Gimana ini pihak pengembangnya. Kalo sekiranya aplikasinya belum layak di pakai oleh banyak orang jangan dulu di tampilkan untuk publik.,negative,1.0,1,negative,negative,negative,negative
+287,pertamina,"Aplikasi ini brengsek, baru aja daftar sekali masuk jawabnya nomer hp atau pin salah... Koplok Menyulitkan rakyat kecil",negative,1.0,1,negative,negative,negative,negative
+288,pertamina,Hancur kek hati,negative,1.0,1,negative,negative,negative,negative
+289,satusehat,GK bisa masukin kode vertivikasi,neutral,3.0,1,negative,negative,negative,negative
+290,pertamina,"menu scan struknya masih macet2, truus... di pombensin sering tidak sedia struknya...😆😆😆kan jd gk bisa aplod pembelian deeh",positive,4.0,1,neutral,neutral,neutral,neutral
+291,pertamina,"BIKIN SUSAH RAKYAT AJA, RIBET, MEMPERSULIT MINYAK HASIL BUMI INDONESIA, UNTUK RAKYAT INDONESIA, BUKAN MALAH DI PERSULIT",negative,1.0,1,negative,negative,negative,negative
+292,mobileJKN,"Tak bisa login, selalu keterangan no kartu salah..padahal sudah benar semuanya saya input..versi pun sudah di update..parrahh",negative,2.0,1,negative,negative,negative,negative
+293,mobileJKN,"Kuesionernya kaya Alafa Dan Indo, dumanapun kapanpun buka aplikasi slalu ada, padahal berobat kaga tiap waktu. GANGGU BANGET !!!",negative,2.0,1,negative,negative,negative,negative
+294,JMO,"Saat pengkinian data di bagian update foto selfie setelah mau melanjutkan selalu di bilang koneksi internet tidak ada dan di suruh cek koneksi internet, padahal internet lancar jaya",neutral,3.0,1,negative,negative,negative,negative
+295,JMO,Pastikan koneksi internet terhubung terus.. ainyal full koneksi tersambung.. tolong dibperbaiki masalah seperti ini..,neutral,3.0,1,negative,negative,negative,negative
+296,JMO,Fitur dan pelayanan nya sudah ok terimakasih Bpjs,positive,5.0,1,positive,positive,positive,positive
+297,JMO,"Kepada Developer ,tolong lah di rawat nie aplikasi.",negative,1.0,1,negative,negative,negative,negative
+298,satusehat,Nama sdh tercantum di aplikasi tp pas lihat sertifikat kok ga ada ya? Pdhl sdh vaksin lengkap 2x. Tolong diperbaiki krn sy butuh tampilan sertifikat vaksinnya utk berbagai kepentingan.,negative,2.0,1,negative,negative,neutral,neutral
+299,mobileJKN,Kenapa ga bisa login pakai email lagi ya?,neutral,3.0,1,negative,negative,negative,neutral
+300,mobileJKN,Memudah kan saya,neutral,3.0,1,positive,positive,positive,positive

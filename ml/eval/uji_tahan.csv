@@ -1,0 +1,61 @@
+kategori,teks,label,alasan
+typo,"aplikasi nya eror terus gak bsa di buka smpe skrng",negative,keluhan jelas walau banyak salah ketik
+typo,"knp sih tiap update mlh makin lemottt",negative,keluhan kecepatan dengan huruf berulang
+typo,"mantab bgt aplikasi nya mmbantu skali",positive,pujian dengan salah ketik
+typo,"udh 3x daftar tetep gagal terusss",negative,kegagalan berulang
+typo,"trimakasih aplikasiny sangat brguna",positive,ucapan terima kasih dengan salah ketik
+typo,"loading nya lamaaa bgtt bikin kesel",negative,keluhan kecepatan
+typo,"gampang di pake dan cepet prosesny",positive,pujian kemudahan
+typo,"kode otp gk prnah masuk ke hp saya",negative,keluhan verifikasi
+typo,"apk nya bgus tp kadang suka keluar sndiri",neutral,ada pujian dan keluhan sekaligus
+typo,"pelayanan nya oke bgt sih mnurut sya",positive,pujian layanan
+slang,"apknya ngebug mulu anjir capek gw",negative,keluhan dengan bahasa gaul
+slang,"gaje banget nih apk, gabisa dibuka",negative,singkatan gaje dan gabisa
+slang,"mantul lah pokoknya, gampang bgt dipake",positive,mantul berarti pujian
+slang,"btw ini kenapa sih ga bisa login mulu",negative,keluhan login
+slang,"okelah lumayan ngebantu sih buat cek jadwal",positive,pujian dengan nada santai
+slang,"sumpah ribet parah harus verif muka segala",negative,keluhan proses verifikasi
+slang,"gokil sih fiturnya lengkap bener",positive,gokil sebagai pujian
+slang,"males bgt dah update mulu tiap minggu",negative,keluhan pembaruan
+slang,"nunggu bentar udah kelar, gas terus",positive,pujian kecepatan
+slang,"nih apk bikin emosi jiwa, gabisa daftar",negative,keluhan pendaftaran
+negasi,"tidak buruk, cukup membantu untuk cek saldo",positive,negasi ganda yang bernada positif
+negasi,"tidak bisa login sama sekali sejak kemarin",negative,keluhan akses
+negasi,"bukan aplikasi yang jelek, hanya perlu perbaikan kecil",positive,penilaian positif dengan catatan
+negasi,"saya tidak pernah punya masalah dengan aplikasi ini",positive,pengalaman tanpa keluhan
+negasi,"tidak ada notifikasi yang masuk sejak update terakhir",negative,fitur tidak berfungsi
+negasi,"aplikasi ini tidak mengecewakan sejauh ini",positive,negasi dari kata negatif
+negasi,"tidak jelas cara daftarnya, tidak ada panduan",negative,dua keluhan sekaligus
+negasi,"belum pernah gagal sekalipun waktu pesan tiket",positive,belum pernah gagal berarti puas
+negasi,"kurang lebih sama saja dengan aplikasi sebelumnya",neutral,perbandingan tanpa nada jelas
+negasi,"tidak sulit dipakai, menunya mudah dimengerti",positive,kemudahan pakai
+sarkasme,"bagus sekali, seminggu error terus tiap dibuka",negative,pujian palsu diikuti keluhan
+sarkasme,"mantap, sudah update malah tambah lemot",negative,pujian palsu diikuti keluhan
+sarkasme,"hebat ya, antrean online tapi tetap disuruh datang pagi",negative,sindiran layanan
+sarkasme,"terima kasih sudah bikin saya bolak balik ke kantor",negative,sindiran berterima kasih
+sarkasme,"canggih banget sampai saldo saya hilang sendiri",negative,sindiran fitur
+sarkasme,"luar biasa, verifikasi wajah gagal 10 kali berturut turut",negative,sindiran verifikasi
+sarkasme,"aplikasi terbaik untuk menguji kesabaran pengguna",negative,sindiran halus
+sarkasme,"wow, loading 5 menit untuk lihat satu halaman",negative,sindiran kecepatan
+campuran,"fiturnya lengkap tapi sering error saat jam sibuk",neutral,pujian dan keluhan seimbang
+campuran,"tampilan bagus, sayangnya login masih sering gagal",neutral,pujian dan keluhan seimbang
+campuran,"lumayan membantu walaupun kadang lambat",neutral,pujian dengan catatan
+campuran,"sudah cukup baik, tinggal perbaiki notifikasi saja",neutral,pujian dengan saran
+campuran,"bagus untuk cek jadwal, kurang bagus untuk pembayaran",neutral,dua sisi
+campuran,"senang ada aplikasi ini, tapi tolong ukuran filenya dikecilkan",neutral,pujian dengan permintaan
+netral,"apakah aplikasi ini bisa dipakai di dua nomor berbeda",neutral,pertanyaan tanpa nada
+netral,"tolong tambahkan fitur riwayat pembayaran",neutral,saran tanpa keluhan
+netral,"saya baru pasang aplikasi ini hari ini",neutral,informasi tanpa penilaian
+netral,"cara ganti nomor telepon bagaimana ya",neutral,pertanyaan tanpa nada
+netral,"versi terbaru butuh ruang penyimpanan berapa",neutral,pertanyaan teknis
+netral,"mohon informasi jam layanan call center",neutral,permintaan informasi
+pendek,"mantap",positive,pujian satu kata
+pendek,"lemot",negative,keluhan satu kata
+pendek,"biasa aja",neutral,penilaian netral
+pendek,"payah",negative,keluhan satu kata
+pendek,"bagus banget",positive,pujian singkat
+pendek,"ga guna",negative,keluhan singkat
+emoji,"👍👍👍",positive,jempol tanpa teks
+emoji,"😡 aplikasi apa ini",negative,emoji marah dengan keluhan
+emoji,"terima kasih 🙏 sangat membantu",positive,emoji syukur dengan pujian
+emoji,"😭 sudah seminggu tidak bisa masuk",negative,emoji sedih dengan keluhan

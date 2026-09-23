@@ -1,0 +1,816 @@
+{
+  "catatan": "kalimat dan label disusun tim, bukan dari dataset. Kategori campuran dan netral paling bisa diperdebatkan.",
+  "n": 60,
+  "model": [
+    {
+      "id": "svm",
+      "nama": "Linear SVM"
+    },
+    {
+      "id": "logreg",
+      "nama": "Logistic Regression"
+    },
+    {
+      "id": "nb",
+      "nama": "Naive Bayes"
+    },
+    {
+      "id": "indobert",
+      "nama": "IndoBERTweet int8"
+    }
+  ],
+  "akurasi": {
+    "svm": 0.6833,
+    "logreg": 0.7167,
+    "nb": 0.7667,
+    "indobert": 0.7833
+  },
+  "per_kategori": [
+    {
+      "kategori": "typo",
+      "n": 10,
+      "svm": 0.9,
+      "logreg": 1.0,
+      "nb": 1.0,
+      "indobert": 1.0
+    },
+    {
+      "kategori": "slang",
+      "n": 10,
+      "svm": 0.9,
+      "logreg": 0.9,
+      "nb": 1.0,
+      "indobert": 0.9
+    },
+    {
+      "kategori": "negasi",
+      "n": 10,
+      "svm": 0.6,
+      "logreg": 0.5,
+      "nb": 0.7,
+      "indobert": 0.8
+    },
+    {
+      "kategori": "sarkasme",
+      "n": 8,
+      "svm": 0.375,
+      "logreg": 0.75,
+      "nb": 0.625,
+      "indobert": 0.75
+    },
+    {
+      "kategori": "campuran",
+      "n": 6,
+      "svm": 0.1667,
+      "logreg": 0.3333,
+      "nb": 0.1667,
+      "indobert": 0.5
+    },
+    {
+      "kategori": "netral",
+      "n": 6,
+      "svm": 0.6667,
+      "logreg": 0.3333,
+      "nb": 0.6667,
+      "indobert": 0.3333
+    },
+    {
+      "kategori": "pendek",
+      "n": 6,
+      "svm": 0.8333,
+      "logreg": 0.8333,
+      "nb": 0.8333,
+      "indobert": 0.8333
+    },
+    {
+      "kategori": "emoji",
+      "n": 4,
+      "svm": 1.0,
+      "logreg": 1.0,
+      "nb": 1.0,
+      "indobert": 1.0
+    }
+  ],
+  "butir": [
+    {
+      "kategori": "typo",
+      "teks": "aplikasi nya eror terus gak bsa di buka smpe skrng",
+      "label": "negative",
+      "alasan": "keluhan jelas walau banyak salah ketik",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "typo",
+      "teks": "knp sih tiap update mlh makin lemottt",
+      "label": "negative",
+      "alasan": "keluhan kecepatan dengan huruf berulang",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "typo",
+      "teks": "mantab bgt aplikasi nya mmbantu skali",
+      "label": "positive",
+      "alasan": "pujian dengan salah ketik",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "positive",
+        "nb": "positive",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "typo",
+      "teks": "udh 3x daftar tetep gagal terusss",
+      "label": "negative",
+      "alasan": "kegagalan berulang",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "typo",
+      "teks": "trimakasih aplikasiny sangat brguna",
+      "label": "positive",
+      "alasan": "ucapan terima kasih dengan salah ketik",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "positive",
+        "nb": "positive",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "typo",
+      "teks": "loading nya lamaaa bgtt bikin kesel",
+      "label": "negative",
+      "alasan": "keluhan kecepatan",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "typo",
+      "teks": "gampang di pake dan cepet prosesny",
+      "label": "positive",
+      "alasan": "pujian kemudahan",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "positive",
+        "nb": "positive",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "typo",
+      "teks": "kode otp gk prnah masuk ke hp saya",
+      "label": "negative",
+      "alasan": "keluhan verifikasi",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "typo",
+      "teks": "apk nya bgus tp kadang suka keluar sndiri",
+      "label": "neutral",
+      "alasan": "ada pujian dan keluhan sekaligus",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "neutral",
+        "nb": "neutral",
+        "indobert": "neutral"
+      }
+    },
+    {
+      "kategori": "typo",
+      "teks": "pelayanan nya oke bgt sih mnurut sya",
+      "label": "positive",
+      "alasan": "pujian layanan",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "positive",
+        "nb": "positive",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "slang",
+      "teks": "apknya ngebug mulu anjir capek gw",
+      "label": "negative",
+      "alasan": "keluhan dengan bahasa gaul",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "slang",
+      "teks": "gaje banget nih apk, gabisa dibuka",
+      "label": "negative",
+      "alasan": "singkatan gaje dan gabisa",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "slang",
+      "teks": "mantul lah pokoknya, gampang bgt dipake",
+      "label": "positive",
+      "alasan": "mantul berarti pujian",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "positive",
+        "nb": "positive",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "slang",
+      "teks": "btw ini kenapa sih ga bisa login mulu",
+      "label": "negative",
+      "alasan": "keluhan login",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "slang",
+      "teks": "okelah lumayan ngebantu sih buat cek jadwal",
+      "label": "positive",
+      "alasan": "pujian dengan nada santai",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "positive",
+        "nb": "positive",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "slang",
+      "teks": "sumpah ribet parah harus verif muka segala",
+      "label": "negative",
+      "alasan": "keluhan proses verifikasi",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "slang",
+      "teks": "gokil sih fiturnya lengkap bener",
+      "label": "positive",
+      "alasan": "gokil sebagai pujian",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "positive",
+        "nb": "positive",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "slang",
+      "teks": "males bgt dah update mulu tiap minggu",
+      "label": "negative",
+      "alasan": "keluhan pembaruan",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "slang",
+      "teks": "nunggu bentar udah kelar, gas terus",
+      "label": "positive",
+      "alasan": "pujian kecepatan",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "positive",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "slang",
+      "teks": "nih apk bikin emosi jiwa, gabisa daftar",
+      "label": "negative",
+      "alasan": "keluhan pendaftaran",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "negasi",
+      "teks": "tidak buruk, cukup membantu untuk cek saldo",
+      "label": "positive",
+      "alasan": "negasi ganda yang bernada positif",
+      "jawab": {
+        "svm": "neutral",
+        "logreg": "neutral",
+        "nb": "positive",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "negasi",
+      "teks": "tidak bisa login sama sekali sejak kemarin",
+      "label": "negative",
+      "alasan": "keluhan akses",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "negasi",
+      "teks": "bukan aplikasi yang jelek, hanya perlu perbaikan kecil",
+      "label": "positive",
+      "alasan": "penilaian positif dengan catatan",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "negasi",
+      "teks": "saya tidak pernah punya masalah dengan aplikasi ini",
+      "label": "positive",
+      "alasan": "pengalaman tanpa keluhan",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "negasi",
+      "teks": "tidak ada notifikasi yang masuk sejak update terakhir",
+      "label": "negative",
+      "alasan": "fitur tidak berfungsi",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "neutral"
+      }
+    },
+    {
+      "kategori": "negasi",
+      "teks": "aplikasi ini tidak mengecewakan sejauh ini",
+      "label": "positive",
+      "alasan": "negasi dari kata negatif",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "positive",
+        "nb": "positive",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "negasi",
+      "teks": "tidak jelas cara daftarnya, tidak ada panduan",
+      "label": "negative",
+      "alasan": "dua keluhan sekaligus",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "negasi",
+      "teks": "belum pernah gagal sekalipun waktu pesan tiket",
+      "label": "positive",
+      "alasan": "belum pernah gagal berarti puas",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "negative",
+        "nb": "positive",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "negasi",
+      "teks": "kurang lebih sama saja dengan aplikasi sebelumnya",
+      "label": "neutral",
+      "alasan": "perbandingan tanpa nada jelas",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "neutral"
+      }
+    },
+    {
+      "kategori": "negasi",
+      "teks": "tidak sulit dipakai, menunya mudah dimengerti",
+      "label": "positive",
+      "alasan": "kemudahan pakai",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "positive",
+        "nb": "positive",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "sarkasme",
+      "teks": "bagus sekali, seminggu error terus tiap dibuka",
+      "label": "negative",
+      "alasan": "pujian palsu diikuti keluhan",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "positive",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "sarkasme",
+      "teks": "mantap, sudah update malah tambah lemot",
+      "label": "negative",
+      "alasan": "pujian palsu diikuti keluhan",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "sarkasme",
+      "teks": "hebat ya, antrean online tapi tetap disuruh datang pagi",
+      "label": "negative",
+      "alasan": "sindiran layanan",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "sarkasme",
+      "teks": "terima kasih sudah bikin saya bolak balik ke kantor",
+      "label": "negative",
+      "alasan": "sindiran berterima kasih",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "positive",
+        "nb": "negative",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "sarkasme",
+      "teks": "canggih banget sampai saldo saya hilang sendiri",
+      "label": "negative",
+      "alasan": "sindiran fitur",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "neutral",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "sarkasme",
+      "teks": "luar biasa, verifikasi wajah gagal 10 kali berturut turut",
+      "label": "negative",
+      "alasan": "sindiran verifikasi",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "sarkasme",
+      "teks": "aplikasi terbaik untuk menguji kesabaran pengguna",
+      "label": "negative",
+      "alasan": "sindiran halus",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "negative",
+        "nb": "positive",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "sarkasme",
+      "teks": "wow, loading 5 menit untuk lihat satu halaman",
+      "label": "negative",
+      "alasan": "sindiran kecepatan",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "positive",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "campuran",
+      "teks": "fiturnya lengkap tapi sering error saat jam sibuk",
+      "label": "neutral",
+      "alasan": "pujian dan keluhan seimbang",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "positive",
+        "nb": "positive",
+        "indobert": "neutral"
+      }
+    },
+    {
+      "kategori": "campuran",
+      "teks": "tampilan bagus, sayangnya login masih sering gagal",
+      "label": "neutral",
+      "alasan": "pujian dan keluhan seimbang",
+      "jawab": {
+        "svm": "neutral",
+        "logreg": "neutral",
+        "nb": "neutral",
+        "indobert": "neutral"
+      }
+    },
+    {
+      "kategori": "campuran",
+      "teks": "lumayan membantu walaupun kadang lambat",
+      "label": "neutral",
+      "alasan": "pujian dengan catatan",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "neutral",
+        "nb": "positive",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "campuran",
+      "teks": "sudah cukup baik, tinggal perbaiki notifikasi saja",
+      "label": "neutral",
+      "alasan": "pujian dengan saran",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "positive",
+        "nb": "positive",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "campuran",
+      "teks": "bagus untuk cek jadwal, kurang bagus untuk pembayaran",
+      "label": "neutral",
+      "alasan": "dua sisi",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "positive",
+        "nb": "positive",
+        "indobert": "neutral"
+      }
+    },
+    {
+      "kategori": "campuran",
+      "teks": "senang ada aplikasi ini, tapi tolong ukuran filenya dikecilkan",
+      "label": "neutral",
+      "alasan": "pujian dengan permintaan",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "positive",
+        "nb": "positive",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "netral",
+      "teks": "apakah aplikasi ini bisa dipakai di dua nomor berbeda",
+      "label": "neutral",
+      "alasan": "pertanyaan tanpa nada",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "neutral",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "netral",
+      "teks": "tolong tambahkan fitur riwayat pembayaran",
+      "label": "neutral",
+      "alasan": "saran tanpa keluhan",
+      "jawab": {
+        "svm": "neutral",
+        "logreg": "neutral",
+        "nb": "positive",
+        "indobert": "neutral"
+      }
+    },
+    {
+      "kategori": "netral",
+      "teks": "saya baru pasang aplikasi ini hari ini",
+      "label": "neutral",
+      "alasan": "informasi tanpa penilaian",
+      "jawab": {
+        "svm": "neutral",
+        "logreg": "positive",
+        "nb": "neutral",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "netral",
+      "teks": "cara ganti nomor telepon bagaimana ya",
+      "label": "neutral",
+      "alasan": "pertanyaan tanpa nada",
+      "jawab": {
+        "svm": "neutral",
+        "logreg": "neutral",
+        "nb": "neutral",
+        "indobert": "neutral"
+      }
+    },
+    {
+      "kategori": "netral",
+      "teks": "versi terbaru butuh ruang penyimpanan berapa",
+      "label": "neutral",
+      "alasan": "pertanyaan teknis",
+      "jawab": {
+        "svm": "neutral",
+        "logreg": "positive",
+        "nb": "neutral",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "netral",
+      "teks": "mohon informasi jam layanan call center",
+      "label": "neutral",
+      "alasan": "permintaan informasi",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "positive",
+        "nb": "negative",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "pendek",
+      "teks": "mantap",
+      "label": "positive",
+      "alasan": "pujian satu kata",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "positive",
+        "nb": "positive",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "pendek",
+      "teks": "lemot",
+      "label": "negative",
+      "alasan": "keluhan satu kata",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "pendek",
+      "teks": "biasa aja",
+      "label": "neutral",
+      "alasan": "penilaian netral",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "positive",
+        "nb": "positive",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "pendek",
+      "teks": "payah",
+      "label": "negative",
+      "alasan": "keluhan satu kata",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "pendek",
+      "teks": "bagus banget",
+      "label": "positive",
+      "alasan": "pujian singkat",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "positive",
+        "nb": "positive",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "pendek",
+      "teks": "ga guna",
+      "label": "negative",
+      "alasan": "keluhan singkat",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "emoji",
+      "teks": "👍👍👍",
+      "label": "positive",
+      "alasan": "jempol tanpa teks",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "positive",
+        "nb": "positive",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "emoji",
+      "teks": "😡 aplikasi apa ini",
+      "label": "negative",
+      "alasan": "emoji marah dengan keluhan",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    },
+    {
+      "kategori": "emoji",
+      "teks": "terima kasih 🙏 sangat membantu",
+      "label": "positive",
+      "alasan": "emoji syukur dengan pujian",
+      "jawab": {
+        "svm": "positive",
+        "logreg": "positive",
+        "nb": "positive",
+        "indobert": "positive"
+      }
+    },
+    {
+      "kategori": "emoji",
+      "teks": "😭 sudah seminggu tidak bisa masuk",
+      "label": "negative",
+      "alasan": "emoji sedih dengan keluhan",
+      "jawab": {
+        "svm": "negative",
+        "logreg": "negative",
+        "nb": "negative",
+        "indobert": "negative"
+      }
+    }
+  ]
+}

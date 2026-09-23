@@ -1,0 +1,237 @@
+{
+  "sumber_paper": {
+    "sitasi": "Isnan, M. dan Pardamean, B. (2026). IGAR: Indonesian government applications review for sentiment analysis dataset. Data in Brief, 66, 112708.",
+    "doi": "10.1016/j.dib.2026.112708",
+    "setelan": "TF-IDF maksimal 5000 fitur, Random Forest dan LinearSVC bawaan, tanpa penyetelan. Cara memisah data dan cara merata-rata skor tidak disebut di paper."
+  },
+  "kesepakatan_bintang_vader": {
+    "n": 617722,
+    "kappa": 0.3338,
+    "kecocokan": 0.5865,
+    "paper_kappa": 0.33,
+    "paper_kecocokan": 0.5865,
+    "silang": [
+      [
+        100703,
+        85653,
+        60542
+      ],
+      [
+        7162,
+        12350,
+        14863
+      ],
+      [
+        11868,
+        75326,
+        249255
+      ]
+    ]
+  },
+  "vader_di_test_kami": {
+    "accuracy": 0.504,
+    "precision_weighted": 0.6931,
+    "recall_weighted": 0.504,
+    "f1_weighted": 0.5485,
+    "f1_macro": 0.4372,
+    "n_test": 36227
+  },
+  "per_app": [
+    {
+      "app": "satusehat",
+      "paper_linearsvc": {
+        "accuracy": 0.87,
+        "precision": 0.87,
+        "recall": 0.87,
+        "f1": 0.87
+      },
+      "acak": {
+        "accuracy": 0.8399,
+        "precision_weighted": 0.8086,
+        "recall_weighted": 0.8399,
+        "f1_weighted": 0.8119,
+        "f1_macro": 0.589,
+        "n_train": 152556,
+        "n_test": 38140,
+        "fit_seconds": 29.1
+      },
+      "kunci_teks": {
+        "accuracy": 0.7984,
+        "precision_weighted": 0.7667,
+        "recall_weighted": 0.7984,
+        "f1_weighted": 0.7637,
+        "f1_macro": 0.5609,
+        "n_train": 97817,
+        "n_test": 12290,
+        "fit_seconds": 4.6
+      }
+    },
+    {
+      "app": "BMKG",
+      "paper_linearsvc": {
+        "accuracy": 0.88,
+        "precision": 0.88,
+        "recall": 0.88,
+        "f1": 0.87
+      },
+      "acak": {
+        "accuracy": 0.8604,
+        "precision_weighted": 0.8391,
+        "recall_weighted": 0.8604,
+        "f1_weighted": 0.8146,
+        "f1_macro": 0.3419,
+        "n_train": 1056,
+        "n_test": 265,
+        "fit_seconds": 0.0
+      },
+      "kunci_teks": {
+        "accuracy": 0.7937,
+        "precision_weighted": 0.7676,
+        "recall_weighted": 0.7937,
+        "f1_weighted": 0.7484,
+        "f1_macro": 0.3922,
+        "n_train": 510,
+        "n_test": 63,
+        "fit_seconds": 0.0
+      }
+    },
+    {
+      "app": "KAI",
+      "paper_linearsvc": {
+        "accuracy": 0.81,
+        "precision": 0.81,
+        "recall": 0.81,
+        "f1": 0.81
+      },
+      "acak": {
+        "accuracy": 0.7608,
+        "precision_weighted": 0.725,
+        "recall_weighted": 0.7608,
+        "f1_weighted": 0.7393,
+        "f1_macro": 0.5813,
+        "n_train": 5848,
+        "n_test": 1463,
+        "fit_seconds": 0.1
+      },
+      "kunci_teks": {
+        "accuracy": 0.7711,
+        "precision_weighted": 0.747,
+        "recall_weighted": 0.7711,
+        "f1_weighted": 0.7546,
+        "f1_macro": 0.6165,
+        "n_train": 4354,
+        "n_test": 533,
+        "fit_seconds": 0.0
+      }
+    },
+    {
+      "app": "pertamina",
+      "paper_linearsvc": {
+        "accuracy": 0.88,
+        "precision": 0.88,
+        "recall": 0.88,
+        "f1": 0.88
+      },
+      "acak": {
+        "accuracy": 0.9013,
+        "precision_weighted": 0.8818,
+        "recall_weighted": 0.9013,
+        "f1_weighted": 0.8875,
+        "f1_macro": 0.6105,
+        "n_train": 77032,
+        "n_test": 19259,
+        "fit_seconds": 5.0
+      },
+      "kunci_teks": {
+        "accuracy": 0.8878,
+        "precision_weighted": 0.8652,
+        "recall_weighted": 0.8878,
+        "f1_weighted": 0.8718,
+        "f1_macro": 0.5751,
+        "n_train": 53617,
+        "n_test": 6790,
+        "fit_seconds": 1.1
+      }
+    },
+    {
+      "app": "mobileJKN",
+      "paper_linearsvc": {
+        "accuracy": 0.89,
+        "precision": 0.89,
+        "recall": 0.89,
+        "f1": 0.89
+      },
+      "acak": {
+        "accuracy": 0.8648,
+        "precision_weighted": 0.8293,
+        "recall_weighted": 0.8648,
+        "f1_weighted": 0.8373,
+        "f1_macro": 0.606,
+        "n_train": 97682,
+        "n_test": 24421,
+        "fit_seconds": 27.4
+      },
+      "kunci_teks": {
+        "accuracy": 0.8224,
+        "precision_weighted": 0.7757,
+        "recall_weighted": 0.8224,
+        "f1_weighted": 0.7891,
+        "f1_macro": 0.581,
+        "n_train": 56503,
+        "n_test": 7117,
+        "fit_seconds": 2.0
+      }
+    },
+    {
+      "app": "JMO",
+      "paper_linearsvc": {
+        "accuracy": 0.92,
+        "precision": 0.92,
+        "recall": 0.92,
+        "f1": 0.92
+      },
+      "acak": {
+        "accuracy": 0.9002,
+        "precision_weighted": 0.8783,
+        "recall_weighted": 0.9002,
+        "f1_weighted": 0.8821,
+        "f1_macro": 0.6031,
+        "n_train": 160000,
+        "n_test": 40000,
+        "fit_seconds": 63.2
+      },
+      "kunci_teks": {
+        "accuracy": 0.853,
+        "precision_weighted": 0.8374,
+        "recall_weighted": 0.853,
+        "f1_weighted": 0.8322,
+        "f1_macro": 0.6116,
+        "n_train": 75974,
+        "n_test": 9434,
+        "fit_seconds": 3.0
+      }
+    }
+  ],
+  "semua_app": {
+    "acak": {
+      "accuracy": 0.8686,
+      "precision_weighted": 0.8557,
+      "recall_weighted": 0.8686,
+      "f1_weighted": 0.845,
+      "f1_macro": 0.6015,
+      "n_train": 494177,
+      "n_test": 123545,
+      "fit_seconds": 106.0
+    },
+    "kunci_teks": {
+      "accuracy": 0.8279,
+      "precision_weighted": 0.813,
+      "recall_weighted": 0.8279,
+      "f1_weighted": 0.7983,
+      "f1_macro": 0.574,
+      "n_train": 288775,
+      "n_test": 36227,
+      "fit_seconds": 29.5
+    }
+  }
+}

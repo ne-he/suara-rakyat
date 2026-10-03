@@ -35,6 +35,8 @@ export async function POST(request: Request) {
   const items = texts.map((text) => {
     if (!text.trim()) return { label: null, confidence: null };
     const p = predict(text);
+    // tidak ada satu pun kata yang dikenali: jangan dipaksa diberi nada dari bias model
+    if (p.empty) return { label: null, confidence: null };
     counts[p.label] += 1;
     const seen = new Set<string>();
     for (const t of p.tokens) {

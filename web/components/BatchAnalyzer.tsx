@@ -252,7 +252,15 @@ export default function BatchAnalyzer() {
       {result && sent && (
         <div className="rise space-y-6" aria-live="polite">
           <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-            <Stat k="Ulasan dibaca" v={nf.format(total)} s={`selesai dalam ${(result.ms / 1000).toFixed(2).replace(".", ",")} detik`} />
+            <Stat
+              k="Ulasan dibaca"
+              v={nf.format(total)}
+              s={
+                result.n > total
+                  ? `${nf.format(result.n - total)} tidak terbaca (tanpa kata yang dikenali)`
+                  : `selesai dalam ${(result.ms / 1000).toFixed(2).replace(".", ",")} detik`
+              }
+            />
             {LABELS.map((l) => (
               <Stat key={l} k={LABEL_ID[l]} v={total ? pct(result.counts[l] / total) : "0%"} s={`${nf.format(result.counts[l])} ulasan`} dot={CLASS_HEX[l]} />
             ))}
@@ -315,7 +323,7 @@ export default function BatchAnalyzer() {
                 type="button"
                 onClick={() => {
                   const extra = ["nada", "keyakinan"];
-                  const rows = sent.rows.map((r, i) => [...r, result.items[i]?.label ? LABEL_ID[result.items[i].label!] : "", result.items[i]?.confidence ?? ""]);
+                  const rows = sent.rows.map((r, i) => [...r, result.items[i]?.label ? LABEL_ID[result.items[i].label!] : "tidak terbaca", result.items[i]?.confidence ?? ""]);
                   downloadCsv([[...sent.header, ...extra], ...rows], "hasil-suara-rakyat.csv");
                 }}
                 className="rounded-sm bg-aspal px-4 py-2 text-sm text-putih shadow-[3px_3px_0_var(--merah)] transition hover:-translate-y-0.5"
@@ -339,6 +347,7 @@ export default function BatchAnalyzer() {
                       <td className="px-4 py-2 align-top font-mono text-xs text-abu">{i + 1}</td>
                       <td className="px-4 py-2 align-top">{t.length > 180 ? `${t.slice(0, 180)}...` : t}</td>
                       <td className="whitespace-nowrap px-4 py-2 align-top">
+                        {!it.label && <span className="text-abu">tidak terbaca</span>}
                         {it.label && (
                           <span className="inline-flex items-center gap-1.5">
                             <span className="h-2.5 w-2.5 rounded-full" style={{ background: CLASS_HEX[it.label] }} aria-hidden />

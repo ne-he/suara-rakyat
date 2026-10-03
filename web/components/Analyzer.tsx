@@ -152,7 +152,16 @@ export default function Analyzer() {
             <p className="mt-2 text-sm text-abu">Tulis ulasan lalu tekan Baca nadanya.</p>
           </div>
         )}
-        {result && (
+        {result?.empty && (
+          <section className="rise rounded-xl border-2 border-dashed border-aspal/40 bg-white p-6" aria-label="Hasil baca" data-hasil="kosong">
+            <p className="display text-4xl text-abu">Tidak terbaca</p>
+            <p className="mt-3 text-sm leading-relaxed text-aspal-2">
+              Tidak ada kata yang dikenali, jadi nadanya tidak ditebak. Coba tulis ulasan dalam bahasa Indonesia yang lebih lengkap, misalnya apa yang
+              terjadi saat memakai aplikasinya.
+            </p>
+          </section>
+        )}
+        {result && !result.empty && (
           <section className="rise rounded-xl border-2 border-aspal bg-white p-5 shadow-[6px_6px_0_var(--aspal)]" aria-label="Hasil baca">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div className="max-w-[16rem]">
@@ -186,43 +195,37 @@ export default function Analyzer() {
               ))}
             </div>
 
-            {result.empty ? (
-              <p className="mt-5 rounded-lg bg-kertas p-3 text-sm text-aspal-2">
-                Tidak ada kata yang dikenali, jadi hasil ini cuma tebakan dari pola umum. Coba tulis ulasan yang lebih lengkap.
+            <div className="mt-6">
+              <p className="kicker text-abu">Kata yang menentukan hasil</p>
+              <p className="mt-1 text-xs text-abu">Makin tebal warnanya, makin besar pengaruhnya. Kata yang dicoret menahan hasil ini.</p>
+              <p className="mt-2 flex flex-wrap gap-x-1.5 gap-y-2 text-[15px] leading-7" data-kata>
+                {result.tokens.map((t, i) => {
+                  const strength = Math.min(1, Math.abs(t.weight) / maxAbs);
+                  const toward = t.weight > 0;
+                  return (
+                    <span
+                      key={i}
+                      title={toward ? `Mendorong ke ${LABEL_ID[result.label]}` : `Menahan ${LABEL_ID[result.label]}`}
+                      className="rounded px-1"
+                      style={{
+                        background: toward ? `color-mix(in srgb, ${COLOR[result.label]} ${Math.round(strength * 34)}%, transparent)` : "transparent",
+                        textDecoration: !toward && strength > 0.25 ? "line-through" : undefined,
+                        color: strength > 0.05 ? "var(--aspal)" : "var(--abu)",
+                      }}
+                    >
+                      {t.token}
+                    </span>
+                  );
+                })}
               </p>
-            ) : (
-              <div className="mt-6">
-                <p className="kicker text-abu">Kata yang menentukan hasil</p>
-                <p className="mt-1 text-xs text-abu">Makin tebal warnanya, makin besar pengaruhnya. Kata yang dicoret menahan hasil ini.</p>
-                <p className="mt-2 flex flex-wrap gap-x-1.5 gap-y-2 text-[15px] leading-7" data-kata>
-                  {result.tokens.map((t, i) => {
-                    const strength = Math.min(1, Math.abs(t.weight) / maxAbs);
-                    const toward = t.weight > 0;
-                    return (
-                      <span
-                        key={i}
-                        title={toward ? `Mendorong ke ${LABEL_ID[result.label]}` : `Menahan ${LABEL_ID[result.label]}`}
-                        className="rounded px-1"
-                        style={{
-                          background: toward ? `color-mix(in srgb, ${COLOR[result.label]} ${Math.round(strength * 34)}%, transparent)` : "transparent",
-                          textDecoration: !toward && strength > 0.25 ? "line-through" : undefined,
-                          color: strength > 0.05 ? "var(--aspal)" : "var(--abu)",
-                        }}
-                      >
-                        {t.token}
-                      </span>
-                    );
-                  })}
+              {topDrivers.length > 0 && (
+                <p className="mt-4 text-sm text-aspal-2">
+                  Paling mendorong ke <b style={{ color: COLOR[result.label] }}>{LABEL_ID[result.label].toLowerCase()}</b>:{" "}
+                  {topDrivers.map((t) => `"${t.token}"`).join(", ")}
                 </p>
-                {topDrivers.length > 0 && (
-                  <p className="mt-4 text-sm text-aspal-2">
-                    Paling mendorong ke <b style={{ color: COLOR[result.label] }}>{LABEL_ID[result.label].toLowerCase()}</b>:{" "}
-                    {topDrivers.map((t) => `"${t.token}"`).join(", ")}
-                  </p>
-                )}
-                <p className="mt-2 text-xs text-abu">Singkatan seperti gk, bgt, udh sudah diubah ke bentuk bakunya sebelum dibaca.</p>
-              </div>
-            )}
+              )}
+              <p className="mt-2 text-xs text-abu">Singkatan seperti gk, bgt, udh sudah diubah ke bentuk bakunya sebelum dibaca.</p>
+            </div>
 
             <div className="mt-6 flex flex-wrap items-center gap-3 border-t-2 border-dashed border-aspal/20 pt-4">
               <button

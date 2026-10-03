@@ -1,4 +1,4 @@
-import { loadModels, predictOne } from "@/lib/model";
+import { predict } from "@/lib/model";
 import { clientIp, limited, tooMany } from "@/lib/ratelimit";
 
 export const runtime = "nodejs";
@@ -16,16 +16,13 @@ export async function POST(request: Request) {
   const raw = await request.text();
   if (raw.length > MAX_BODY_BYTES) return Response.json({ error: "Data terlalu besar. Maksimal 1.000 ulasan per kiriman." }, { status: 413 });
 
-  let body: { texts?: unknown; model?: unknown };
+  let body: { texts?: unknown };
   try {
     const parsed: unknown = JSON.parse(raw);
     body = parsed && typeof parsed === "object" ? (parsed as typeof body) : {};
   } catch {
-    return Response.json({ error: 'Format harus JSON: {"texts": ["..."], "model": "svm"}' }, { status: 400 });
+    return Response.json({ error: 'Format harus JSON: {"texts": ["..."]}' }, { status: 400 });
   }
-  const { meta } = loadModels();
-  const model = typeof body.model === "string" ? body.model : meta.default_model;
-  if (!meta.models.some((m) => m.id === model)) return Response.json({ error: "Model tidak dikenal." }, { status: 400 });
   if (!Array.isArray(body.texts) || body.texts.length === 0) return Response.json({ error: "Belum ada ulasan yang dikirim." }, { status: 400 });
   if (body.texts.length > MAX_TEXTS) return Response.json({ error: `Maksimal ${MAX_TEXTS} ulasan per kiriman.` }, { status: 400 });
   if (!body.texts.every((t) => typeof t === "string")) return Response.json({ error: "Setiap ulasan harus berupa teks." }, { status: 400 });
@@ -37,7 +34,7 @@ export async function POST(request: Request) {
   const words: Record<Label, Map<string, { score: number; docs: number }>> = { negative: new Map(), neutral: new Map(), positive: new Map() };
   const items = texts.map((text) => {
     if (!text.trim()) return { label: null, confidence: null };
-    const p = predictOne(text, model);
+    const p = predict(text);
     counts[p.label] += 1;
     const seen = new Set<string>();
     for (const t of p.tokens) {
@@ -62,5 +59,5 @@ export async function POST(request: Request) {
         .map(([token, e]) => ({ token, score: Math.round(e.score * 100) / 100, docs: e.docs })),
     ]),
   );
-  return Response.json({ model, n: texts.length, counts, items, top, ms: Math.round(performance.now() - t0) });
+  return Response.json({ n: texts.length, counts, items, top, ms: Math.round(performance.now() - t0) });
 }

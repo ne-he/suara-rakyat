@@ -1,5 +1,7 @@
-// Label sekumpulan teks dengan 3 model web, lewat kode yang persis sama dengan API.
-// Dipakai skrip Python (uji tahan bahasa, lembar anotasi) supaya hasilnya identik dengan yang dilihat pengunjung.
+// Label sekumpulan teks dengan model yang tersimpan di web/model, lewat kode yang persis sama dengan API.
+// Dipakai skrip Python (uji tahan bahasa, lembar anotasi, evaluasi laporan) supaya hasil model web identik
+// dengan yang dilihat pengunjung. Model web hanya Linear SVM, Logistic Regression dan Naive Bayes ikut
+// dihitung untuk perbandingan di laporan.
 // Jalankan: npx tsx scripts/label-file.ts masuk.json keluar.json
 // masuk.json berisi array teks. keluar.json berisi array { svm, logreg, nb } dengan label dan peluang.
 

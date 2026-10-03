@@ -1,8 +1,9 @@
-// Inferensi 3 model linear TF-IDF (kata + karakter) hasil export ml/scripts/05_export_web.py.
+// Inferensi model linear TF-IDF (kata + karakter) hasil export ml/scripts/05_export_web.py.
 // Rumus fitur sama dengan ml/suara_ml/features.py:
 //   tf = 1 + ln(count), x = tf * idf, dinormalisasi L2 per blok (kata, karakter).
 // Skor kelas = W x + b + bias, probabilitas = softmax(skor / T).
-// Fitur dihitung sekali, lalu dipakai semua model. Model kata (Naive Bayes) cuma membaca blok kata.
+// Web hanya memakai satu model (meta.default_model, Linear SVM). Bobot Logistic Regression dan
+// Naive Bayes ikut disimpan untuk uji paritas dan evaluasi laporan, dibaca hanya kalau diminta.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -66,10 +67,11 @@ export type Prediction = {
 
 type Loaded = {
   meta: ModelMeta;
+  dir: string;
   wordIndex: Map<string, number>;
   charIndex: Map<string, number>;
   idf: Float32Array;
-  coef: Map<string, Float32Array>; // [kelas * n_cols], baris per kelas
+  coef: Map<string, Float32Array>; // [kelas * n_cols], baris per kelas, diisi saat model pertama kali dipakai
 };
 
 let cached: Loaded | null = null;
@@ -101,18 +103,19 @@ export function loadModels(dir = path.join(process.cwd(), "model")): Loaded {
   const charIndex = readVocab(path.join(dir, "vocab_char.txt"), meta.n_char);
   const idf = readFloat32(path.join(dir, "idf.f32"));
   if (idf.length !== nFeat) throw new Error("ukuran idf tidak cocok dengan meta.json");
-  const coef = new Map<string, Float32Array>();
-  for (const m of meta.models) {
-    const w = readFloat32(path.join(dir, `coef_${m.id}.f32`));
-    if (w.length !== m.n_cols * meta.labels.length) throw new Error(`ukuran coef_${m.id} tidak cocok`);
-    coef.set(m.id, w);
-  }
-  cached = { meta, wordIndex, charIndex, idf, coef };
+  cached = { meta, dir, wordIndex, charIndex, idf, coef: new Map() };
   return cached;
 }
 
-export function modelIds(): string[] {
-  return loadModels().meta.models.map((m) => m.id);
+function coefOf(info: ModelInfo): Float32Array {
+  const loaded = loadModels();
+  let w = loaded.coef.get(info.id);
+  if (!w) {
+    w = readFloat32(path.join(loaded.dir, `coef_${info.id}.f32`));
+    if (w.length !== info.n_cols * loaded.meta.labels.length) throw new Error(`ukuran coef_${info.id} tidak cocok`);
+    loaded.coef.set(info.id, w);
+  }
+  return w;
 }
 
 type Entry = { idx: number; value: number; owners: number[] };
@@ -197,20 +200,25 @@ function run(info: ModelInfo, w: Float32Array, toks: string[], entries: Entry[],
   };
 }
 
-/** Prediksi satu model saja (dipakai uji kecepatan per model). */
+/** Prediksi satu model tertentu (dipakai uji kecepatan per model). */
 export function predictOne(text: string, id: string): Prediction {
-  const { meta, coef } = loadModels();
+  const { meta } = loadModels();
   const info = meta.models.find((m) => m.id === id);
   if (!info) throw new Error(`model ${id} tidak ada`);
   const { toks, entries } = featurize(text);
-  return run(info, coef.get(id)!, toks, entries, meta.labels);
+  return run(info, coefOf(info), toks, entries, meta.labels);
 }
 
-/** Prediksi semua model sekaligus (fitur dihitung sekali). */
+/** Prediksi model yang dipakai web. Satu-satunya jalur yang dipanggil halaman dan API. */
+export function predict(text: string): Prediction {
+  return predictOne(text, loadModels().meta.default_model);
+}
+
+/** Prediksi semua model sekaligus (fitur dihitung sekali). Hanya untuk uji paritas dan evaluasi laporan. */
 export function predictAll(text: string): Record<string, Prediction> {
-  const { meta, coef } = loadModels();
+  const { meta } = loadModels();
   const { toks, entries } = featurize(text);
   const out: Record<string, Prediction> = {};
-  for (const info of meta.models) out[info.id] = run(info, coef.get(info.id)!, toks, entries, meta.labels);
+  for (const info of meta.models) out[info.id] = run(info, coefOf(info), toks, entries, meta.labels);
   return out;
 }

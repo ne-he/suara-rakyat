@@ -1,10 +1,18 @@
 import type { NextConfig } from "next";
 
+// File bobot model dibaca lewat fs saat runtime, jadi wajib ikut dibundel ke fungsi serverless.
+// Hanya model bawaan (Linear SVM) yang dibawa. Bobot LR dan NB di folder model cuma dipakai skrip uji.
+const MODEL_FILES = ["./model/meta.json", "./model/vocab_word.txt", "./model/vocab_char.txt", "./model/idf.f32", "./model/coef_svm.f32"];
+const MODEL_LAIN = ["./model/coef_logreg.f32", "./model/coef_nb.f32"];
+
 const nextConfig: NextConfig = {
-  // file bobot model dibaca lewat fs saat runtime, jadi wajib ikut dibundel ke fungsi serverless
   outputFileTracingIncludes: {
-    "/api/predict": ["./model/**/*"],
-    "/api/predict-batch": ["./model/**/*"],
+    "/api/predict": MODEL_FILES,
+    "/api/predict-batch": MODEL_FILES,
+  },
+  outputFileTracingExcludes: {
+    "/api/predict": MODEL_LAIN,
+    "/api/predict-batch": MODEL_LAIN,
   },
   poweredByHeader: false,
   async headers() {

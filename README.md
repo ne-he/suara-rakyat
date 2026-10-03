@@ -1,6 +1,6 @@
 # Suara Rakyat
 
-Web untuk membaca nada ulasan aplikasi layanan publik (Mobile JKN, JMO, SatuSehat, MyPertamina, KAI Access, Info BMKG). Tulis satu ulasan, pilih salah satu dari tiga model, lalu web menampilkan label negatif, netral, atau positif, probabilitasnya, kata yang paling mendorong hasil itu, dan pendapat dua model lainnya.
+Web untuk membaca nada ulasan aplikasi layanan publik (Mobile JKN, JMO, SatuSehat, MyPertamina, KAI Access, Info BMKG). Tulis satu ulasan lalu tekan Baca nadanya. Web menampilkan nada negatif, netral, atau positif, seberapa yakin mesinnya dalam kata-kata, dan kata yang paling menentukan hasil. Dibuat untuk orang awam, jadi tidak ada pilihan model atau istilah teknis di layar.
 
 Projek AOL mata kuliah Software Engineering. Tim: Nehemiah, Marcel, Wilson, Hans, Daniel.
 
@@ -10,18 +10,22 @@ Isi web:
 
 | Halaman | Isi |
 |---|---|
-| `/` | cerita scroll, pita ulasan asli, formulir satu ulasan dengan pilihan model, tren keluhan per kuartal, panel bukti per model, papan perbandingan |
-| `/massal` | tempel atau unggah CSV sampai 1.000 ulasan, ringkasan nada, kata pendorong, unduh hasil CSV |
-| `/dashboard` | perbandingan semua model, contoh label yang bertabrakan, uji tahan bahasa, pembanding dari penelitian lain, unduh tabel CSV dan grafik PNG atau SVG |
+| `/` | cerita scroll, pita ulasan asli, panduan tiga langkah, formulir baca satu ulasan, porsi keluhan tiap aplikasi, cara kerja dan batasan dalam bahasa awam |
+| `/massal` | tempel atau unggah CSV sampai 1.000 ulasan, ringkasan nada, kata pendorong, saringan per nada, unduh hasil CSV |
+| `/dashboard` | ringkasan per aplikasi: porsi nada, rata-rata bintang, hal yang paling sering dikeluhkan dan dipuji, contoh ulasan, tren keluhan per kuartal |
 | `/kuesioner` | kuesioner SUS untuk evaluasi subjektif plus alat rekap jawaban tim |
 
-## Tiga model di web
+Versi sebelumnya disimpan di branch: `versi-lama` (v1.1), `versi-2`, dan `versi-3` (masih dengan pilihan tiga model dan dashboard perbandingan model).
+
+## Satu model di web, tiga dibandingkan di laporan
+
+Web hanya memakai Linear SVM. Logistic Regression dan Naive Bayes tetap dilatih dan dibandingkan untuk laporan, bobotnya disimpan di `web/model/` untuk uji paritas, tapi tidak ikut dibundel ke server. Alasan memilih Linear SVM selain skor: paling cepat dilatih ulang di antara model yang skornya setara (29 detik lawan 340 detik untuk Logistic Regression), bobot liniernya bisa langsung menunjukkan kata penentu ke pengguna, cukup jalan di server web gratis tanpa GPU, dan hasilnya sama persis dengan versi Python.
 
 Semua dites di 36.227 ulasan unik yang tidak pernah dilihat saat training.
 
 | Model | Fitur | Val macro-F1 | Test macro-F1 | Akurasi | Polaritas terbalik |
 |---|---|---|---|---|---|
-| Linear SVM (default) | kata + karakter | 0,665 | **0,668** | 82,7% | 6,6% |
+| Linear SVM (dipakai di web) | kata + karakter | 0,665 | **0,668** | 82,7% | 6,6% |
 | Logistic Regression | kata + karakter | 0,659 | 0,663 | 82,1% | 7,0% |
 | Naive Bayes (Multinomial) | kata | 0,647 | 0,651 | 79,6% | 7,4% |
 
@@ -36,7 +40,7 @@ Tabel lengkap 29 konfigurasi ada di `ml/reports/results.md`. Selisih macro-F1 te
 | Linear SVM dikurangi Naive Bayes | 0,012 sampai 0,022 | ya |
 | Linear SVM kata + karakter dikurangi SVM kata saja | -0,001 sampai 0,005 | tidak |
 
-Ketiga model memakai satu mesin fitur yang sama, jadi satu request menghitung fitur sekali lalu menjalankan ketiganya. Kecepatan baca per ulasan di laptop (11th Gen Intel(R) Core(TM) i5-11320H @ 3.20GHz, `npm run bench`): Linear SVM 0,21 ms, Logistic Regression 0,19 ms, Naive Bayes 0,18 ms, ketiganya sekaligus 0,23 ms.
+Ketiga model memakai satu mesin fitur yang sama. Kecepatan baca per ulasan di laptop (11th Gen Intel(R) Core(TM) i5-11320H @ 3.20GHz, `npm run bench`): Linear SVM 0,21 ms, Logistic Regression 0,19 ms, Naive Bayes 0,18 ms, ketiganya sekaligus 0,23 ms.
 
 ## Data dan cara membersihkannya
 
@@ -60,7 +64,7 @@ Geser bias kelas (dipilih di validation) menaikkan F1 netral Linear SVM di test 
 
 ## Evaluasi tambahan
 
-Tiga bukti di luar skor macro-F1 biasa, semuanya tampil di halaman `/dashboard`.
+Bukti di luar skor macro-F1 biasa. Angkanya dipakai di laporan (`ml/reports/`), tidak lagi ditampilkan di web karena web dibuat untuk orang awam.
 
 **Label yang bertabrakan** (`ml/scripts/11_label_kotor.py`). Ada 3.260 teks unik yang mendapat lebih dari satu label bintang, mencakup 224.664 ulasan. Contoh: kata "lambat" muncul 122 kali, 76 diberi bintang negatif dan 20 diberi bintang positif. Ini batas yang tidak bisa dilewati model mana pun.
 
@@ -83,7 +87,20 @@ Tiga bukti di luar skor macro-F1 biasa, semuanya tampil di halaman `/dashboard`.
 
 Jadi jarak antara angka paper (0,81 sampai 0,92 per aplikasi) dan angka kami muncul dari dua hal: metrik tertimbang lawan macro, dan ulasan kembar yang bocor antar bagian data. VADER sendiri, kalau dipakai sebagai model di data test kami, hanya mencapai macro-F1 0,437 dengan akurasi 50,4%.
 
-**Dibaca ulang manusia** (`ml/anotasi/`). Pembuat dataset menulis bahwa tiap ulasan hanya dinilai satu orang lewat bintang. `14_anotasi_siapkan.py` menyiapkan 300 ulasan test untuk dibaca ulang lima anggota tim tanpa melihat bintangnya, `15_anotasi_hitung.py` menghitung kappa Fleiss antar pembaca dan skor tiap model terhadap label pembaca. Begitu `web/data/anotasi.json` ada, bagiannya muncul sendiri di dashboard.
+**Dibaca ulang manusia** (`ml/anotasi/`). Pembuat dataset menulis bahwa tiap ulasan hanya dinilai satu orang lewat bintang. `14_anotasi_siapkan.py` menyiapkan 300 ulasan test untuk dibaca ulang lima anggota tim tanpa melihat bintangnya, `15_anotasi_hitung.py` menghitung kappa Fleiss antar pembaca dan skor tiap model terhadap label pembaca.
+
+**Cosine similarity** (`ml/scripts/17_cosine.py`, `ml/reports/cosine.json`). Dipakai dari empat sudut, semua di atas vektor TF-IDF kata yang sudah dinormalisasi L2:
+
+| Sudut | Hasil |
+|---|---|
+| Kemiripan pusat kelas di data latih | negatif dengan netral 0,92, netral dengan positif 0,61, negatif dengan positif 0,53. Ulasan netral nyaris tidak bisa dibedakan dari ulasan negatif, ini penjelasan kenapa F1 netral paling rendah |
+| Tetangga terdekat (5.000 ulasan uji lawan 288.775 ulasan latih) | median kemiripan maksimum 0,47, hanya 2,6% ulasan uji punya kembaran vektor di data latih. Tebakan dari 10 tetangga terdekat mencapai macro-F1 0,591, Linear SVM 0,666 di sampel yang sama |
+| Porsi nada per aplikasi, bintang lawan tebakan Linear SVM | cosine 0,993 sampai 0,9996 per aplikasi, rata-rata 0,993 per aplikasi per kuartal. Ringkasan nada di cek massal bisa dipercaya walau tebakan per ulasan kadang keliru |
+| Kesepakatan antar model | Linear SVM dan Logistic Regression rata-rata cosine peluang 0,992 dengan label sama 95,4%. Dengan Naive Bayes 0,967 (89,3%), dengan IndoBERTweet int8 0,966 (89,1%) |
+
+**Pengujian skenario** (`tests/skenario/`). 32 skenario black box dijalankan otomatis di Chromium lewat Playwright terhadap web live. Hasil terakhir 31 dari 32 lulus. Yang gagal adalah pembatas laju, yang tidak selalu terpicu di Vercel karena disimpan di memori tiap instance. Dua putaran sebelumnya menemukan dua cacat yang sudah diperbaiki: teks tanpa kata yang dikenali sempat diberi nada Positif, dan tombol Baca semua bisa ditekan sebelum ulasan contoh selesai dimuat. Detail di `tests/skenario/README.md`.
+
+**Kebutuhan dan wawancara** (`docs/`). Kebutuhan fungsional dan nonfungsional beserta ketertelusurannya ke skenario uji ada di `docs/kebutuhan-pengguna.md`. Pedoman wawancara pakar dan uji pakai pengguna ada di `docs/wawancara/`.
 
 ## Cara model dipilih
 
@@ -93,7 +110,7 @@ Jadi jarak antara angka paper (0,81 sampai 0,92 per aplikasi) dan angka kami mun
 
 ## Dari Python ke web
 
-Bobot tiga model, idf, dan kosakata diekspor ke `web/model/` (sekitar 16 MB). Rumus fitur ditulis ulang di TypeScript (`web/lib/textnorm.ts`, `web/lib/model.ts`), jadi web tidak butuh Python, GPU, atau layanan luar.
+Bobot tiga model, idf, dan kosakata diekspor ke `web/model/`. Fungsi serverless hanya membawa bobot Linear SVM, idf, dan kosakata. Rumus fitur ditulis ulang di TypeScript (`web/lib/textnorm.ts`, `web/lib/model.ts`), jadi web tidak butuh Python, GPU, atau layanan luar.
 
 Uji paritas (`npm run parity`) membandingkan prediksi TypeScript dengan Python untuk tiap model di 3.018 teks, termasuk 18 teks jebakan seperti emoji, huruf unicode aneh, URL, dan teks kosong. Hasil terakhir: 0 label berbeda di ketiga model, selisih probabilitas maksimal 0,00000065.
 
@@ -130,22 +147,24 @@ Uji kemulusan di Chromium dengan GPU Intel Iris Xe, scroll roda mouse naik turun
 ```
 ml/
   suara_ml/          normalisasi teks, fitur TF-IDF, metrik, pemanggil model web dan IndoBERT
-  scripts/           01_prepare sampai 15_anotasi_hitung, generator notebook Colab
+  scripts/           01_prepare sampai 17_cosine, generator notebook Colab
   eval/              kalimat uji tahan bahasa buatan tim
   anotasi/           lembar anotasi manusia, kunci, dan folder hasil
   notebooks/         indobert_colab.ipynb (fine-tune IndoBERT di GPU Colab)
   reports/           audit data, hasil semua run, seleksi final, confusion matrix
 web/
-  app/               halaman dan route /api/predict
-  components/        cerita scroll, formulir + pilihan model, panel bukti
-  lib/               port TypeScript normalisasi dan inferensi 3 model
-  model/             bobot model hasil export
-  data/              ringkasan dataset dan papan peringkat untuk halaman
+  app/               halaman dan route /api/predict, /api/predict-batch
+  components/        cerita scroll, formulir baca ulasan, cek massal, dashboard aplikasi, kuesioner
+  lib/               port TypeScript normalisasi dan inferensi model
+  model/             bobot model hasil export (web memakai Linear SVM)
+  data/              ringkasan dataset, data dashboard per aplikasi, tren, pita ulasan
   scripts/           uji paritas (npm run parity) dan uji kecepatan (npm run bench)
-  app/massal, app/dashboard, app/kuesioner    halaman cek massal, dashboard model, kuesioner SUS
+  app/massal, app/dashboard, app/kuesioner    halaman cek massal, dashboard aplikasi, kuesioner SUS
+tests/skenario/      pengujian skenario black box (Playwright) dan hasilnya
 tools/frames/        pemotong video jadi frame + scenes.json (potongan dan porsi scroll)
 indobert-api/        server IndoBERTweet int8 (FastAPI + onnxruntime + Dockerfile)
-docs/diagram/        kerangka berpikir, use case, class diagram, sequence (SVG + PNG) dan skrip pembuatnya
+docs/diagram/        kerangka berpikir, alur praproses, Waterfall, use case, class, sequence, activity (SVG + PNG)
+docs/                kebutuhan pengguna, pedoman wawancara pakar dan pengguna
 ```
 
 Draf laporan dan bahan presentasi ada di folder `laporan/` yang sengaja tidak ikut ke repo publik.
@@ -169,9 +188,11 @@ python 11_label_kotor.py
 python 12_uji_tahan.py
 python 13_pembanding_luar.py
 python 14_anotasi_siapkan.py
+python 16_dashboard_aplikasi.py
+python 17_cosine.py
 ```
 
-`09_web_extras.py` menyiapkan pita ulasan, data tren per kuartal, dan file contoh untuk cek massal. Skrip 11 sampai 13 mengisi bagian bukti tambahan di dashboard. Skrip 14 membuat lembar anotasi, dan `15_anotasi_hitung.py` dijalankan setelah lembarnya terisi. Skrip 12 dan 14 memanggil model web lewat `web/scripts/label-file.ts`, jadi `npm install` di folder `web` harus sudah dijalankan.
+`09_web_extras.py` menyiapkan pita ulasan, data tren per kuartal, dan file contoh untuk cek massal. `16_dashboard_aplikasi.py` menyiapkan data halaman dashboard. Skrip 11 sampai 13 dan 17 menghasilkan bukti tambahan untuk laporan. Skrip 14 membuat lembar anotasi, dan `15_anotasi_hitung.py` dijalankan setelah lembarnya terisi. Skrip 12, 14, dan 16 memanggil model web lewat `web/scripts/label-file.ts`, jadi `npm install` di folder `web` harus sudah dijalankan.
 
 Diagram untuk laporan dibuat terpisah:
 
@@ -187,6 +208,15 @@ npm install
 npm run parity
 npm run bench
 npm run dev
+```
+
+Pengujian skenario:
+
+```bash
+pip install playwright
+python -m playwright install chromium
+python tests/skenario/jalankan.py                               # web live
+python tests/skenario/jalankan.py http://localhost:3000 lokal   # server lokal
 ```
 
 `03_models.py` makan waktu sekitar 1 jam di CPU 8 core. Paling lama LightGBM (18 menit) dan Logistic Regression kata + karakter C=8 (16 menit).
@@ -206,7 +236,7 @@ Notebook `ml/notebooks/indobert_colab.ipynb` melatih IndoBERTweet (`indolem/indo
 | Kecepatan baca per ulasan (CPU laptop) | 19,6 ms (ONNX int8) | 0,21 ms |
 | Ukuran model | 111,3 MB (int8) | sekitar 9 MB bobot + kosakata |
 
-IndoBERTweet unggul sekitar 0,02 macro-F1 dan selisihnya signifikan. Model ini belum dipasang di web karena jauh lebih berat. Versi int8 setuju dengan versi penuh di 96,6% dari 3.000 ulasan test, tapi macro-F1 turun dari 0,637 ke 0,615 di sampel itu (tanpa geser bias).
+IndoBERTweet unggul sekitar 0,02 macro-F1 dan selisihnya signifikan. Model ini tidak dipasang di web karena jauh lebih berat dan butuh server sendiri, jadi dipakai sebagai pembanding di laporan. Versi int8 setuju dengan versi penuh di 96,6% dari 3.000 ulasan test, tapi macro-F1 turun dari 0,637 ke 0,615 di sampel itu (tanpa geser bias).
 
 Catatan soal run Colab: di transformers 5.16 sampler `group_by_length` ikut dipakai `trainer.predict`, jadi logit yang tersimpan teracak urutannya dan skor yang tercetak di notebook (0,333) salah. Sampler itu memakai seed tetap, jadi `ml/scripts/07_indobert_import.py` membangun ulang urutannya. Hasilnya terbukti benar karena macro-F1 dan akurasi validation sama persis dengan log evaluasi saat training (0,63663 dan 85,85%). Notebook sudah diperbaiki: prediksi sekarang memakai DataLoader berurutan dan ada cek otomatis terhadap log training.
 
@@ -220,9 +250,9 @@ python ml/scripts/08_bootstrap.py
 python ml/scripts/05_export_web.py
 ```
 
-## Server IndoBERT (opsional)
+## Server IndoBERT (untuk evaluasi)
 
-Model linear cukup ringan untuk ikut di server web. IndoBERTweet tidak, jadi versi int8-nya dijalankan sebagai server sendiri di folder `indobert-api` (FastAPI + onnxruntime), lalu web memanggilnya lewat route `/api/predict-indobert`. Kalau alamat servernya tidak diisi, web tetap jalan dengan tiga model linear saja.
+Versi int8 IndoBERTweet bisa dijalankan sebagai server sendiri di folder `indobert-api` (FastAPI + onnxruntime). Sejak v4 web tidak memanggilnya lagi. Fungsi inferensinya dipakai langsung oleh skrip evaluasi (`ml/suara_ml/prediksi.py`) untuk uji tahan bahasa dan lembar anotasi.
 
 Skor versi int8 di test: macro-F1 0,684 (rentang bootstrap 95% 0,677 sampai 0,690), akurasi 82,3%, F1 netral 0,310. Bedanya dengan Linear SVM 0,010 sampai 0,021, jadi tetap unggul. Turun dari versi penuh sekitar 0,008 macro-F1 karena pembulatan int8.
 
@@ -235,7 +265,7 @@ cp data/indobert/suara_indobert_onnx_int8/tokenizer/tokenizer.json indobert-api/
 cd indobert-api && pip install -r requirements.txt && uvicorn app:app --port 7860
 ```
 
-Lalu isi `web/.env.local` dengan `INDOBERT_URL=http://127.0.0.1:7860` dan jalankan ulang web. Detail endpoint ada di `indobert-api/README.md`.
+Detail endpoint ada di `indobert-api/README.md`.
 
 Catatan hosting (dicek 18 Sep 2026 di dokumentasi resmi Hugging Face): membuat Space baru bertipe Docker atau Gradio sekarang butuh akun berbayar, hanya Static Space yang gratis. Alternatif gratis yang tersisa: server kecil di Render (mati sendiri setelah 15 menit menganggur, bangun lagi sekitar satu menit) atau menjalankan server ini di laptop saat presentasi.
 
@@ -247,6 +277,7 @@ Catatan hosting (dicek 18 Sep 2026 di dokumentasi resmi Hugging Face): membuat S
 - Info BMKG dan KAI Access datanya sedikit, jadi skor per aplikasi keduanya paling goyah.
 - Bukan suara seluruh warga. Yang terbaca hanya pengguna Android yang menyempatkan menulis ulasan, dan orang yang sedang kesal atau sangat puas lebih sering menulis. Ulasan dari iOS dan media sosial tidak ikut.
 - Hasil model bukan penilaian resmi instansi mana pun.
+- Pembatas laju 60 permintaan per menit disimpan di memori tiap instance server, jadi di Vercel tidak selalu terpicu. Perlu penyimpan bersama kalau web dipakai lebih luas.
 - Cek massal mengirim teks ke server untuk dihitung lalu dibuang. Tidak ada yang disimpan, tapi jangan unggah data pribadi.
 - Kuesioner SUS tidak menyimpan jawaban. Rekap dilakukan manual lewat tempel data di halaman yang sama.
 - Pita ulasan di halaman depan memakai ulasan asli yang sudah disaring (tanpa angka panjang, tautan, kata kasar, penanda lokasi) lalu dibaca manual satu per satu.

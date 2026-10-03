@@ -170,6 +170,11 @@ def sk09(p, **_):
     return "hasil Positif muncul lewat Ctrl + Enter"
 
 
+def pakai_contoh(p: Page) -> None:
+    p.get_by_role("button", name="Pakai 200 ulasan contoh").click()
+    expect(p.get_by_text("ulasan-contoh.csv: 200 baris")).to_be_visible(timeout=20000)
+
+
 def baca_massal(p: Page) -> str:
     p.get_by_role("button", name="Baca semua").click()
     kartu = p.locator("p", has_text="Ulasan dibaca").locator("xpath=..")
@@ -188,7 +193,7 @@ def sk10(p, **_):
 
 def sk11(p, **_):
     buka(p, "/massal")
-    p.get_by_role("button", name="Pakai 200 ulasan contoh").click()
+    pakai_contoh(p)
     ringkas = baca_massal(p)
     cocok = p.get_by_text(re.compile(r"Cocok dengan label dari bintang")).inner_text()
     assert "200" in ringkas, ringkas
@@ -210,7 +215,7 @@ def sk12(p, **_):
 
 def sk13(p, **_):
     buka(p, "/massal")
-    p.get_by_role("button", name="Pakai 200 ulasan contoh").click()
+    pakai_contoh(p)
     baca_massal(p)
     with p.expect_download() as dl:
         p.get_by_role("button", name="Unduh hasil CSV").click()
@@ -222,7 +227,7 @@ def sk13(p, **_):
 
 def sk14(p, **_):
     buka(p, "/massal")
-    p.get_by_role("button", name="Pakai 200 ulasan contoh").click()
+    pakai_contoh(p)
     baca_massal(p)
     p.get_by_role("button", name=re.compile(r"^Negatif \(")).click()
     nada = p.locator("table tbody tr td:nth-child(3)").all_inner_texts()

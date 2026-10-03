@@ -1,0 +1,12 @@
+{
+ "url": "https://suara-rakyat-xi.vercel.app/api/predict",
+ "tanggal": "2026-10-03",
+ "cara": "70 permintaan berurutan secepatnya dari satu laptop, batas 60 per menit per alamat IP, jeda 65 detik antar percobaan",
+ "percobaan": [
+  {"sumber": "hasil-live-putaran1.json, SK-32", "diterima": 55, "ditolak_429": 15},
+  {"sumber": "hasil-live.json, SK-32", "diterima": 70, "ditolak_429": 0},
+  {"sumber": "skrip terpisah, burst 1", "diterima": 60, "ditolak_429": 10},
+  {"sumber": "skrip terpisah, burst 2", "diterima": 60, "ditolak_429": 10}
+ ],
+ "catatan": "Burst ketiga skrip terpisah berhenti karena DNS laptop penguji gagal sesaat, tidak dihitung. Pembatas laju disimpan di memori tiap instance fungsi serverless, jadi hanya terpicu kalau permintaan jatuh ke instance yang sama. Perbaikan yang disarankan: penyimpan bersama (misalnya Redis) atau aturan rate limit di firewall Vercel."
+}

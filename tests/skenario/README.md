@@ -40,8 +40,19 @@ Kode kebutuhan (FR dan NFR) merujuk ke `docs/kebutuhan-pengguna.md`.
 - **Data uji yang keliru (SK-24).** Teks JSON rusak dibungkus ulang menjadi JSON sah oleh pustaka
   pengujian, jadi yang teruji justru teks kosong. Data diganti menjadi bytes mentah.
 
-Putaran kedua di lokal setelah perbaikan: 32 dari 32 lulus. Hasil terhadap web live ada di
-`hasil-live.json`.
+Putaran kedua di lokal setelah perbaikan: 32 dari 32 lulus (`hasil-lokal.json`).
+
+## Web live
+
+- **Putaran pertama** (`hasil-live-putaran1.json`): 30 dari 32. SK-11 dan SK-14 gagal karena tombol
+  Baca semua ditekan sebelum 200 ulasan contoh selesai diunduh, jadi yang terbaca formulir kosong.
+  Di lokal unduhannya instan sehingga tidak terlihat. Pengguna HP dengan sinyal lambat bisa
+  mengalami hal yang sama, jadi web diperbaiki: tombol ditahan sampai contoh siap.
+- **Putaran kedua** (`hasil-live.json`): 31 dari 32. SK-32 gagal: 70 permintaan diterima semua.
+  Percobaan tambahan di `ratelimit-live.json` menunjukkan pembatas laju terpicu tepat setelah
+  permintaan ke-60 di tiga dari empat percobaan. Penyebabnya pembatas disimpan di memori tiap
+  instance fungsi serverless, jadi tidak dijamin kalau permintaan tersebar ke beberapa instance.
+  Dicatat sebagai keterbatasan dan saran perbaikan di laporan.
 
 ## Catatan
 

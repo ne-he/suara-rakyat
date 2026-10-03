@@ -10,6 +10,9 @@ dataset/*
 # draf laporan dan bahan presentasi (bukan untuk repo publik)
 /laporan/
 
+# materi dari dosen (slide, panduan AOL, contoh projek kelompok lain), bukan milik tim
+/folder dosen/
+
 # python
 __pycache__/
 *.pyc

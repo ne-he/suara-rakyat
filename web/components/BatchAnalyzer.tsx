@@ -38,6 +38,7 @@ export default function BatchAnalyzer() {
   const [filter, setFilter] = useState<Label | "all">("all");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [memuatContoh, setMemuatContoh] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const header = table && hasHeader ? table[0] : table?.[0]?.map((_, i) => `Kolom ${i + 1}`) ?? [];
@@ -149,12 +150,21 @@ export default function BatchAnalyzer() {
           <button
             type="button"
             onClick={async () => {
-              const res = await fetch("/contoh/ulasan-contoh.csv");
-              loadTable(await res.text(), "ulasan-contoh.csv");
+              // tombol Baca semua ditahan sampai contoh selesai diunduh, supaya tidak membaca formulir kosong di sinyal lambat
+              setMemuatContoh(true);
+              try {
+                const res = await fetch("/contoh/ulasan-contoh.csv");
+                loadTable(await res.text(), "ulasan-contoh.csv");
+              } catch {
+                setError("Contoh gagal dimuat. Periksa koneksi lalu coba lagi.");
+              } finally {
+                setMemuatContoh(false);
+              }
             }}
-            className="rounded-full border-2 border-dashed border-merah/60 px-4 py-1.5 text-sm text-merah-tua transition hover:border-merah hover:bg-merah/5"
+            disabled={memuatContoh}
+            className="rounded-full border-2 border-dashed border-merah/60 px-4 py-1.5 text-sm text-merah-tua transition hover:border-merah hover:bg-merah/5 disabled:opacity-60"
           >
-            Pakai 200 ulasan contoh
+            {memuatContoh ? "Memuat contoh..." : "Pakai 200 ulasan contoh"}
           </button>
         </div>
 
@@ -237,10 +247,10 @@ export default function BatchAnalyzer() {
         <button
           type="button"
           onClick={run}
-          disabled={loading}
+          disabled={loading || memuatContoh}
           className="display mt-4 w-full rounded-sm bg-merah px-5 py-3 text-3xl text-putih shadow-[4px_4px_0_var(--aspal)] transition hover:bg-merah-tua active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0_var(--aspal)] disabled:opacity-60 sm:w-auto sm:px-10"
         >
-          {loading ? "Membaca..." : "Baca semua"}
+          {loading ? "Membaca..." : memuatContoh ? "Menunggu contoh..." : "Baca semua"}
         </button>
         {error && <p className="mt-3 text-sm font-semibold text-neg">{error}</p>}
         <p className="mt-3 text-xs text-abu">

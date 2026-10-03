@@ -1,0 +1,593 @@
+{
+  "fitur": "TF-IDF kata 1-2 gram, L2",
+  "A_antar_kelas": {
+    "jumlah_latih": {
+      "negative": 169369,
+      "neutral": 20403,
+      "positive": 99003
+    },
+    "rata_cosine_pasangan": {
+      "negative": {
+        "negative": 0.0098,
+        "neutral": 0.0088,
+        "positive": 0.0046
+      },
+      "neutral": {
+        "negative": 0.0088,
+        "neutral": 0.0093,
+        "positive": 0.0051
+      },
+      "positive": {
+        "negative": 0.0046,
+        "neutral": 0.0051,
+        "positive": 0.0077
+      }
+    },
+    "cosine_pusat_kelas": {
+      "negative": {
+        "negative": 1.0,
+        "neutral": 0.92,
+        "positive": 0.5328
+      },
+      "neutral": {
+        "negative": 0.92,
+        "neutral": 1.0,
+        "positive": 0.6072
+      },
+      "positive": {
+        "negative": 0.5328,
+        "neutral": 0.6072,
+        "positive": 1.0
+      }
+    }
+  },
+  "B_tetangga_terdekat": {
+    "sampel_uji": 5000,
+    "seed": 42,
+    "k": 10,
+    "detik": 72.3,
+    "kemiripan_maksimum": {
+      "median": 0.4661,
+      "p10": 0.2701,
+      "p90": 0.8121,
+      "porsi_di_atas_0_95": 0.0316,
+      "porsi_sama_persis": 0.0262
+    },
+    "per_tingkat": [
+      {
+        "kemiripan": "di bawah 0,5",
+        "n": 2774,
+        "porsi": 0.5548,
+        "akurasi_svm": 0.8025,
+        "akurasi_tetangga_1": 0.6698
+      },
+      {
+        "kemiripan": "0,5 sampai 0,8",
+        "n": 1675,
+        "porsi": 0.335,
+        "akurasi_svm": 0.8466,
+        "akurasi_tetangga_1": 0.791
+      },
+      {
+        "kemiripan": "0,8 sampai 0,95",
+        "n": 393,
+        "porsi": 0.0786,
+        "akurasi_svm": 0.8855,
+        "akurasi_tetangga_1": 0.8651
+      },
+      {
+        "kemiripan": "0,95 ke atas",
+        "n": 158,
+        "porsi": 0.0316,
+        "akurasi_svm": 0.8861,
+        "akurasi_tetangga_1": 0.8418
+      }
+    ],
+    "skor": {
+      "tetangga_1": {
+        "macro_f1": 0.5606,
+        "akurasi": 0.7312
+      },
+      "tetangga_10_berbobot": {
+        "macro_f1": 0.5911,
+        "akurasi": 0.8106
+      },
+      "linear_svm_web": {
+        "macro_f1": 0.666,
+        "akurasi": 0.8264
+      }
+    }
+  },
+  "C_profil_aplikasi": {
+    "svm": {
+      "nama": "Linear SVM",
+      "semua": {
+        "porsi_bintang": [
+          0.5875,
+          0.0701,
+          0.3424
+        ],
+        "porsi_model": [
+          0.6198,
+          0.0825,
+          0.2977
+        ],
+        "cosine": 0.9967
+      },
+      "per_app": {
+        "JMO": {
+          "n": 9434,
+          "porsi_bintang": [
+            0.4222,
+            0.0578,
+            0.52
+          ],
+          "porsi_model": [
+            0.4627,
+            0.0643,
+            0.473
+          ],
+          "cosine": 0.9957,
+          "selisih_negatif": 0.0405
+        },
+        "satusehat": {
+          "n": 12290,
+          "porsi_bintang": [
+            0.5871,
+            0.0868,
+            0.326
+          ],
+          "porsi_model": [
+            0.6339,
+            0.1037,
+            0.2623
+          ],
+          "cosine": 0.9933,
+          "selisih_negatif": 0.0468
+        },
+        "mobileJKN": {
+          "n": 7117,
+          "porsi_bintang": [
+            0.6109,
+            0.088,
+            0.3011
+          ],
+          "porsi_model": [
+            0.6499,
+            0.0909,
+            0.2592
+          ],
+          "cosine": 0.997,
+          "selisih_negatif": 0.0389
+        },
+        "pertamina": {
+          "n": 6790,
+          "porsi_bintang": [
+            0.7994,
+            0.0351,
+            0.1655
+          ],
+          "porsi_model": [
+            0.7884,
+            0.0566,
+            0.1551
+          ],
+          "cosine": 0.9996,
+          "selisih_negatif": 0.011
+        },
+        "KAI": {
+          "n": 533,
+          "porsi_bintang": [
+            0.5704,
+            0.1069,
+            0.3227
+          ],
+          "porsi_model": [
+            0.5835,
+            0.1295,
+            0.2871
+          ],
+          "cosine": 0.9978,
+          "selisih_negatif": 0.0131
+        },
+        "BMKG": {
+          "n": 63,
+          "porsi_bintang": [
+            0.0952,
+            0.0952,
+            0.8095
+          ],
+          "porsi_model": [
+            0.1429,
+            0.0794,
+            0.7778
+          ],
+          "cosine": 0.9978,
+          "selisih_negatif": 0.0476
+        }
+      },
+      "per_app_kuartal": {
+        "jumlah_kelompok": 35,
+        "min_ulasan": 100,
+        "rata": 0.9926,
+        "terendah": 0.9666
+      }
+    },
+    "logreg": {
+      "nama": "Logistic Regression",
+      "semua": {
+        "porsi_bintang": [
+          0.5875,
+          0.0701,
+          0.3424
+        ],
+        "porsi_model": [
+          0.6113,
+          0.0857,
+          0.303
+        ],
+        "cosine": 0.9975
+      },
+      "per_app": {
+        "JMO": {
+          "n": 9434,
+          "porsi_bintang": [
+            0.4222,
+            0.0578,
+            0.52
+          ],
+          "porsi_model": [
+            0.4616,
+            0.0598,
+            0.4786
+          ],
+          "cosine": 0.9964,
+          "selisih_negatif": 0.0394
+        },
+        "satusehat": {
+          "n": 12290,
+          "porsi_bintang": [
+            0.5871,
+            0.0868,
+            0.326
+          ],
+          "porsi_model": [
+            0.6202,
+            0.1093,
+            0.2705
+          ],
+          "cosine": 0.995,
+          "selisih_negatif": 0.033
+        },
+        "mobileJKN": {
+          "n": 7117,
+          "porsi_bintang": [
+            0.6109,
+            0.088,
+            0.3011
+          ],
+          "porsi_model": [
+            0.632,
+            0.1051,
+            0.2629
+          ],
+          "cosine": 0.9977,
+          "selisih_negatif": 0.0211
+        },
+        "pertamina": {
+          "n": 6790,
+          "porsi_bintang": [
+            0.7994,
+            0.0351,
+            0.1655
+          ],
+          "porsi_model": [
+            0.7895,
+            0.0539,
+            0.1566
+          ],
+          "cosine": 0.9997,
+          "selisih_negatif": 0.0099
+        },
+        "KAI": {
+          "n": 533,
+          "porsi_bintang": [
+            0.5704,
+            0.1069,
+            0.3227
+          ],
+          "porsi_model": [
+            0.5591,
+            0.1501,
+            0.2908
+          ],
+          "cosine": 0.9968,
+          "selisih_negatif": 0.0113
+        },
+        "BMKG": {
+          "n": 63,
+          "porsi_bintang": [
+            0.0952,
+            0.0952,
+            0.8095
+          ],
+          "porsi_model": [
+            0.1587,
+            0.0794,
+            0.7619
+          ],
+          "cosine": 0.996,
+          "selisih_negatif": 0.0635
+        }
+      },
+      "per_app_kuartal": {
+        "jumlah_kelompok": 35,
+        "min_ulasan": 100,
+        "rata": 0.9935,
+        "terendah": 0.9681
+      }
+    },
+    "nb": {
+      "nama": "Naive Bayes",
+      "semua": {
+        "porsi_bintang": [
+          0.5875,
+          0.0701,
+          0.3424
+        ],
+        "porsi_model": [
+          0.5783,
+          0.1134,
+          0.3083
+        ],
+        "cosine": 0.9969
+      },
+      "per_app": {
+        "JMO": {
+          "n": 9434,
+          "porsi_bintang": [
+            0.4222,
+            0.0578,
+            0.52
+          ],
+          "porsi_model": [
+            0.4427,
+            0.0734,
+            0.484
+          ],
+          "cosine": 0.998,
+          "selisih_negatif": 0.0205
+        },
+        "satusehat": {
+          "n": 12290,
+          "porsi_bintang": [
+            0.5871,
+            0.0868,
+            0.326
+          ],
+          "porsi_model": [
+            0.5664,
+            0.1695,
+            0.2641
+          ],
+          "cosine": 0.9883,
+          "selisih_negatif": 0.0207
+        },
+        "mobileJKN": {
+          "n": 7117,
+          "porsi_bintang": [
+            0.6109,
+            0.088,
+            0.3011
+          ],
+          "porsi_model": [
+            0.6157,
+            0.1135,
+            0.2708
+          ],
+          "cosine": 0.9983,
+          "selisih_negatif": 0.0048
+        },
+        "pertamina": {
+          "n": 6790,
+          "porsi_bintang": [
+            0.7994,
+            0.0351,
+            0.1655
+          ],
+          "porsi_model": [
+            0.7596,
+            0.0616,
+            0.1788
+          ],
+          "cosine": 0.999,
+          "selisih_negatif": 0.0398
+        },
+        "KAI": {
+          "n": 533,
+          "porsi_bintang": [
+            0.5704,
+            0.1069,
+            0.3227
+          ],
+          "porsi_model": [
+            0.4953,
+            0.197,
+            0.3077
+          ],
+          "cosine": 0.9858,
+          "selisih_negatif": 0.075
+        },
+        "BMKG": {
+          "n": 63,
+          "porsi_bintang": [
+            0.0952,
+            0.0952,
+            0.8095
+          ],
+          "porsi_model": [
+            0.1587,
+            0.0476,
+            0.7937
+          ],
+          "cosine": 0.9952,
+          "selisih_negatif": 0.0635
+        }
+      },
+      "per_app_kuartal": {
+        "jumlah_kelompok": 35,
+        "min_ulasan": 100,
+        "rata": 0.9915,
+        "terendah": 0.9312
+      }
+    },
+    "indobert": {
+      "nama": "IndoBERTweet int8",
+      "semua": {
+        "porsi_bintang": [
+          0.5875,
+          0.0701,
+          0.3424
+        ],
+        "porsi_model": [
+          0.5848,
+          0.1155,
+          0.2996
+        ],
+        "cosine": 0.996
+      },
+      "per_app": {
+        "JMO": {
+          "n": 9434,
+          "porsi_bintang": [
+            0.4222,
+            0.0578,
+            0.52
+          ],
+          "porsi_model": [
+            0.4341,
+            0.0885,
+            0.4774
+          ],
+          "cosine": 0.9972,
+          "selisih_negatif": 0.0119
+        },
+        "satusehat": {
+          "n": 12290,
+          "porsi_bintang": [
+            0.5871,
+            0.0868,
+            0.326
+          ],
+          "porsi_model": [
+            0.5889,
+            0.1436,
+            0.2675
+          ],
+          "cosine": 0.9928,
+          "selisih_negatif": 0.0017
+        },
+        "mobileJKN": {
+          "n": 7117,
+          "porsi_bintang": [
+            0.6109,
+            0.088,
+            0.3011
+          ],
+          "porsi_model": [
+            0.6022,
+            0.1416,
+            0.2561
+          ],
+          "cosine": 0.9949,
+          "selisih_negatif": 0.0087
+        },
+        "pertamina": {
+          "n": 6790,
+          "porsi_bintang": [
+            0.7994,
+            0.0351,
+            0.1655
+          ],
+          "porsi_model": [
+            0.7753,
+            0.0723,
+            0.1524
+          ],
+          "cosine": 0.9988,
+          "selisih_negatif": 0.0242
+        },
+        "KAI": {
+          "n": 533,
+          "porsi_bintang": [
+            0.5704,
+            0.1069,
+            0.3227
+          ],
+          "porsi_model": [
+            0.5591,
+            0.1538,
+            0.2871
+          ],
+          "cosine": 0.9961,
+          "selisih_negatif": 0.0113
+        },
+        "BMKG": {
+          "n": 63,
+          "porsi_bintang": [
+            0.0952,
+            0.0952,
+            0.8095
+          ],
+          "porsi_model": [
+            0.1111,
+            0.0635,
+            0.8254
+          ],
+          "cosine": 0.9991,
+          "selisih_negatif": 0.0159
+        }
+      },
+      "per_app_kuartal": {
+        "jumlah_kelompok": 35,
+        "min_ulasan": 100,
+        "rata": 0.9903,
+        "terendah": 0.9551
+      }
+    }
+  },
+  "D_antar_model": {
+    "pasangan": [
+      {
+        "pasangan": "Linear SVM dan Logistic Regression",
+        "rata_cosine_peluang": 0.992,
+        "label_sama": 0.9541
+      },
+      {
+        "pasangan": "Linear SVM dan Naive Bayes",
+        "rata_cosine_peluang": 0.9671,
+        "label_sama": 0.8934
+      },
+      {
+        "pasangan": "Linear SVM dan IndoBERTweet int8",
+        "rata_cosine_peluang": 0.9662,
+        "label_sama": 0.8913
+      },
+      {
+        "pasangan": "Logistic Regression dan Naive Bayes",
+        "rata_cosine_peluang": 0.9623,
+        "label_sama": 0.8827
+      },
+      {
+        "pasangan": "Logistic Regression dan IndoBERTweet int8",
+        "rata_cosine_peluang": 0.9601,
+        "label_sama": 0.8772
+      },
+      {
+        "pasangan": "Naive Bayes dan IndoBERTweet int8",
+        "rata_cosine_peluang": 0.9513,
+        "label_sama": 0.8592
+      }
+    ]
+  }
+}

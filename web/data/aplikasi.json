@@ -1,0 +1,718 @@
+{
+ "sumber": "IGAR v3 (Isnan dan Pardamean, 2025), ulasan Google Play, label dari bintang",
+ "ulasan": 617722,
+ "mulai": "2012-05-11",
+ "akhir": "2023-03-26",
+ "porsi": {
+  "negative": 0.3997,
+  "neutral": 0.0556,
+  "positive": 0.5447
+ },
+ "apps": [
+  {
+   "id": "mobileJKN",
+   "nama": "Mobile JKN",
+   "pengelola": "BPJS Kesehatan",
+   "ulasan": 122103,
+   "mulai": "2016-06-07",
+   "akhir": "2021-11-05",
+   "rata_bintang": 3.29,
+   "porsi": {
+    "negative": 0.3864,
+    "neutral": 0.0704,
+    "positive": 0.5432
+   },
+   "keluhan": [
+    {
+     "teks": "update",
+     "ulasan": 12603,
+     "porsi": 0.2671
+    },
+    {
+     "teks": "login",
+     "ulasan": 7482,
+     "porsi": 0.1586
+    },
+    {
+     "teks": "daftar",
+     "ulasan": 4566,
+     "porsi": 0.0968
+    },
+    {
+     "teks": "terdaftar",
+     "ulasan": 1688,
+     "porsi": 0.0358
+    },
+    {
+     "teks": "email",
+     "ulasan": 1656,
+     "porsi": 0.0351
+    },
+    {
+     "teks": "salah",
+     "ulasan": 1745,
+     "porsi": 0.037
+    },
+    {
+     "teks": "suruh",
+     "ulasan": 1842,
+     "porsi": 0.039
+    },
+    {
+     "teks": "log",
+     "ulasan": 1646,
+     "porsi": 0.0349
+    }
+   ],
+   "pujian": [
+    {
+     "teks": "memudahkan",
+     "ulasan": 1114,
+     "porsi": 0.0168
+    },
+    {
+     "teks": "tidak perlu",
+     "ulasan": 547,
+     "porsi": 0.0082
+    },
+    {
+     "teks": "informasi",
+     "ulasan": 549,
+     "porsi": 0.0083
+    },
+    {
+     "teks": "terbantu",
+     "ulasan": 329,
+     "porsi": 0.005
+    },
+    {
+     "teks": "praktis",
+     "ulasan": 384,
+     "porsi": 0.0058
+    },
+    {
+     "teks": "antri",
+     "ulasan": 335,
+     "porsi": 0.0051
+    },
+    {
+     "teks": "kesehatan",
+     "ulasan": 1339,
+     "porsi": 0.0202
+    },
+    {
+     "teks": "mengetahui",
+     "ulasan": 201,
+     "porsi": 0.003
+    }
+   ],
+   "contoh": [
+    {
+     "teks": "Update terus perasaan kemaren baru update ini update lagi,yang susah nya nggak ada untuk update nya",
+     "label": "negative",
+     "bintang": 2
+    },
+    {
+     "teks": "Abis di upgread ko malah gak bisa di buka si mana urgent lagi",
+     "label": "negative",
+     "bintang": 2
+    },
+    {
+     "teks": "Kenapa minta di update terus tiap mau buka jkn",
+     "label": "neutral",
+     "bintang": 3
+    },
+    {
+     "teks": "Bagus dan mudah cara pakainya aplikasi ini",
+     "label": "positive",
+     "bintang": 5
+    },
+    {
+     "teks": "semoga bpjs bisa mengcover masyarakat yg sakit",
+     "label": "positive",
+     "bintang": 4
+    }
+   ]
+  },
+  {
+   "id": "JMO",
+   "nama": "JMO",
+   "pengelola": "BPJS Ketenagakerjaan",
+   "ulasan": 200000,
+   "mulai": "2021-09-02",
+   "akhir": "2023-03-26",
+   "rata_bintang": 3.97,
+   "porsi": {
+    "negative": 0.2216,
+    "neutral": 0.0433,
+    "positive": 0.7351
+   },
+   "keluhan": [
+    {
+     "teks": "data",
+     "ulasan": 7504,
+     "porsi": 0.1693
+    },
+    {
+     "teks": "update",
+     "ulasan": 5926,
+     "porsi": 0.1337
+    },
+    {
+     "teks": "login",
+     "ulasan": 5422,
+     "porsi": 0.1223
+    },
+    {
+     "teks": "pengkinian",
+     "ulasan": 4800,
+     "porsi": 0.1083
+    },
+    {
+     "teks": "email",
+     "ulasan": 3698,
+     "porsi": 0.0834
+    },
+    {
+     "teks": "cek",
+     "ulasan": 3847,
+     "porsi": 0.0868
+    },
+    {
+     "teks": "saldo",
+     "ulasan": 4824,
+     "porsi": 0.1088
+    },
+    {
+     "teks": "akun",
+     "ulasan": 2544,
+     "porsi": 0.0574
+    }
+   ],
+   "pujian": [
+    {
+     "teks": "memudahkan",
+     "ulasan": 1821,
+     "porsi": 0.0124
+    },
+    {
+     "teks": "praktis",
+     "ulasan": 712,
+     "porsi": 0.0048
+    },
+    {
+     "teks": "informasi",
+     "ulasan": 827,
+     "porsi": 0.0056
+    },
+    {
+     "teks": "mengetahui",
+     "ulasan": 448,
+     "porsi": 0.003
+    },
+    {
+     "teks": "pengecekan",
+     "ulasan": 640,
+     "porsi": 0.0044
+    },
+    {
+     "teks": "terbantu",
+     "ulasan": 330,
+     "porsi": 0.0022
+    },
+    {
+     "teks": "akurat",
+     "ulasan": 395,
+     "porsi": 0.0027
+    },
+    {
+     "teks": "tidak perlu",
+     "ulasan": 436,
+     "porsi": 0.003
+    }
+   ],
+   "contoh": [
+    {
+     "teks": "Pas mau buka lagi kenapa gak bisa?? Padahal dengan email dan paswwrd yg sama,, payah",
+     "label": "negative",
+     "bintang": 2
+    },
+    {
+     "teks": "Kenapa mau cek saldo , tidak dapat terhubung?? Aplikasi ga jelas",
+     "label": "negative",
+     "bintang": 1
+    },
+    {
+     "teks": "Ini kenapa y buat akun jmo selalu ada tulisan\"mohon maaf, sedang ads perbaikan\"",
+     "label": "neutral",
+     "bintang": 3
+    },
+    {
+     "teks": "Mudah dan cepat proses klaim jht saya...trims",
+     "label": "positive",
+     "bintang": 5
+    },
+    {
+     "teks": "semoga dengan adanya aplikasi kni lebih meningkatkan pengetahuan",
+     "label": "positive",
+     "bintang": 4
+    }
+   ]
+  },
+  {
+   "id": "satusehat",
+   "nama": "SatuSehat",
+   "pengelola": "Kementerian Kesehatan",
+   "ulasan": 190696,
+   "mulai": "2020-03-31",
+   "akhir": "2021-10-14",
+   "rata_bintang": 3.16,
+   "porsi": {
+    "negative": 0.4244,
+    "neutral": 0.0685,
+    "positive": 0.507
+   },
+   "keluhan": [
+    {
+     "teks": "vaksin",
+     "ulasan": 20408,
+     "porsi": 0.2522
+    },
+    {
+     "teks": "sertifikat",
+     "ulasan": 14935,
+     "porsi": 0.1845
+    },
+    {
+     "teks": "daftar",
+     "ulasan": 5460,
+     "porsi": 0.0675
+    },
+    {
+     "teks": "muncul",
+     "ulasan": 5384,
+     "porsi": 0.0665
+    },
+    {
+     "teks": "lahir",
+     "ulasan": 4910,
+     "porsi": 0.0607
+    },
+    {
+     "teks": "data",
+     "ulasan": 5304,
+     "porsi": 0.0655
+    },
+    {
+     "teks": "tanggal",
+     "ulasan": 4061,
+     "porsi": 0.0502
+    },
+    {
+     "teks": "kode",
+     "ulasan": 3890,
+     "porsi": 0.0481
+    }
+   ],
+   "pujian": [
+    {
+     "teks": "covid",
+     "ulasan": 2310,
+     "porsi": 0.0239
+    },
+    {
+     "teks": "sehat",
+     "ulasan": 940,
+     "porsi": 0.0097
+    },
+    {
+     "teks": "informasi",
+     "ulasan": 1072,
+     "porsi": 0.0111
+    },
+    {
+     "teks": "mengetahui",
+     "ulasan": 709,
+     "porsi": 0.0073
+    },
+    {
+     "teks": "kesehatan",
+     "ulasan": 680,
+     "porsi": 0.007
+    },
+    {
+     "teks": "pandemi",
+     "ulasan": 567,
+     "porsi": 0.0059
+    },
+    {
+     "teks": "memudahkan",
+     "ulasan": 560,
+     "porsi": 0.0058
+    },
+    {
+     "teks": "virus",
+     "ulasan": 417,
+     "porsi": 0.0043
+    }
+   ],
+   "contoh": [
+    {
+     "teks": "Ga ada guna nya,klw buat ngojek,bikin gps eror dnk.",
+     "label": "negative",
+     "bintang": 1
+    },
+    {
+     "teks": "Jelek kurang lengkap , sertifikat nggk bisa dishare",
+     "label": "negative",
+     "bintang": 1
+    },
+    {
+     "teks": "Tolong app nya ada arahan soal bahasa karna tdk semua orang indonesia paham atau mngerti bahasa inggris",
+     "label": "neutral",
+     "bintang": 3
+    },
+    {
+     "teks": "Tetap menerapkan prokes yg sesuai sop utk menjaga kesehatan",
+     "label": "positive",
+     "bintang": 5
+    },
+    {
+     "teks": "Info terkini sudah bisa dicetak sertifikatnya. Makasih atas perbaikan aplikasinya, semoga selalu sukses & sehat 🙏🙏🙏",
+     "label": "positive",
+     "bintang": 5
+    }
+   ]
+  },
+  {
+   "id": "pertamina",
+   "nama": "MyPertamina",
+   "pengelola": "Pertamina",
+   "ulasan": 96291,
+   "mulai": "2017-08-09",
+   "akhir": "2022-07-02",
+   "rata_bintang": 1.97,
+   "porsi": {
+    "negative": 0.7388,
+    "neutral": 0.033,
+    "positive": 0.2283
+   },
+   "keluhan": [
+    {
+     "teks": "daftar",
+     "ulasan": 4700,
+     "porsi": 0.0661
+    },
+    {
+     "teks": "rakyat",
+     "ulasan": 5133,
+     "porsi": 0.0722
+    },
+    {
+     "teks": "beli",
+     "ulasan": 3257,
+     "porsi": 0.0458
+    },
+    {
+     "teks": "masyarakat",
+     "ulasan": 2560,
+     "porsi": 0.036
+    },
+    {
+     "teks": "bensin",
+     "ulasan": 3265,
+     "porsi": 0.0459
+    },
+    {
+     "teks": "login",
+     "ulasan": 1965,
+     "porsi": 0.0276
+    },
+    {
+     "teks": "otp",
+     "ulasan": 1863,
+     "porsi": 0.0262
+    },
+    {
+     "teks": "menyusahkan",
+     "ulasan": 3487,
+     "porsi": 0.049
+    }
+   ],
+   "pujian": [
+    {
+     "teks": "my pertamina",
+     "ulasan": 1080,
+     "porsi": 0.0491
+    },
+    {
+     "teks": "hadiah",
+     "ulasan": 431,
+     "porsi": 0.0196
+    },
+    {
+     "teks": "berkah",
+     "ulasan": 422,
+     "porsi": 0.0192
+    },
+    {
+     "teks": "memudahkan",
+     "ulasan": 339,
+     "porsi": 0.0154
+    },
+    {
+     "teks": "undian",
+     "ulasan": 235,
+     "porsi": 0.0107
+    },
+    {
+     "teks": "pelayanan",
+     "ulasan": 232,
+     "porsi": 0.0106
+    },
+    {
+     "teks": "menang",
+     "ulasan": 186,
+     "porsi": 0.0085
+    },
+    {
+     "teks": "praktis",
+     "ulasan": 211,
+     "porsi": 0.0096
+    }
+   ],
+   "contoh": [
+    {
+     "teks": "Habis update malah nyampah, tdk bisa dipakai untuk pembayaran, sampai ngulang berkali. Tetap tdk bisa, parah",
+     "label": "negative",
+     "bintang": 1
+    },
+    {
+     "teks": "Ribet agh,SANGAT RIBEUUTTT...metode pembayaran nya juga gak semua bisa orang miliki.... Why???",
+     "label": "negative",
+     "bintang": 1
+    },
+    {
+     "teks": "Tolong dong fitur scanernya diperbaiki susah sekali kadang buat melakukan pembayaran mesti nunggu agak lama baru bisa",
+     "label": "neutral",
+     "bintang": 3
+    },
+    {
+     "teks": "Saya lebih senang menggunakan produk pertamax karena lebih halus di mesin dan lebih irit",
+     "label": "positive",
+     "bintang": 5
+    },
+    {
+     "teks": "Lebih baik kualitas My Pertamina. Jaringan di perluas lagi, biar pelanggan terus menikmati layangan ini",
+     "label": "positive",
+     "bintang": 5
+    }
+   ]
+  },
+  {
+   "id": "KAI",
+   "nama": "KAI Access",
+   "pengelola": "KAI",
+   "ulasan": 7311,
+   "mulai": "2014-07-16",
+   "akhir": "2017-12-26",
+   "rata_bintang": 3.03,
+   "porsi": {
+    "negative": 0.4385,
+    "neutral": 0.1067,
+    "positive": 0.4548
+   },
+   "keluhan": [
+    {
+     "teks": "kode",
+     "ulasan": 378,
+     "porsi": 0.1179
+    },
+    {
+     "teks": "kursi",
+     "ulasan": 334,
+     "porsi": 0.1042
+    },
+    {
+     "teks": "lama",
+     "ulasan": 255,
+     "porsi": 0.0795
+    },
+    {
+     "teks": "versi",
+     "ulasan": 231,
+     "porsi": 0.0721
+    },
+    {
+     "teks": "server",
+     "ulasan": 199,
+     "porsi": 0.0621
+    },
+    {
+     "teks": "update",
+     "ulasan": 184,
+     "porsi": 0.0574
+    },
+    {
+     "teks": "login",
+     "ulasan": 177,
+     "porsi": 0.0552
+    },
+    {
+     "teks": "bahasa",
+     "ulasan": 147,
+     "porsi": 0.0459
+    }
+   ],
+   "pujian": [
+    {
+     "teks": "memudahkan",
+     "ulasan": 89,
+     "porsi": 0.0268
+    },
+    {
+     "teks": "kereta api",
+     "ulasan": 101,
+     "porsi": 0.0304
+    },
+    {
+     "teks": "antri",
+     "ulasan": 30,
+     "porsi": 0.009
+    },
+    {
+     "teks": "praktis",
+     "ulasan": 32,
+     "porsi": 0.0096
+    },
+    {
+     "teks": "mempermudah",
+     "ulasan": 43,
+     "porsi": 0.0129
+    },
+    {
+     "teks": "tidak perlu",
+     "ulasan": 32,
+     "porsi": 0.0096
+    },
+    {
+     "teks": "tiket ka",
+     "ulasan": 24,
+     "porsi": 0.0072
+    },
+    {
+     "teks": "stasiun",
+     "ulasan": 60,
+     "porsi": 0.018
+    }
+   ],
+   "contoh": [
+    {
+     "teks": "versi yg baru ini sangat membingungkan. susah loginnya !!!",
+     "label": "negative",
+     "bintang": 2
+    },
+    {
+     "teks": "Verifikasi nomer telpon gagal mulu aneh",
+     "label": "negative",
+     "bintang": 1
+    },
+    {
+     "teks": "Bagaimana cara edit account pada aplikasi?kok tidak ada",
+     "label": "neutral",
+     "bintang": 3
+    },
+    {
+     "teks": "Desain aplikasiny Bagus, keren.",
+     "label": "positive",
+     "bintang": 5
+    },
+    {
+     "teks": "Makasih banget mudah dan nyaman",
+     "label": "positive",
+     "bintang": 5
+    }
+   ]
+  },
+  {
+   "id": "BMKG",
+   "nama": "Info BMKG",
+   "pengelola": "BMKG",
+   "ulasan": 1321,
+   "mulai": "2012-05-11",
+   "akhir": "2015-12-13",
+   "rata_bintang": 4.34,
+   "porsi": {
+    "negative": 0.084,
+    "neutral": 0.0749,
+    "positive": 0.841
+   },
+   "keluhan": [
+    {
+     "teks": "info",
+     "ulasan": 10,
+     "porsi": 0.0901
+    }
+   ],
+   "pujian": [
+    {
+     "teks": "penting",
+     "ulasan": 23,
+     "porsi": 0.0207
+    },
+    {
+     "teks": "akurat",
+     "ulasan": 19,
+     "porsi": 0.0171
+    },
+    {
+     "teks": "cuaca",
+     "ulasan": 104,
+     "porsi": 0.0936
+    },
+    {
+     "teks": "informasi",
+     "ulasan": 23,
+     "porsi": 0.0207
+    },
+    {
+     "teks": "kondisi",
+     "ulasan": 10,
+     "porsi": 0.009
+    },
+    {
+     "teks": "infonya",
+     "ulasan": 10,
+     "porsi": 0.009
+    },
+    {
+     "teks": "waspada",
+     "ulasan": 10,
+     "porsi": 0.009
+    },
+    {
+     "teks": "gempa",
+     "ulasan": 65,
+     "porsi": 0.0585
+    }
+   ],
+   "contoh": [
+    {
+     "teks": "gak bisa kebuka.. jelek aplikasinya",
+     "label": "negative",
+     "bintang": 1
+    },
+    {
+     "teks": "Baca bukumu jgn sampai berdebu",
+     "label": "positive",
+     "bintang": 4
+    },
+    {
+     "teks": "Bepergian lebih nyaman dengan mengetahui kondisi cuaca",
+     "label": "positive",
+     "bintang": 4
+    }
+   ]
+  }
+ ]
+}

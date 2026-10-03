@@ -10,7 +10,7 @@ Model yang diuji sama persis dengan yang dipakai produk: 3 model web lewat kode 
 dan IndoBERTweet int8 lewat fungsi di indobert-api/app.py kalau modelnya ada di laptop.
 
 Input: ml/eval/uji_tahan.csv
-Output: ml/reports/uji_tahan.json dan web/data/uji.json
+Output: ml/reports/uji_tahan.json (dipakai laporan, sejak v4 tidak lagi tampil di web)
 """
 
 from __future__ import annotations
@@ -66,7 +66,6 @@ def main() -> None:
         ],
     }
     (ROOT / "ml" / "reports" / "uji_tahan.json").write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
-    (ROOT / "web" / "data" / "uji.json").write_text(json.dumps(out, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps({"akurasi": out["akurasi"], "per_kategori": per_kategori}, ensure_ascii=False, indent=1))
 
 

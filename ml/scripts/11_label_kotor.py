@@ -8,7 +8,7 @@ bukan cuma dari kalimat.
 Penyaringan: teks pendek, tanpa angka panjang, email, kata kasar, tuduhan politik, penanda
 lokasi, atau sapaan diikuti nama. Sisanya tetap dibaca manual sebelum dipajang.
 
-Output: ml/reports/label_kotor.json dan web/data/label.json
+Output: ml/reports/label_kotor.json (dipakai laporan, sejak v4 tidak lagi tampil di web)
 """
 
 from __future__ import annotations
@@ -83,7 +83,6 @@ def main() -> None:
         "contoh": contoh,
     }
     (ROOT / "ml" / "reports" / "label_kotor.json").write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
-    (ROOT / "web" / "data" / "label.json").write_text(json.dumps(out, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(out, ensure_ascii=False, indent=1))
 
 

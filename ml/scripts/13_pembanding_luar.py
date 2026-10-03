@@ -15,7 +15,7 @@ Tiga hal yang dihitung di sini:
 Angka paper ditulis ulang dari Tabel 9 (kolom LinearSVC, teks Indonesia) di
 Isnan dan Pardamean (2026), Data in Brief 66, 112708, doi:10.1016/j.dib.2026.112708.
 
-Output: ml/reports/pembanding_luar.json dan web/data/pembanding.json
+Output: ml/reports/pembanding_luar.json (dipakai laporan, sejak v4 tidak lagi tampil di web)
 """
 
 from __future__ import annotations
@@ -141,7 +141,6 @@ def main() -> None:
         "semua_app": {"acak": semua_acak, "kunci_teks": semua_kunci},
     }
     (ROOT / "ml" / "reports" / "pembanding_luar.json").write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
-    (ROOT / "web" / "data" / "pembanding.json").write_text(json.dumps(out, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps({"kesepakatan": {k: kesepakatan[k] for k in ["kappa", "kecocokan", "paper_kappa", "paper_kecocokan"]}, "vader_test": vader_test, "semua": out["semua_app"]}, ensure_ascii=False, indent=1))
 
 

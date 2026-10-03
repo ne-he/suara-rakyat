@@ -6,7 +6,7 @@ lalu membandingkan label bintang dan tiap model terhadap label mayoritas itu.
 
 Kalau folder hasil masih kosong, skrip berhenti dengan pesan, tidak menulis apa pun.
 
-Output: ml/reports/anotasi.json dan web/data/anotasi.json
+Output: ml/reports/anotasi.json (dipakai laporan)
 """
 
 from __future__ import annotations
@@ -116,7 +116,6 @@ def main() -> None:
         "banding": banding,
     }
     (ROOT / "ml" / "reports" / "anotasi.json").write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
-    (ROOT / "web" / "data" / "anotasi.json").write_text(json.dumps(out, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(out, ensure_ascii=False, indent=1))
 
 

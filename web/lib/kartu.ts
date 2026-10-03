@@ -34,13 +34,7 @@ function wrap(ctx: CanvasRenderingContext2D, text: string, maxWidth: number, max
   return lines;
 }
 
-export async function unduhKartu(opts: {
-  label: Label;
-  probs: Record<Label, number>;
-  modelName: string;
-  text?: string;
-  drivers: string[];
-}) {
+export async function unduhKartu(opts: { label: Label; probs: Record<Label, number>; text?: string; drivers: string[] }) {
   await document.fonts.ready;
   const display = fam("--font-shoulders", "Impact, sans-serif");
   const sans = fam("--font-jakarta", "Arial, sans-serif");
@@ -66,7 +60,7 @@ export async function unduhKartu(opts: {
 
   ctx.fillStyle = "#6f675c";
   ctx.font = `600 26px ${sans}`;
-  ctx.fillText(`DIBACA OLEH ${opts.modelName.toUpperCase()}`, 56, 168);
+  ctx.fillText("HASIL BACA NADA ULASAN", 56, 168);
 
   // stempel hasil
   ctx.save();
@@ -132,8 +126,8 @@ export async function unduhKartu(opts: {
   ctx.fillRect(0, H - 82, W, 8);
   ctx.fillStyle = "#6f675c";
   ctx.font = `500 24px ${sans}`;
-  ctx.fillText("Model sentimen ulasan aplikasi layanan publik, projek AOL Software Engineering.", 56, H - 48);
-  ctx.fillText("Hasil model, bukan penilaian resmi instansi mana pun.", 56, H - 20);
+  ctx.fillText("Pembaca nada ulasan aplikasi layanan publik, projek AOL Software Engineering.", 56, H - 48);
+  ctx.fillText("Tebakan mesin, bukan penilaian resmi instansi mana pun.", 56, H - 20);
 
   const blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, "image/png"));
   if (blob) downloadBlob(blob, `suara-rakyat-${opts.label}.png`);

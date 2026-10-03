@@ -355,7 +355,7 @@ def sk28(api, **_):
         server.append(r.json()["ms"])
     med = statistics.median(waktu)
     assert med < 1000, med
-    return f"median {med:.0f} ms, maksimum {max(waktu):.0f} ms dari sisi penguji; hitungan model di server median {statistics.median(server):.2f} ms"
+    return f"median {med:.0f} ms, maksimum {max(waktu):.0f} ms dari sisi penguji, hitungan model di server median {statistics.median(server):.2f} ms"
 
 
 def sk29(_p, browser, **__):

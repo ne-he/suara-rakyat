@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 export const REPO_URL = "https://github.com/ne-he/suara-rakyat";
+export const VERSI_WEB = "v4";
 
 const LINKS = [
   { href: "/#coba", label: "Coba" },
@@ -38,13 +39,13 @@ export default function SiteHeader({ active }: { active?: string }) {
   );
 }
 
-export function SiteFooter({ version }: { version?: string }) {
+export function SiteFooter() {
   return (
     <>
       <div className="bendera" />
       <footer className="px-5 py-6 text-xs text-abu sm:px-10">
         <div className="mx-auto flex max-w-6xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <span>Suara Rakyat {version} · projek AOL Software Engineering</span>
+          <span>Suara Rakyat {VERSI_WEB} · projek AOL Software Engineering</span>
           <nav className="flex flex-wrap gap-x-4 gap-y-1">
             {LINKS.map((l) => (
               <Link key={l.href} href={l.href} className="hover:text-aspal">
@@ -55,7 +56,7 @@ export function SiteFooter({ version }: { version?: string }) {
               Kode
             </a>
           </nav>
-          <span>Hasil model bukan penilaian resmi instansi mana pun.</span>
+          <span>Hasil baca mesin, bukan penilaian resmi instansi mana pun.</span>
         </div>
       </footer>
     </>

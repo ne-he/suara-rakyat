@@ -1,9 +1,6 @@
-import fs from "node:fs";
-import path from "node:path";
 import type { Metadata } from "next";
 import SiteHeader, { SiteFooter } from "@/components/SiteHeader";
 import SusForm from "@/components/SusForm";
-import type { ModelMeta } from "@/lib/model";
 
 export const metadata: Metadata = {
   title: "Kuesioner SUS · Suara Rakyat",
@@ -11,7 +8,6 @@ export const metadata: Metadata = {
 };
 
 export default function Kuesioner() {
-  const meta = JSON.parse(fs.readFileSync(path.join(process.cwd(), "model", "meta.json"), "utf8")) as ModelMeta;
   return (
     <>
       <SiteHeader active="/kuesioner" />
@@ -37,7 +33,7 @@ export default function Kuesioner() {
           </p>
         </div>
       </main>
-      <SiteFooter version={meta.version} />
+      <SiteFooter />
     </>
   );
 }

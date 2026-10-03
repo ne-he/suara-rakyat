@@ -23,9 +23,9 @@ const ITEMS = [
 const SHORT = ["Ingin sering pakai", "Tidak rumit", "Mudah dipakai", "Tanpa bantuan teknis", "Fitur terhubung", "Konsisten", "Cepat dipelajari", "Tidak merepotkan", "Percaya diri", "Tanpa banyak belajar"];
 const SCALE = ["Sangat tidak setuju", "Tidak setuju", "Netral", "Setuju", "Sangat setuju"];
 const TASKS = [
-  "Tulis satu ulasan di halaman depan lalu tekan Suarakan.",
-  "Ganti model pembaca dan bandingkan hasilnya.",
-  "Buka Dashboard dan temukan model dengan skor tertinggi.",
+  "Tulis satu ulasan di halaman depan lalu tekan Baca nadanya.",
+  "Unduh kartu hasilnya.",
+  "Buka Dashboard, pilih satu aplikasi, lalu temukan hal yang paling sering dikeluhkan.",
   "Di halaman Massal, baca 200 ulasan contoh lalu unduh hasilnya.",
 ];
 const BENCHMARK = 68; // rata-rata skor SUS yang umum dipakai sebagai patokan

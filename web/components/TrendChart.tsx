@@ -26,9 +26,11 @@ function allQuarters(rows: TrendRow[]): TrendRow[] {
   return out;
 }
 
-export default function TrendChart({ data, defaultApp }: { data: TrendData; defaultApp: string }) {
+/** Kalau `app` diisi, aplikasinya dipilih dari luar (dashboard) dan tombol pilihan di grafik disembunyikan. */
+export default function TrendChart({ data, defaultApp, app: dipilih }: { data: TrendData; defaultApp: string; app?: string }) {
   const apps = Object.keys(data.apps);
-  const [app, setApp] = useState(defaultApp);
+  const [pilihan, setApp] = useState(defaultApp);
+  const app = dipilih ?? pilihan;
   const [hover, setHover] = useState<number | null>(null);
   const [wrapRef, width] = useWidth<HTMLDivElement>();
   const svgRef = useRef<SVGSVGElement>(null);
@@ -66,7 +68,7 @@ export default function TrendChart({ data, defaultApp }: { data: TrendData; defa
 
   return (
     <div>
-      <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Pilih aplikasi">
+      <div className={`flex flex-wrap gap-2 ${dipilih ? "hidden" : ""}`} role="radiogroup" aria-label="Pilih aplikasi">
         {apps.map((a) => (
           <button
             key={a}
@@ -86,7 +88,7 @@ export default function TrendChart({ data, defaultApp }: { data: TrendData; defa
         ))}
       </div>
 
-      <p className="mt-4 text-sm text-aspal-2">
+      <p className={`${dipilih ? "" : "mt-4"} text-sm text-aspal-2`}>
         Kuartal dengan porsi ulasan negatif tertinggi di {APP_NAME[app]}: <b className="text-aspal">{rows[peak].period}</b>, {pct(share[peak])} dari{" "}
         {nf.format(rows[peak].n)} ulasan. Kuartal terakhir di data: <b className="text-aspal">{rows[last].period}</b>, {pct(share[last])}.
       </p>

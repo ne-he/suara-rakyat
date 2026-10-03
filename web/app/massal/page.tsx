@@ -1,9 +1,6 @@
-import fs from "node:fs";
-import path from "node:path";
 import type { Metadata } from "next";
 import BatchAnalyzer from "@/components/BatchAnalyzer";
 import SiteHeader, { SiteFooter } from "@/components/SiteHeader";
-import type { ModelMeta } from "@/lib/model";
 
 export const metadata: Metadata = {
   title: "Cek banyak ulasan · Suara Rakyat",
@@ -11,7 +8,6 @@ export const metadata: Metadata = {
 };
 
 export default function Massal() {
-  const meta = JSON.parse(fs.readFileSync(path.join(process.cwd(), "model", "meta.json"), "utf8")) as ModelMeta;
   return (
     <>
       <SiteHeader active="/massal" />
@@ -24,15 +20,25 @@ export default function Massal() {
             <span className="text-merah">sekali baca.</span>
           </h1>
           <p className="mt-5 max-w-2xl text-lg text-aspal-2">
-            Tempel ulasan satu per baris atau unggah file CSV. Web akan menghitung porsi nadanya, menandai kata yang paling sering mendorong ke
-            negatif, lalu menyiapkan file hasil untuk diunduh.
+            Cocok untuk yang punya banyak ulasan, misalnya pengelola layanan atau peneliti. Tempel ulasan satu per baris atau unggah file CSV. Web
+            menghitung porsi nadanya, menandai kata keluhan yang paling sering muncul, lalu menyiapkan file hasil untuk diunduh.
           </p>
+          <ol className="mt-6 grid gap-3 text-sm sm:grid-cols-3">
+            {["Masukkan ulasan: tempel teks, unggah CSV, atau pakai 200 ulasan contoh.", "Tekan Baca semua.", "Lihat ringkasannya, saring per nada, lalu unduh hasil CSV."].map(
+              (t, i) => (
+                <li key={t} className="flex gap-3 rounded-xl border-2 border-aspal/20 bg-white/60 p-3">
+                  <span className="display text-3xl text-merah">{i + 1}</span>
+                  <span className="text-aspal-2">{t}</span>
+                </li>
+              ),
+            )}
+          </ol>
           <div className="mt-10">
-            <BatchAnalyzer models={meta.models.map((m) => ({ id: m.id, name: m.name }))} defaultId={meta.default_model} />
+            <BatchAnalyzer />
           </div>
         </div>
       </main>
-      <SiteFooter version={meta.version} />
+      <SiteFooter />
     </>
   );
 }

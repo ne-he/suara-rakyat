@@ -6,10 +6,8 @@ import { downloadCsv } from "@/lib/download";
 import { CLASS_HEX, INK, LABEL_ID, LABELS, nf, pct, type Label } from "@/lib/fmt";
 import { useWidth } from "@/lib/useWidth";
 
-type ModelOpt = { id: string; name: string };
 type Item = { label: Label | null; confidence: number | null };
 type Result = {
-  model: string;
   n: number;
   counts: Record<Label, number>;
   items: Item[];
@@ -27,7 +25,7 @@ function starLabel(v: string): Label | null {
   return s <= 2 ? "negative" : s < 4 ? "neutral" : "positive";
 }
 
-export default function BatchAnalyzer({ models, defaultId }: { models: ModelOpt[]; defaultId: string }) {
+export default function BatchAnalyzer() {
   const [mode, setMode] = useState<"tempel" | "csv">("tempel");
   const [pasted, setPasted] = useState("");
   const [table, setTable] = useState<string[][] | null>(null);
@@ -35,7 +33,6 @@ export default function BatchAnalyzer({ models, defaultId }: { models: ModelOpt[
   const [hasHeader, setHasHeader] = useState(true);
   const [textCol, setTextCol] = useState(0);
   const [starCol, setStarCol] = useState(-1);
-  const [model, setModel] = useState(defaultId);
   const [result, setResult] = useState<Result | null>(null);
   const [sent, setSent] = useState<{ texts: string[]; stars: (Label | null)[]; rows: string[][]; header: string[] } | null>(null);
   const [filter, setFilter] = useState<Label | "all">("all");
@@ -97,7 +94,7 @@ export default function BatchAnalyzer({ models, defaultId }: { models: ModelOpt[
       const res = await fetch("/api/predict-batch", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ texts, model }),
+        body: JSON.stringify({ texts }),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? "Gagal membaca ulasan.");
@@ -235,27 +232,13 @@ export default function BatchAnalyzer({ models, defaultId }: { models: ModelOpt[
       </div>
 
       <div className="poster rounded-xl border-2 border-aspal bg-white p-5 sm:p-6">
-        <p className="kicker kicker-garis text-abu">2. Pilih model lalu baca</p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {models.map((m) => (
-            <button
-              key={m.id}
-              type="button"
-              aria-pressed={model === m.id}
-              onClick={() => setModel(m.id)}
-              className={`display rounded-full border-2 px-4 py-1.5 text-lg transition duration-300 hover:-translate-y-0.5 ${
-                model === m.id ? "border-aspal bg-merah text-putih shadow-[3px_3px_0_var(--aspal)]" : "border-aspal/30 bg-white hover:border-aspal"
-              }`}
-            >
-              {m.name}
-            </button>
-          ))}
-        </div>
+        <p className="kicker kicker-garis text-abu">2. Baca semua ulasan</p>
+        <p className="mt-3 text-sm text-aspal-2">Setiap ulasan diberi nada negatif, netral, atau positif. Hasilnya bisa diunduh sebagai file CSV.</p>
         <button
           type="button"
           onClick={run}
           disabled={loading}
-          className="display mt-5 w-full rounded-sm bg-merah px-5 py-3 text-3xl text-putih shadow-[4px_4px_0_var(--aspal)] transition hover:bg-merah-tua active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0_var(--aspal)] disabled:opacity-60 sm:w-auto sm:px-10"
+          className="display mt-4 w-full rounded-sm bg-merah px-5 py-3 text-3xl text-putih shadow-[4px_4px_0_var(--aspal)] transition hover:bg-merah-tua active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0_var(--aspal)] disabled:opacity-60 sm:w-auto sm:px-10"
         >
           {loading ? "Membaca..." : "Baca semua"}
         </button>
@@ -269,7 +252,7 @@ export default function BatchAnalyzer({ models, defaultId }: { models: ModelOpt[
       {result && sent && (
         <div className="rise space-y-6" aria-live="polite">
           <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-            <Stat k="Ulasan dibaca" v={nf.format(total)} s={`${result.ms} ms di server`} />
+            <Stat k="Ulasan dibaca" v={nf.format(total)} s={`selesai dalam ${(result.ms / 1000).toFixed(2).replace(".", ",")} detik`} />
             {LABELS.map((l) => (
               <Stat key={l} k={LABEL_ID[l]} v={total ? pct(result.counts[l] / total) : "0%"} s={`${nf.format(result.counts[l])} ulasan`} dot={CLASS_HEX[l]} />
             ))}
@@ -331,9 +314,9 @@ export default function BatchAnalyzer({ models, defaultId }: { models: ModelOpt[
               <button
                 type="button"
                 onClick={() => {
-                  const extra = ["prediksi", "keyakinan", "model"];
-                  const rows = sent.rows.map((r, i) => [...r, result.items[i]?.label ? LABEL_ID[result.items[i].label!] : "", result.items[i]?.confidence ?? "", result.model]);
-                  downloadCsv([[...sent.header, ...extra], ...rows], `hasil-suara-rakyat-${result.model}.csv`);
+                  const extra = ["nada", "keyakinan"];
+                  const rows = sent.rows.map((r, i) => [...r, result.items[i]?.label ? LABEL_ID[result.items[i].label!] : "", result.items[i]?.confidence ?? ""]);
+                  downloadCsv([[...sent.header, ...extra], ...rows], "hasil-suara-rakyat.csv");
                 }}
                 className="rounded-sm bg-aspal px-4 py-2 text-sm text-putih shadow-[3px_3px_0_var(--merah)] transition hover:-translate-y-0.5"
               >

@@ -15,6 +15,13 @@ const nextConfig: NextConfig = {
     "/api/predict-batch": MODEL_LAIN,
   },
   poweredByHeader: false,
+  // Pintasan saat presentasi di komputer kelas. Tidak ditautkan dari menu, hanya tautan lihat saja (view) di Canva.
+  async redirects() {
+    return [
+      { source: "/presentasi", destination: "https://www.canva.com/design/DAHXD6OaoFY/aT3THzQRSzqnMxq1Nt76lg/view", permanent: false },
+      { source: "/poster", destination: "https://www.canva.com/design/DAHXDY2yA_I/GXDv3-DdJlHK_iWla7_93Q/view", permanent: false },
+    ];
+  },
   async headers() {
     return [
       {

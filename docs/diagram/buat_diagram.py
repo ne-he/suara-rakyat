@@ -151,20 +151,20 @@ def angka() -> dict:
 def kerangka() -> Kanvas:
     a = angka()
     langkah: list[tuple[str, list[str]]] = [
-        ("Identifikasi masalah", ["Ulasan warga di Play Store menumpuk dan tidak terbaca satu per satu", "Pengelola layanan sulit tahu keluhan yang paling sering muncul"]),
+        ("Identifikasi masalah", ["Ulasan aplikasi layanan publik di Play Store menumpuk dan tidak terbaca satu per satu", "Pengelola layanan (pemerintah) sulit tahu keluhan yang paling sering muncul dan kapan memuncak"]),
         ("Studi literatur", ["Analisis sentimen, TF-IDF, SVM, Logistic Regression, Naive Bayes, IndoBERTweet", "Paper dataset IGAR, metrik macro-F1, cosine similarity, SDLC Waterfall"]),
         ("Pengumpulan data", [f"Dataset IGAR v3: {ribuan(a['mentah'])} ulasan Google Play, 6 aplikasi, {a['tahun'][0]} sampai {a['tahun'][1]}", "Label dari bintang: 1-2 negatif, 3 netral, 4-5 positif"]),
-        ("Praproses teks", ["Normalisasi Unicode NFKC, huruf kecil, buang tautan", "Pangkas huruf berulang (aaa jadi aa), tokenisasi huruf, angka, emoji", f"Kamus slang {a['slang']} entri: gk jadi tidak, udh jadi sudah"]),
-        ("Pembersihan dan pembagian data", [f"Ulasan yang sama persis digabung: {ribuan(a['unik'])} teks unik", "Label mayoritas per teks, teks dengan label seri dibuang", "Hash md5 teks: 80% latih, 10% validasi, 10% uji (tanpa kebocoran)"]),
-        ("Ekstraksi fitur", ["TF-IDF kata 1-2 gram dan karakter 2-5 gram", f"tf sublinear, normalisasi L2 per blok, {ribuan(a['kolom'])} kolom fitur"]),
-        ("Pelatihan model", ["Linear SVM, Logistic Regression, Multinomial Naive Bayes", f"Pembanding: Ridge, SGD, LightGBM, IndoBERTweet ({a['konfigurasi']} konfigurasi)"]),
-        ("Penyetelan di data validasi", ["Pilih setelan dengan macro-F1 validasi tertinggi", "Geser bias tiap kelas dan kalibrasi suhu peluang"]),
-        ("Evaluasi di data uji", ["Macro-F1, akurasi, presisi, recall, matriks kebingungan, kecepatan", "Bootstrap 1.000 kali, cosine similarity, uji 60 kalimat, replikasi paper"]),
+        ("Text preprocessing", ["Normalisasi Unicode NFKC, lowercase, buang URL", "Pangkas huruf berulang (aaa jadi aa), tokenization huruf, angka, emoji", f"Kamus slang {a['slang']} entri: gk jadi tidak, udh jadi sudah"]),
+        ("Data cleaning dan data splitting", [f"Ulasan yang sama persis digabung: {ribuan(a['unik'])} teks unik", "Label mayoritas per teks, teks dengan label seri dibuang", "Hash MD5 teks: 80% train, 10% validation, 10% test (tanpa data leakage)"]),
+        ("Feature extraction", ["TF-IDF word 1-2 gram dan character 2-5 gram", f"sublinear tf, normalisasi L2 per blok, {ribuan(a['kolom'])} fitur"]),
+        ("Model training", ["Linear SVM, Logistic Regression, Multinomial Naive Bayes", f"Model pembanding: Ridge, SGD, LightGBM, IndoBERTweet ({a['konfigurasi']} konfigurasi)"]),
+        ("Hyperparameter tuning di validation set", ["Pilih setelan dengan macro-F1 validation tertinggi", "Class bias adjustment dan temperature scaling"]),
+        ("Evaluasi di test set", ["Macro-F1, accuracy, precision, recall, confusion matrix, kecepatan", "Bootstrap 1.000 kali, cosine similarity, uji 60 kalimat, replikasi paper"]),
     ]
     lanjut: list[tuple[str, list[str]]] = [
-        ("Pemilihan model", [f"Linear SVM: macro-F1 {koma(a['f1'])}, {koma(a['ms'])} ms per ulasan", "bobotnya bisa menunjukkan kata penentu ke pengguna"]),
-        ("Implementasi aplikasi", [f"Bobot diekspor ke TypeScript, uji paritas di {ribuan(a['paritas'])} teks", "Next.js di Vercel: baca satu ulasan, cek massal, dashboard"]),
-        ("Pengujian dan evaluasi pengguna", ["Skenario uji black box di web yang sudah online", "Kuesioner SUS dan wawancara pakar"]),
+        ("Model selection", [f"Linear SVM: macro-F1 {koma(a['f1'])}, {koma(a['ms'])} ms per ulasan", "bobotnya bisa menunjukkan kata penentu ke pengguna"]),
+        ("Implementasi aplikasi", ["Streamlit: pengelola pilih aplikasi, start date, end date", f"Ulasan diambil google-play-scraper, dibaca Linear SVM yang sama (parity test {ribuan(a['paritas'])} teks)"]),
+        ("Pengujian dan evaluasi pengguna", ["Unit test, UI test, dan black-box scenario testing", "Kuesioner SUS dan wawancara pakar"]),
         ("Simpulan dan saran", []),
     ]
     W = 1080
@@ -205,9 +205,9 @@ def kerangka() -> Kanvas:
         y += h + jarak
 
     k.kelompok(196, pos[0][0], pos[1][0] + pos[1][1], "Persiapan")
-    k.kelompok(196, pos[2][0], pos[4][0] + pos[4][1], "Data dan praproses")
-    k.kelompok(196, pos[5][0], pos[9][0] + pos[9][1], "Pemodelan dan evaluasi")
-    k.kelompok(196, pos[10][0], pos[11][0] + pos[11][1], "Aplikasi")
+    k.kelompok(196, pos[2][0], pos[4][0] + pos[4][1], "Data dan preprocessing")
+    k.kelompok(196, pos[5][0], pos[9][0] + pos[9][1], "Modeling dan evaluasi")
+    k.kelompok(196, pos[10][0], pos[11][0] + pos[11][1], "Implementasi")
     k.h = int(y + 10)
     return k
 
@@ -284,11 +284,11 @@ def alur_praproses() -> Kanvas:
 
 def waterfall() -> Kanvas:
     fase = [
-        ("1. Analisis kebutuhan", ["Masalah, pengguna, dan data IGAR", "Kebutuhan fungsional dan nonfungsional", "Audit data: duplikat, label dari bintang"]),
-        ("2. Perancangan", ["Arsitektur web tanpa basis data", "Model di fungsi serverless Vercel", "UML, alur data, rancangan layar"]),
-        ("3. Implementasi", ["Pipeline ML, skrip 01 sampai 17 (Python)", "Web Next.js dan TypeScript", "Bobot model diekspor ke web"]),
-        ("4. Pengujian", ["Uji paritas Python lawan TypeScript", "Skenario black box dan uji 60 kalimat", "Evaluasi model di data uji"]),
-        ("5. Penerapan", ["Rilis otomatis ke Vercel tiap push", "Kode terbuka di GitHub", "Video demo dan presentasi"]),
+        ("1. Analisis kebutuhan", ["Masalah, pengguna, dan data IGAR", "Functional dan non-functional requirement", "v5: pengguna utama pengelola layanan"]),
+        ("2. Perancangan", ["Arsitektur tanpa database", "v4: model di serverless Vercel", "v5: Streamlit + google-play-scraper"]),
+        ("3. Implementasi", ["Pipeline ML Python, skrip 01 sampai 17", "v4: Next.js dan TypeScript", "v5: Streamlit, 3 class Python"]),
+        ("4. Pengujian", ["Parity test model lawan sklearn", "Unit test, UI test, black-box testing", "Evaluasi model di test set"]),
+        ("5. Penerapan", ["v4 di Vercel, v5 di Streamlit", "Community Cloud, kode di GitHub", "Video demo dan presentasi"]),
         ("6. Pemeliharaan", ["Perbaikan dari masukan dosen dan", "pengguna, lalu putaran berikutnya", "dimulai lagi dari analisis kebutuhan"]),
     ]
     k = Kanvas(1220, 900, "Model pengembangan Waterfall Suara Rakyat")
@@ -304,12 +304,12 @@ def waterfall() -> Kanvas:
     bawah = yl + h + 44
     k.garis([(xl + w / 2, yl + h), (xl + w / 2, bawah), (34, bawah), (34, y0 + h / 2), (x0 - 2, y0 + h / 2)], putus=True)
     k.teks(380, bawah - 10, "umpan balik: kebutuhan baru masuk ke putaran berikutnya", 12, ABU, 700)
-    versi = [("v1", "17 Sep 2026", "model dan web prediksi pertama"), ("v2", "19 Sep 2026", "cek massal, kuesioner SUS, tren keluhan"), ("v3", "23 Sep 2026", "evaluasi tambahan dan diagram laporan"), ("v4", "3 Okt 2026", "satu model, dashboard untuk pengguna awam")]
+    versi = [("v1", "17 Sep 2026", ["model dan web", "prediksi pertama"]), ("v2", "19 Sep 2026", ["cek massal, SUS,", "tren keluhan"]), ("v3", "23 Sep 2026", ["evaluasi tambahan,", "diagram laporan"]), ("v4", "3 Okt 2026", ["satu model,", "dashboard aplikasi"]), ("v5", "13 Nov 2026", ["Streamlit + scraper", "untuk pengelola layanan"])]
     k.teks(70, bawah + 44, "Putaran yang sudah dilalui (tanggal dari riwayat commit Git):", 13, ASPAL, 700, anchor="start")
     for i, (v, tgl, isi) in enumerate(versi):
-        cx = 70 + i * 280
-        k.kotak(cx, bawah + 58, 262, 52, [f"{v}, {tgl}", isi], isi="#ffffff", garis=GARIS, ukuran=11.5, tebal=500)
-    k.h = int(bawah + 130)
+        cx = 70 + i * 220
+        k.kotak(cx, bawah + 58, 206, 66, [f"{v}, {tgl}", *isi], isi=KERTAS if v == "v5" else "#ffffff", garis=GARIS, ukuran=11.5, tebal=500)
+    k.h = int(bawah + 146)
     return k
 
 
@@ -582,6 +582,272 @@ def activity() -> Kanvas:
     return k
 
 
+# ---------------- v5: app Streamlit untuk pengelola layanan ----------------
+
+
+def use_case_v5() -> Kanvas:
+    k = Kanvas(1400, 820, "Use case diagram Suara Rakyat v5")
+    k.teks(700, 36, "Use case diagram (v5)", 21, ASPAL, 800)
+    k.bingkai(270, 66, 880, 700, "Suara Rakyat v5 (Streamlit)")
+    k.aktor(130, 330, ["Pengelola layanan", "(pemerintah)"])
+    k.aktor(1290, 120, ["Google Play", "«sistem»"])
+
+    A, B = 470, 880
+    utama = {
+        "ambil": (A, 210, ["Ambil dan baca", "ulasan"]),
+        "ringkas": (A, 380, ["Lihat ringkasan", "nada"]),
+        "tren": (A, 500, ["Lihat tren", "nada"]),
+        "daftar": (A, 610, ["Lihat daftar", "ulasan per nada"]),
+        "csv": (A, 715, ["Unduh hasil", "CSV"]),
+    }
+    tambahan = {
+        "gp": (B, 120, ["Ambil ulasan dari", "Google Play"]),
+        "baca": (B, 215, ["Baca nada dengan", "Linear SVM"]),
+        "id": (B, 310, ["Isi application ID", "atau link"]),
+        "kata": (B, 410, ["Lihat kata", "penentu"]),
+        "urut": (B, 610, ["Urutkan", "ulasan"]),
+    }
+    for cx, cy, baris in utama.values():
+        k.elips(cx, cy, 104, 38, baris)
+    for cx, cy, baris in tambahan.values():
+        k.elips(cx, cy, 98, 34, baris, isi="#ffffff")
+
+    for cx, cy, _ in utama.values():
+        k.garis([(166, 352), (cx - 104, cy)], kepala="tidak")
+    gx, gy, _ = tambahan["gp"]
+    k.garis([(gx + 98, gy), (1252, 142)], kepala="tidak")
+
+    def relasi(dari, ke, label, lx, ly):
+        k.garis([dari, ke], putus=True, kepala="garis")
+        k.teks(lx, ly, label, 11, ABU, 600)
+
+    ax, ay, _ = utama["ambil"]
+    relasi((ax + 96, ay - 16), (B - 96, 128), "«include»", 680, 150)
+    relasi((ax + 104, ay), (B - 98, 213), "«include»", 680, 202)
+    relasi((B - 94, 300), (ax + 98, ay + 14), "«extend»", 735, 306)
+    rx, ry, _ = utama["ringkas"]
+    relasi((rx + 102, ry + 4), (B - 98, 408), "«include»", 680, 384)
+    dx_, dy_, _ = utama["daftar"]
+    relasi((B - 98, 610), (dx_ + 104, dy_), "«extend»", 680, 600)
+    k.teks(710, 796, "«include» selalu ikut dijalankan, «extend» hanya kalau pengguna memilihnya. Ringkasan, tren, daftar, dan CSV tersedia setelah ulasan diambil.", 11.5, ABU, 500)
+    return k
+
+
+def class_diagram_v5() -> Kanvas:
+    k = Kanvas(1500, 840, "Class diagram Suara Rakyat v5")
+    k.teks(750, 36, "Class diagram (v5)", 21, ASPAL, 800)
+    k.teks(750, 58, "kelas di streamlit-app/suara beserta library dan berkas yang dipakainya", 13, ABU, 500)
+
+    def kotak(x, y, w, nama, atribut, metode, isi=PUTIH):
+        return x, y, w, kelas(k, x, y, w, nama, atribut, metode, isi)
+
+    bawah = lambda b: b[1] + b[3]
+    tengah_x = lambda b: b[0] + b[2] / 2
+    kanan = lambda b: b[0] + b[2]
+
+    def label(x, y, teks, anchor="start"):
+        k.teks(x, y, teks, 11.5, ABU, 600, anchor=anchor)
+
+    app = kotak(560, 92, 380, "app.py  «Streamlit»", ["- session_state['hasil']: dict", "- APPS: dict[str, str]"], ["+ run_search(app_id, start, end)", "+ show_dashboard(hasil)", "+ parse_app_id(teks): str"], KERTAS)
+    anf = kotak(60, 110, 250, "AppNotFound  «exception»", [], [])
+    rs = kotak(40, 330, 380, "ReviewScraper", ["+ max_fetch: int = 10000", "- fetch_page: Callable"], ["+ app_info(app_id): dict", "+ fetch(app_id, start, end,", "      on_progress): ScrapeResult"])
+    ra = kotak(560, 330, 380, "ReviewAnalysis", ["- df: DataFrame", "- _preds: list[Prediction]"], ["+ counts(), unreadable()", "+ star_agreement(): float", "+ trend(), is_weekly()", "+ top_words(label, n)", "+ table(label), to_csv(): bytes"])
+    sc = kotak(1080, 330, 380, "SentimentClassifier", ["- word_index, char_index: dict", "- idf, coef: ndarray", "- offset: ndarray (intercept + bias)", "- temperature: float"], ["+ predict(teks): Prediction", "+ predict_many(teks): list[Prediction]"], KERTAS)
+    sr = kotak(40, 640, 250, "ScrapeResult  «dataclass»", ["+ reviews: DataFrame", "+ fetched: int", "+ hit_limit: bool", "+ oldest_seen: datetime"], [])
+    gp = kotak(310, 640, 210, "google_play_scraper", ["«library»"], ["+ app(), reviews()"])
+    pr = kotak(610, 640, 280, "Prediction  «dataclass»", ["+ label: str | None", "+ confidence: float | None", "+ probs: tuple[float, ...]", "+ tokens: tuple[(str, float)]"], [])
+    tn = kotak(990, 640, 240, "suara_ml.textnorm", ["«modul»"], ["+ tokens(), word_ngrams()", "+ char_ngrams(), mask_personal()"])
+    wm = kotak(1250, 640, 220, "web/model  «berkas»", ["meta.json, vocab_word.txt,", "vocab_char.txt, idf.f32,", "coef_svm.f32"], [])
+
+    # app memakai tiga kelas utama
+    k.garis([(tengah_x(app) - 140, bawah(app)), (tengah_x(app) - 140, 300), (tengah_x(rs), 300), (tengah_x(rs), rs[1] - 2)], putus=True, kepala="garis")
+    k.garis([(tengah_x(app), bawah(app)), (tengah_x(ra), ra[1] - 2)], putus=True, kepala="garis")
+    k.garis([(tengah_x(app) + 140, bawah(app)), (tengah_x(app) + 140, 300), (tengah_x(sc), 300), (tengah_x(sc), sc[1] - 2)], putus=True, kepala="garis")
+    label(758, 292, "memakai")
+    # ReviewScraper melempar AppNotFound
+    k.garis([(tengah_x(rs) - 60, rs[1]), (tengah_x(anf), bawah(anf) + 2)], putus=True, kepala="garis")
+    label(tengah_x(anf) + 8, (bawah(anf) + rs[1]) / 2 + 20, "melempar")
+    # ReviewScraper membuat ScrapeResult dan memakai library
+    k.garis([(tengah_x(sr), bawah(rs)), (tengah_x(sr), sr[1] - 2)], putus=True, kepala="garis")
+    label(tengah_x(sr) + 8, (bawah(rs) + sr[1]) / 2 + 4, "membuat")
+    k.garis([(tengah_x(gp), bawah(rs)), (tengah_x(gp), gp[1] - 2)], putus=True, kepala="garis")
+    label(tengah_x(gp) + 8, (bawah(rs) + gp[1]) / 2 + 4, "memakai")
+    # ReviewAnalysis menyimpan banyak Prediction (aggregation)
+    xs, ys = tengah_x(ra), bawah(ra)
+    k.isi.append(f'<path d="M{xs},{ys}l-8,11l8,11l8,-11z" fill="{PUTIH}" stroke="{ASPAL}" stroke-width="1.6"/>')
+    k.garis([(xs, ys + 22), (xs, pr[1])], kepala="tidak")
+    label(xs + 8, pr[1] - 8, "0..*")
+    # SentimentClassifier membuat Prediction, memakai textnorm, membaca berkas model
+    xa = sc[0] + 30
+    k.garis([(xa, bawah(sc)), (xa, 600), (kanan(pr) - 40, 600), (kanan(pr) - 40, pr[1] - 2)], putus=True, kepala="garis")
+    label((xa + kanan(pr) - 40) / 2, 592, "membuat", "middle")
+    k.garis([(1170, bawah(sc)), (1170, tn[1] - 2)], putus=True, kepala="garis")
+    label(1178, 620, "memakai")
+    k.garis([(tengah_x(wm), bawah(sc)), (tengah_x(wm), wm[1] - 2)], putus=True, kepala="garis")
+    label(tengah_x(wm) + 8, 620, "membaca")
+    k.teks(750, 818, "Garis putus = dependency (memakai, membuat, melempar). Belah ketupat kosong = aggregation: satu ReviewAnalysis menyimpan banyak Prediction.", 11.5, ABU, 500)
+    return k
+
+
+def sequence_v5() -> Kanvas:
+    k = Kanvas(1400, 1080, "Sequence diagram ambil dan baca ulasan v5")
+    k.teks(700, 34, "Sequence diagram (v5): ambil dan baca ulasan", 20, ASPAL, 800)
+    xs = [100, 330, 560, 790, 1020, 1260]
+    nama = [["Pengelola", "layanan"], ["app.py", "(Streamlit)"], ["ReviewScraper"], ["Google Play"], ["Sentiment", "Classifier"], ["ReviewAnalysis"]]
+    for x, n in zip(xs, nama):
+        k.kotak(x - 85, 58, 170, 52, n, isi=KERTAS)
+        k.isi.append(f'<path d="M{x},110V1030" stroke="{ABU}" stroke-width="1.4" stroke-dasharray="5 5"/>')
+    P, A, R, G, S, N = xs
+
+    def latar(x, y, teks, anchor="middle"):
+        # latar polos di belakang label supaya garis lifeline tidak menembus tulisan
+        w = len(teks) * 6.6 + 10
+        x0 = x - w / 2 if anchor == "middle" else x - 5
+        k.isi.append(f'<rect x="{x0:.1f}" y="{y - 13}" width="{w:.1f}" height="17" fill="{PUTIH}"/>')
+
+    def pesan(y, x1, x2, teks, balas=False):
+        k.panah(x1, y, x2, y, None, putus=balas, kepala="garis" if balas else "penuh")
+        latar((x1 + x2) / 2, y - 8, teks)
+        k.teks((x1 + x2) / 2, y - 8, teks, 11.5, ASPAL, 600)
+
+    def aktif(x, y1, y2):
+        k.isi.append(f'<rect x="{x - 6}" y="{y1}" width="12" height="{y2 - y1}" fill="{PUTIH}" stroke="{ASPAL}" stroke-width="1.5"/>')
+
+    def bingkai(y1, y2, judul, syarat, x1=60, x2=1340):
+        k.isi.append(f'<rect x="{x1}" y="{y1}" width="{x2 - x1}" height="{y2 - y1}" rx="6" fill="none" stroke="{MERAH}" stroke-width="1.6"/>')
+        k.isi.append(f'<path d="M{x1},{y1}H{x1 + 64}V{y1 + 24}H{x1}Z" fill="{MERAH}"/>')
+        k.teks(x1 + 32, y1 + 17, judul, 12, PUTIH, 700)
+        latar(x1 + 76, y1 + 17, syarat, "start")
+        k.teks(x1 + 76, y1 + 17, syarat, 11.5, ABU, 600, anchor="start")
+
+    def catatan(x, y, w, baris):
+        k.kotak(x, y, w, 18 + len(baris) * 15, baris, isi=KERTAS, r=4, ukuran=11, tebal=500)
+
+    pesan(150, P, A, "pilih aplikasi dan tanggal")
+    aktif(A, 150, 1000)
+    bingkai(170, 232, "alt", "[start date > end date atau application ID tidak valid]")
+    pesan(216, A, P, "pesan galat", balas=True)
+    pesan(272, A, R, "app_info(app_id)")
+    aktif(R, 272, 340)
+    pesan(300, R, G, "app(app_id)")
+    pesan(330, G, R, "judul, pengembang", balas=True)
+    bingkai(350, 412, "alt", "[aplikasi tidak ditemukan]")
+    pesan(396, R, A, "AppNotFound", balas=True)
+    pesan(396, A, P, "pesan: tidak ditemukan", balas=True)
+    pesan(452, A, R, "fetch(app_id, start, end, on_progress)")
+    aktif(R, 452, 640)
+    bingkai(472, 610, "loop", "[belum lewat start date, ulasan belum habis, kurang dari 10.000]", 260, 860)
+    pesan(516, R, G, "reviews(NEWEST, 200, token)")
+    pesan(548, G, R, "200 ulasan + token berikutnya", balas=True)
+    pesan(590, R, A, "on_progress(jumlah, tanggal tertua)")
+    pesan(636, R, A, "ScrapeResult (tanpa identitas)", balas=True)
+    pesan(690, A, S, "predict_many(teks ulasan)")
+    aktif(S, 690, 790)
+    catatan(1040, 706, 200, ["TF-IDF, skor Linear SVM", "+ bias, softmax(skor/T),", "kata penentu"])
+    pesan(790, S, A, "list[Prediction]", balas=True)
+    pesan(840, A, N, "ReviewAnalysis(reviews, predictions)")
+    aktif(N, 840, 930)
+    pesan(880, A, N, "counts(), trend(), top_words(), table()")
+    pesan(926, N, A, "ringkasan, tren, kata, tabel", balas=True)
+    pesan(980, A, P, "dashboard dan daftar ulasan", balas=True)
+    k.teks(700, 1062, "Hasil disimpan di session_state selama halaman terbuka, tidak di database. Ganti filter nada tidak mengambil ulang ulasan.", 11.5, ABU, 500)
+    return k
+
+
+def activity_v5() -> Kanvas:
+    k = Kanvas(1200, 1480, "Activity diagram pantau ulasan v5")
+    k.teks(600, 36, "Activity diagram (v5): pantau ulasan satu aplikasi", 20, ASPAL, 800)
+    jalur = [(40, "Pengelola layanan"), (420, "App Streamlit"), (800, "Google Play")]
+    for x, n in jalur:
+        k.isi.append(f'<rect x="{x}" y="60" width="380" height="1400" fill="none" stroke="{ASPAL}" stroke-width="1.6"/>')
+        k.isi.append(f'<rect x="{x}" y="60" width="380" height="36" fill="{KERTAS}" stroke="{ASPAL}" stroke-width="1.6"/>')
+        k.teks(x + 190, 84, n, 13.5, MERAH_TUA, 700)
+    P, A, G = 230, 610, 990
+
+    def aksi(cx, cy, baris, w=250):
+        h = 22 + len(baris) * 16
+        k.kotak(cx - w / 2, cy - h / 2, w, h, baris, isi="#ffffff", r=16, ukuran=12, tebal=500)
+        return h / 2
+
+    def pilihan(cx, cy, w=44, h=44):
+        k.isi.append(f'<path d="M{cx},{cy - h / 2}L{cx + w / 2},{cy}L{cx},{cy + h / 2}L{cx - w / 2},{cy}Z" fill="{KERTAS}" stroke="{ASPAL}" stroke-width="2"/>')
+
+    def jaga(x, y, s, anchor="start"):
+        k.teks(x, y, s, 11.5, ABU, 700, anchor=anchor)
+
+    def tanya(x, y, baris, anchor="start"):
+        k.baris_teks(x, y, baris, 11.5, ABU, 600, 14, anchor=anchor)
+
+    k.isi.append(f'<circle cx="{P}" cy="125" r="11" fill="{ASPAL}"/>')
+    h = aksi(P, 180, ["Buka Suara Rakyat v5"])
+    k.panah(P, 136, P, 180 - h - 2)
+    pilihan(P, 255)
+    k.panah(P, 180 + h, P, 233)
+    tanya(P + 28, 214, ["aplikasi ada", "di daftar?"])
+    h1 = aksi(140, 345, ["Pilih dari", "daftar 6 aplikasi"], 170)
+    h2 = aksi(320, 345, ["Isi application ID", "atau tempel link"], 170)
+    k.garis([(P - 22, 255), (140, 255), (140, 345 - h1 - 2)])
+    jaga(150, 247, "[ya]", "end")
+    k.garis([(P + 22, 255), (320, 255), (320, 345 - h2 - 2)])
+    jaga(310, 247, "[tidak]")
+    pilihan(P, 420)
+    k.garis([(140, 345 + h1), (140, 420), (P - 24, 420)])
+    k.garis([(320, 345 + h2), (320, 420), (P + 24, 420)])
+    h = aksi(P, 490, ["Isi start date dan end date"])
+    k.panah(P, 442, P, 490 - h - 2)
+    h = aksi(P, 570, ["Tekan Ambil dan baca ulasan"])
+    k.panah(P, 490 + 19, P, 570 - h - 2)
+    pilihan(A, 570)
+    k.panah(P + 125, 570, A - 24, 570)
+    tanya(A + 30, 555, ["input valid?"])
+    he = aksi(A, 480, ["Tampilkan pesan galat"])
+    k.panah(A, 548, A, 480 + he + 2)
+    jaga(A + 8, 528, "[tidak]")
+    k.panah(A - 125, 480, P + 125 + 2, 490)
+    h = aksi(A, 660, ["Cek aplikasi (app_info)"])
+    k.panah(A, 592, A, 660 - h - 2)
+    jaga(A + 8, 614, "[ya]")
+    hg = aksi(G, 660, ["Kirim judul dan pengembang"])
+    k.panah(A + 125, 660, G - 125 - 2, 660)
+    pilihan(A, 750)
+    k.garis([(G, 660 + hg), (G, 706), (A, 706), (A, 726)])
+    tanya(A - 30, 755, ["ditemukan?"], "end")
+    k.garis([(A + 22, 750), (765, 750), (765, 480), (A + 125 + 2, 480)])
+    jaga(A + 32, 742, "[tidak]")
+    h = aksi(A, 840, ["Minta 200 ulasan terbaru", "(lanjut dari token)"])
+    k.panah(A, 772, A, 840 - h - 2)
+    jaga(A + 8, 796, "[ya]")
+    hg = aksi(G, 840, ["Kirim 200 ulasan", "dan token berikutnya"])
+    k.panah(A + 125, 840, G - 125 - 2, 840)
+    h3 = aksi(A, 935, ["Simpan ulasan di rentang tanggal,", "buang nama dan foto, perbarui progres"], 300)
+    k.garis([(G, 840 + hg), (G, 935), (A + 150 + 2, 935)])
+    pilihan(A, 1020)
+    k.panah(A, 935 + h3, A, 998)
+    tanya(A + 30, 1010, ["lewat start date, ulasan", "habis, atau 10.000?"])
+    k.garis([(A - 22, 1020), (440, 1020), (440, 840), (A - 125 - 2, 840)])
+    jaga(448, 1012, "[belum]")
+    h = aksi(A, 1105, ["Baca nada tiap ulasan", "dengan Linear SVM"])
+    k.panah(A, 1042, A, 1105 - h - 2)
+    jaga(A + 8, 1064, "[sudah]")
+    h4 = aksi(A, 1190, ["Susun ringkasan: persen nada,", "tren, kata penentu, tabel"], 270)
+    k.panah(A, 1105 + h, A, 1190 - h4 - 2)
+    h5 = aksi(P, 1190, ["Baca dashboard dan daftar", "ulasan per nada"])
+    k.panah(A - 135, 1190, P + 125 + 2, 1190)
+    pilihan(P, 1275)
+    k.panah(P, 1190 + h5, P, 1253)
+    tanya(P + 30, 1270, ["unduh CSV?"])
+    h = aksi(P, 1355, ["Tekan Unduh semua hasil"])
+    k.panah(P, 1297, P, 1355 - h - 2)
+    jaga(P - 10, 1320, "[ya]", "end")
+    h6 = aksi(A, 1355, ["Susun CSV (UTF-8 untuk Excel)"], 270)
+    k.panah(P + 125, 1355, A - 135 - 2, 1355)
+    k.isi.append(f'<circle cx="{A}" cy="1425" r="13" fill="none" stroke="{ASPAL}" stroke-width="2"/><circle cx="{A}" cy="1425" r="8" fill="{ASPAL}"/>')
+    k.panah(A, 1355 + h6, A, 1410)
+    k.garis([(P - 22, 1275), (70, 1275), (70, 1425), (A - 15, 1425)])
+    jaga(78, 1266, "[tidak]")
+    return k
+
+
 def ke_png(berkas: list[Path]) -> None:
     kode = """
 import sys
@@ -607,8 +873,13 @@ def main() -> None:
         "kerangka-berpikir": kerangka,
         "alur-praproses": alur_praproses,
         "waterfall": waterfall,
-        "use-case": use_case,
-        "class-diagram": class_diagram,
+        "use-case": use_case_v5,
+        "class-diagram": class_diagram_v5,
+        "sequence-v5": sequence_v5,
+        "activity-v5": activity_v5,
+        # diagram v4 (web Next.js) tetap dibuat untuk bab riwayat versi
+        "use-case-v4": use_case,
+        "class-diagram-v4": class_diagram,
         "sequence-prediksi": sequence,
         "activity-massal": activity,
     }

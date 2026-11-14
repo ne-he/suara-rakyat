@@ -1,7 +1,9 @@
 # Pedoman wawancara pakar
 
 Dipakai untuk evaluasi subjektif di laporan (Bab 4.3). Tujuannya meminta penilaian orang yang
-paham analisis sentimen atau layanan publik terhadap metode, hasil, dan kegunaan Suara Rakyat.
+paham analisis sentimen atau layanan publik terhadap metode, hasil, dan kegunaan Suara Rakyat v5
+(app Streamlit untuk pengelola layanan: pilih aplikasi dan rentang tanggal, ulasan diambil dari
+Google Play, lalu nadanya dibaca).
 
 ## Siapa yang diwawancarai
 
@@ -11,21 +13,22 @@ Minimal satu, idealnya dua sampai tiga orang dengan latar berbeda:
 |---|---|---|
 | Dosen data science atau text mining | Paham pelabelan, metrik, dan model teks | Bagian A dan B |
 | Praktisi atau peneliti NLP bahasa Indonesia | Paham bahasa gaul, singkatan, dan sindiran di ulasan | Bagian B dan C |
-| Orang yang mengelola atau meneliti layanan publik digital | Paham apa yang berguna bagi pengelola layanan | Bagian C dan D |
+| Orang yang mengelola atau meneliti layanan publik digital (misalnya pegawai humas atau pengelola aplikasi instansi) | Paham apa yang berguna bagi pengelola layanan | Bagian C dan D |
 
 Nama, jabatan, dan rekaman tidak disimpan di repositori publik. Simpan di folder tim yang tertutup.
 
 ## Sebelum wawancara
 
-1. Kirim tautan web dan satu paragraf ringkasan projek sehari sebelumnya.
+1. Kirim tautan app Streamlit dan satu paragraf ringkasan projek sehari sebelumnya.
 2. Minta izin merekam. Kalau tidak boleh, satu anggota tim mencatat.
-3. Siapkan laptop berisi web live, dashboard, dan tabel hasil model dari laporan.
+3. Siapkan laptop berisi app yang sudah dibuka sekali (supaya tidak menunggu app bangun), dan tabel hasil model dari laporan.
 4. Durasi 30 sampai 40 menit. Satu orang bertanya, satu orang mencatat.
 
 Kalimat pembuka yang bisa dipakai:
 
 > Terima kasih sudah meluangkan waktu. Kami dari kelompok AOL Software Engineering BINUS
-> membangun web Suara Rakyat yang membaca nada ulasan enam aplikasi layanan publik. Kami ingin
+> membangun Suara Rakyat, alat untuk pengelola layanan publik yang mengambil ulasan aplikasi dari
+> Google Play lalu membaca nadanya secara otomatis. Kami ingin
 > minta pendapat Bapak atau Ibu tentang metode, hasil, dan kegunaannya. Wawancara sekitar 30
 > menit. Boleh kami rekam untuk keperluan laporan? Nama tidak akan kami tampilkan tanpa izin.
 
@@ -55,21 +58,27 @@ Kalimat pembuka yang bisa dipakai:
 9. Model kami paling sering keliru pada sindiran dan ulasan campuran. Pendekatan apa yang paling
    realistis untuk memperbaikinya dalam waktu satu semester?
 
-## Bagian C. Kegunaan web (sekitar 10 menit)
+## Bagian C. Kegunaan app (sekitar 12 menit)
 
-Minta pakar mencoba tiga tugas sambil berpikir keras: baca satu ulasan, buka dashboard lalu
-temukan keluhan terbanyak di satu aplikasi, dan cek 200 ulasan contoh di halaman Massal.
+Minta pakar mencoba tiga tugas sambil berpikir keras: (1) pantau Mobile JKN tujuh hari terakhir,
+(2) sebutkan hal yang paling sering dikeluhkan dari kata penentu dan daftar ulasan negatif, dan
+(3) pantau aplikasi lain dengan menempel link Google Play-nya, lalu unduh CSV.
 
-10. Apakah hasil di layar mudah dipahami oleh orang yang tidak paham model?
-11. Apakah keterangan "mesin yakin" dan kata yang diwarnai membantu, atau justru membingungkan?
-12. Dari dashboard, informasi apa yang paling berguna, dan apa yang masih kurang?
-13. Apakah ada bagian yang bisa disalahartikan, misalnya dikira penilaian resmi instansi?
+10. Apakah hasil di layar mudah dipahami oleh pegawai yang tidak paham model?
+11. Apakah persen nada, tren, dan kata penentu cukup untuk menentukan apa yang harus diperbaiki?
+    Informasi apa yang masih kurang, misalnya kategori keluhan seperti login atau pembayaran?
+12. Apakah kolom "dibalas" dan urutan "paling banyak disukai" membantu tim layanan memilih ulasan
+    yang perlu dibalas lebih dulu?
+13. Ulasan diambil dengan library google-play-scraper, bukan API resmi Google. Menurut Bapak atau
+    Ibu, apakah ini layak untuk pemakaian instansi, atau sebaiknya lewat ekspor resmi Play Console
+    yang dimiliki instansi pemilik aplikasi?
+14. Model dilatih dari ulasan 2012 sampai 2023, sedangkan yang dibaca sekarang ulasan 2026.
+    Seberapa sering model seperti ini perlu dilatih ulang?
 
 ## Bagian D. Dampak dan etika (sekitar 5 menit)
 
-14. Siapa yang menurut Bapak atau Ibu paling diuntungkan oleh alat seperti ini?
 15. Risiko apa yang perlu kami tulis di bagian batasan? Contoh: ulasan Play Store tidak mewakili
-    seluruh warga.
+    seluruh warga, atau angka nada dikira penilaian resmi instansi.
 16. Kalau projek ini dilanjutkan, satu hal apa yang paling perlu dikerjakan lebih dulu?
 
 ## Penutup

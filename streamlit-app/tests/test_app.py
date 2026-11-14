@@ -107,7 +107,7 @@ def test_successful_search_shows_dashboard(app):
 
 def test_filter_positive(app):
     app.button[0].click().run()
-    app.button_group[0].set_value("Positif").run()
+    app.radio[0].set_value("Positif").run()
     assert set(app.dataframe[0].value["nada"]) == {"Positif"}
 
 

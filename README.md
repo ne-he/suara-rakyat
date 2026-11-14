@@ -1,12 +1,28 @@
 # Suara Rakyat
 
-Web untuk membaca nada ulasan aplikasi layanan publik (Mobile JKN, JMO, SatuSehat, MyPertamina, KAI Access, Info BMKG). Tulis satu ulasan lalu tekan Baca nadanya. Web menampilkan nada negatif, netral, atau positif, seberapa yakin mesinnya dalam kata-kata, dan kata yang paling menentukan hasil. Dibuat untuk orang awam, jadi tidak ada pilihan model atau istilah teknis di layar.
+Alat pemantau nada ulasan aplikasi layanan publik (Mobile JKN, JMO, SATUSEHAT, MyPertamina, Access by KAI, Info BMKG) untuk pengelola layanan di instansi pemerintah. Versi terbaru (v5) adalah app Streamlit: pengguna memilih aplikasi atau mengisi application ID, lalu start date dan end date. Ulasan diambil langsung dari Google Play dengan `google-play-scraper`, nadanya dibaca Linear SVM hasil penelitian, lalu tampil sebagai persen nada, tren, kata penentu, dan daftar ulasan per nada yang bisa diunduh sebagai CSV.
 
 Projek AOL mata kuliah Software Engineering. Tim: Nehemiah, Marcel, Wilson, Hans, Daniel.
 
-Web: https://suara-rakyat-xi.vercel.app
+App v5 (Streamlit): `[?]` (link Streamlit Community Cloud diisi setelah deploy). Kode dan cara menjalankan: [`streamlit-app/`](streamlit-app/README.md).
 
-Isi web:
+Web v4 (Next.js, untuk warga dan cek massal): https://suara-rakyat-xi.vercel.app
+
+## v5: dashboard untuk pengelola layanan
+
+Dibuat setelah feedback dosen 14 Oktober 2026: pemerintah tidak akan memasukkan ulasan satu per satu, jadi data diambil otomatis dari Google Play.
+
+| Bagian | Isi |
+|---|---|
+| `streamlit-app/app.py` | tampilan: input aplikasi dan tanggal, dashboard, daftar ulasan per nada, unduh CSV |
+| `streamlit-app/suara/scraper.py` | `ReviewScraper`: ambil ulasan terbaru 200 per halaman sampai lewat start date, maksimal 10.000, tanpa nama dan foto pengulas |
+| `streamlit-app/suara/classifier.py` | `SentimentClassifier`: model yang sama dengan web v4 (bobot di `web/model/`), uji paritas 3.018 teks tanpa beda label |
+| `streamlit-app/suara/analysis.py` | `ReviewAnalysis`: persen nada, kecocokan dengan bintang, tren harian atau mingguan, kata penentu, CSV |
+| `streamlit-app/tests/` | 26 unit test dan UI test (Streamlit AppTest) tanpa internet |
+| `tests/skenario-v5/` | 14 skenario black box di browser dengan data Google Play asli |
+| `docs/kebutuhan-pengguna-v5.md` | functional dan non-functional requirement v5 beserta skenario pengujinya |
+
+Isi web v4:
 
 | Halaman | Isi |
 |---|---|

@@ -46,17 +46,16 @@ def pct(x: float) -> str:
 
 def run_search(app_id: str, start: date, end: date) -> None:
     scraper = ReviewScraper()
+    # galat ditampilkan di luar kotak status, karena isi kotak status bisa tertutup
+    try:
+        info = scraper.app_info(app_id)
+    except AppNotFound:
+        st.error(f"Application ID `{app_id}` tidak ditemukan di Google Play Indonesia. Cek lagi ejaannya.")
+        return
+    except Exception:
+        st.error("Google Play tidak bisa dihubungi saat ini. Coba lagi beberapa menit lagi.")
+        return
     with st.status("Mengambil ulasan dari Google Play...", expanded=True) as status:
-        try:
-            info = scraper.app_info(app_id)
-        except AppNotFound:
-            status.update(label="Aplikasi tidak ditemukan", state="error")
-            st.error(f"Application ID `{app_id}` tidak ditemukan di Google Play Indonesia. Cek lagi ejaannya.")
-            return
-        except Exception:
-            status.update(label="Google Play tidak bisa dihubungi", state="error")
-            st.error("Google Play tidak bisa dihubungi saat ini. Coba lagi beberapa menit lagi.")
-            return
         st.write(f"**{info['title']}** oleh {info['developer']}")
 
         start_dt = datetime.combine(start, datetime.min.time(), WIB)
@@ -164,9 +163,9 @@ def show_dashboard(h: dict) -> None:
 
     st.markdown("#### Daftar ulasan")
     f1, f2 = st.columns([3, 2])
-    pilihan = f1.segmented_control("Nada", ["Negatif", "Netral", "Positif", "Semua"], default="Negatif")
+    pilihan = f1.radio("Nada", ["Negatif", "Netral", "Positif", "Semua"], horizontal=True)
     urut = f2.selectbox("Urutkan", ["Terbaru", "Paling banyak disukai", "Keyakinan tertinggi"])
-    label = None if pilihan in (None, "Semua") else {v: k for k, v in LABEL_ID.items()}[pilihan]
+    label = None if pilihan == "Semua" else {v: k for k, v in LABEL_ID.items()}[pilihan]
     tabel = a.table(label)
     if urut == "Paling banyak disukai":
         tabel = tabel.sort_values("disukai", ascending=False)

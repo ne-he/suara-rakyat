@@ -4,7 +4,7 @@ Alat pemantau nada ulasan aplikasi layanan publik (Mobile JKN, JMO, SATUSEHAT, M
 
 Projek AOL mata kuliah Software Engineering. Tim: Nehemiah, Marcel, Wilson, Hans, Daniel.
 
-App v5 (Streamlit): `[?]` (link Streamlit Community Cloud diisi setelah deploy). Kode dan cara menjalankan: [`streamlit-app/`](streamlit-app/README.md).
+App v5 (Streamlit): https://suara-rakyat.streamlit.app Kode dan cara menjalankan: [`streamlit-app/`](streamlit-app/README.md).
 
 Web v4 (Next.js, untuk warga dan cek massal): https://suara-rakyat-xi.vercel.app
 
@@ -19,7 +19,7 @@ Dibuat setelah feedback dosen 14 Oktober 2026: pemerintah tidak akan memasukkan 
 | `streamlit-app/suara/classifier.py` | `SentimentClassifier`: model yang sama dengan web v4 (bobot di `web/model/`), uji paritas 3.018 teks tanpa beda label |
 | `streamlit-app/suara/analysis.py` | `ReviewAnalysis`: persen nada, kecocokan dengan bintang, tren harian atau mingguan, kata penentu, CSV |
 | `streamlit-app/tests/` | 26 unit test dan UI test (Streamlit AppTest) tanpa internet |
-| `tests/skenario-v5/` | 14 skenario black box di browser dengan data Google Play asli |
+| `tests/skenario-v5/` | 14 skenario black box di browser dengan data Google Play asli, lulus 14 dari 14 di lokal dan di app live (14 November 2026) |
 | `docs/kebutuhan-pengguna-v5.md` | functional dan non-functional requirement v5 beserta skenario pengujinya |
 
 Isi web v4:

@@ -1,0 +1,165 @@
+{
+  "meta": {
+    "url": "https://suara-rakyat.streamlit.app/~/+/",
+    "waktu": "2026-11-14T11:46:21+00:00",
+    "python": "3.14.3",
+    "lulus": 14,
+    "total": 14
+  },
+  "skenario": [
+    {
+      "id": "SV-01",
+      "fitur": "Input",
+      "kebutuhan": "FR5-01, FR5-02",
+      "skenario": "Membuka halaman",
+      "langkah": "Buka app",
+      "data": "-",
+      "harapan": "Judul tampil, pilihan berisi 6 aplikasi dan Aplikasi lain, rentang bawaan 7 hari sampai hari ini",
+      "hasil": "judul tampil: True, 7 pilihan, rentang 08/11/2026 sampai 14/11/2026",
+      "status": "LULUS"
+    },
+    {
+      "id": "SV-02",
+      "fitur": "Input",
+      "kebutuhan": "FR5-02",
+      "skenario": "Start date setelah end date",
+      "langkah": "Isi start date hari ini dan end date 3 hari lalu, tekan Ambil",
+      "data": "start hari ini, end 3 hari lalu",
+      "harapan": "Pesan galat tentang start date muncul dan tidak ada ulasan yang diambil",
+      "hasil": "pesan: Start date harus sama dengan atau sebelum end date.",
+      "status": "LULUS"
+    },
+    {
+      "id": "SV-03",
+      "fitur": "Input",
+      "kebutuhan": "FR5-01",
+      "skenario": "Application ID tidak valid",
+      "langkah": "Pilih Aplikasi lain, isi teks bebas, tekan Ambil",
+      "data": "bukan id",
+      "harapan": "Pesan galat meminta application ID yang valid",
+      "hasil": "pesan: Isi application ID yang valid, misalnya com.bpjstku.",
+      "status": "LULUS"
+    },
+    {
+      "id": "SV-04",
+      "fitur": "Input",
+      "kebutuhan": "FR5-01, NFR5-06",
+      "skenario": "Application ID yang tidak ada di Google Play",
+      "langkah": "Pilih Aplikasi lain, isi com.suararakyat.tidakada, tekan Ambil",
+      "data": "com.suararakyat.tidakada",
+      "harapan": "Pesan aplikasi tidak ditemukan",
+      "hasil": "pesan: Application ID com.suararakyat.tidakada tidak ditemukan di Google Play Indonesia. Cek lagi ejaannya.",
+      "status": "LULUS"
+    },
+    {
+      "id": "SV-05",
+      "fitur": "Input",
+      "kebutuhan": "FR5-01",
+      "skenario": "Menempel link Google Play utuh",
+      "langkah": "Pilih Aplikasi lain, tempel link Access by KAI, tekan Ambil",
+      "data": "https://play.google.com/store/apps/details?id=com.kai.kaiticketing&hl=id",
+      "harapan": "Dashboard Access by KAI tampil",
+      "hasil": "judul dashboard: ['Access by KAI']",
+      "status": "LULUS"
+    },
+    {
+      "id": "SV-06",
+      "fitur": "Dashboard",
+      "kebutuhan": "FR5-03, FR5-04, FR5-05",
+      "skenario": "Pantau Mobile JKN 7 hari terakhir",
+      "langkah": "Pilih Mobile JKN, rentang bawaan, tekan Ambil",
+      "data": "app.bpjs.mobile, 7 hari",
+      "harapan": "Empat angka tampil, persen tiga nada berjumlah sekitar 100%, kecocokan dengan bintang ditampilkan",
+      "hasil": "{'Ulasan dibaca': '656', 'Negatif': '43,8%', 'Netral': '4,3%', 'Positif': '52,0%'}, jumlah persen 100.1, Nada hasil model sama dengan nada dari bintang pada 89,5% ulasan. Bint",
+      "status": "LULUS"
+    },
+    {
+      "id": "SV-07",
+      "fitur": "Dashboard",
+      "kebutuhan": "FR5-06, FR5-07",
+      "skenario": "Grafik tren dan kata penentu",
+      "langkah": "Setelah SV-06, lihat bagian tren dan kata penentu",
+      "data": "hasil SV-06",
+      "harapan": "Satu grafik tren dan dua grafik kata penentu tampil",
+      "hasil": "3 grafik tampil (1 tren + 2 kata penentu)",
+      "status": "LULUS"
+    },
+    {
+      "id": "SV-08",
+      "fitur": "Daftar ulasan",
+      "kebutuhan": "FR5-08",
+      "skenario": "Saring daftar per nada",
+      "langkah": "Setelah SV-06, pilih Negatif lalu Positif",
+      "data": "hasil SV-06",
+      "harapan": "Jumlah baris daftar sama dengan jumlah ulasan nada itu di ringkasan",
+      "hasil": "Positif: daftar 341, ringkasan 341, Negatif: daftar 287, ringkasan 287",
+      "status": "LULUS"
+    },
+    {
+      "id": "SV-09",
+      "fitur": "Daftar ulasan",
+      "kebutuhan": "FR5-08",
+      "skenario": "Urutkan daftar",
+      "langkah": "Setelah SV-06, ganti urutan ke Paling banyak disukai",
+      "data": "hasil SV-06",
+      "harapan": "Daftar tetap tampil tanpa galat dan jumlah baris tidak berubah",
+      "hasil": "baris sebelum 287, sesudah 287",
+      "status": "LULUS"
+    },
+    {
+      "id": "SV-10",
+      "fitur": "Unduh",
+      "kebutuhan": "FR5-09, NFR5-04",
+      "skenario": "Unduh hasil CSV",
+      "langkah": "Setelah SV-06, tekan Unduh semua hasil (CSV)",
+      "data": "hasil SV-06",
+      "harapan": "CSV terunduh, kolomnya tanggal, bintang, nada, keyakinan, disukai, dibalas, ulasan, tanpa nama pengulas, jumlah baris sama dengan ulasan yang diambil",
+      "hasil": "suara-rakyat_app.bpjs.mobile_20261108-20261114.csv, kolom ['tanggal', 'bintang', 'nada', 'keyakinan', 'disukai', 'dibalas', 'ulasan'], 656 baris data",
+      "status": "LULUS"
+    },
+    {
+      "id": "SV-11",
+      "fitur": "Dashboard",
+      "kebutuhan": "FR5-06",
+      "skenario": "Rentang panjang memakai tren mingguan",
+      "langkah": "Pilih Info BMKG, start date 1 Januari 2026, tekan Ambil",
+      "data": "com.Info_BMKG, 1 Jan 2026 sampai hari ini",
+      "harapan": "Dashboard tampil dengan grafik tren (per minggu karena rentang lebih dari 62 hari)",
+      "hasil": "551 ulasan dibaca, 3 grafik",
+      "status": "LULUS"
+    },
+    {
+      "id": "SV-12",
+      "fitur": "Pengambilan",
+      "kebutuhan": "FR5-03",
+      "skenario": "Aplikasi ramai melewati batas 10.000 ulasan",
+      "langkah": "Pilih JMO, rentang 90 hari, tekan Ambil",
+      "data": "com.bpjstku, 90 hari",
+      "harapan": "Peringatan batas 10.000 ulasan muncul dan dashboard tetap tampil",
+      "hasil": "peringatan: Pencarian dibatasi 10.000 ulasan terbaru. Ulasan tertua yang terambil bertanggal 06/10/2026, jadi ulasan sebel, 9.999 ulasan dibaca",
+      "status": "LULUS"
+    },
+    {
+      "id": "SV-13",
+      "fitur": "Tampilan",
+      "kebutuhan": "NFR5-01",
+      "skenario": "Dibuka di layar HP",
+      "langkah": "Buka app di lebar 390 px",
+      "data": "-",
+      "harapan": "Tidak ada bagian yang perlu digeser ke samping",
+      "hasil": "lebar isi 390 px, lebar layar 390 px",
+      "status": "LULUS"
+    },
+    {
+      "id": "SV-14",
+      "fitur": "Kecepatan",
+      "kebutuhan": "NFR5-02",
+      "skenario": "Waktu tunggu pantau 7 hari",
+      "langkah": "Ukur waktu dari tekan Ambil sampai angka ringkasan tampil di SV-06",
+      "data": "app.bpjs.mobile, 7 hari",
+      "harapan": "Di bawah 30 detik",
+      "hasil": "3.1 detik untuk 656 ulasan",
+      "status": "LULUS"
+    }
+  ]
+}

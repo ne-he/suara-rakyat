@@ -1,5 +1,7 @@
 # Suara Rakyat v5 (Streamlit)
 
+App live: https://suara-rakyat.streamlit.app
+
 Dashboard pemantauan ulasan aplikasi layanan publik untuk pengelola layanan. Pengguna memilih aplikasi
 (atau mengisi application ID), start date, dan end date. Sistem mengambil ulasan dari Google Play lewat
 `google-play-scraper`, membaca nadanya dengan Linear SVM hasil penelitian, lalu menampilkan komposisi nada,

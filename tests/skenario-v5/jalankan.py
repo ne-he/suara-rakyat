@@ -7,7 +7,7 @@ tests/skenario-v5/hasil-<nama>.json dan HASIL-<nama>.md.
 
 Pakai:
   python tests/skenario-v5/jalankan.py http://localhost:8531 lokal
-  python tests/skenario-v5/jalankan.py https://<app>.streamlit.app live
+  python tests/skenario-v5/jalankan.py "https://suara-rakyat.streamlit.app/~/+/" live
 """
 
 from __future__ import annotations
@@ -25,7 +25,8 @@ from pathlib import Path
 from playwright.sync_api import Page, sync_playwright
 
 HERE = Path(__file__).resolve().parent
-URL = sys.argv[1].rstrip("/") if len(sys.argv) > 1 else "http://localhost:8531"
+# garis miring di akhir dipertahankan: app Streamlit Cloud di /~/+/ gagal dibuka tanpa itu
+URL = sys.argv[1] if len(sys.argv) > 1 else "http://localhost:8531"
 NAMA = sys.argv[2] if len(sys.argv) > 2 else "lokal"
 DESKTOP = {"width": 1366, "height": 900}
 TUNGGU = 180_000  # pengambilan ulasan dari Google Play bisa makan puluhan detik

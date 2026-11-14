@@ -92,7 +92,7 @@
       "langkah": "Setelah SV-06, pilih Negatif lalu Positif",
       "data": "hasil SV-06",
       "harapan": "Jumlah baris daftar sama dengan jumlah ulasan nada itu di ringkasan",
-      "hasil": "Positif: daftar 318, ringkasan 318; Negatif: daftar 268, ringkasan 268",
+      "hasil": "Positif: daftar 318, ringkasan 318, Negatif: daftar 268, ringkasan 268",
       "status": "LULUS"
     },
     {

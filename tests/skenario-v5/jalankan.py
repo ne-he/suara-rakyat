@@ -184,7 +184,7 @@ def jalankan() -> list[dict]:
         for lab in ("Positif", "Negatif"):
             nada(page, lab)
             cek.append((lab, jumlah_daftar(page), per_nada[lab]))
-        catat("SV-08", all(a == b for _, a, b in cek), "; ".join(f"{lab}: daftar {a}, ringkasan {b}" for lab, a, b in cek))
+        catat("SV-08", all(a == b for _, a, b in cek), ", ".join(f"{lab}: daftar {a}, ringkasan {b}" for lab, a, b in cek))
 
         sebelum = jumlah_daftar(page)
         page.locator('[data-testid="stSelectbox"]').nth(1).click()

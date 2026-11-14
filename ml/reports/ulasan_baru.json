@@ -1,0 +1,138 @@
+{
+  "diambil": "2026-11-14T11:03:37+07:00",
+  "rentang": [
+    "2026-10-16",
+    "2026-11-14"
+  ],
+  "catatan": "label pembanding dari bintang (aturan IGAR), batas 10.000 ulasan terbaru per aplikasi",
+  "pembanding_test_set_igar": {
+    "accuracy": 0.8273,
+    "macro_f1": 0.6678
+  },
+  "gabungan": {
+    "terbaca": 12298,
+    "accuracy": 0.862,
+    "macro_f1": 0.6385,
+    "f1_per_kelas": {
+      "negative": 0.8487,
+      "neutral": 0.1423,
+      "positive": 0.9244
+    }
+  },
+  "per_aplikasi": {
+    "app.bpjs.mobile": {
+      "aplikasi": "Mobile JKN (BPJS Kesehatan)",
+      "ulasan": 3312,
+      "terbaca": 3312,
+      "kena_batas": false,
+      "ulasan_tertua": "2026-10-15T09:22:42+07:00",
+      "accuracy": 0.901,
+      "macro_f1": 0.6742,
+      "porsi_bintang": {
+        "negative": 0.3946,
+        "neutral": 0.0344,
+        "positive": 0.571
+      },
+      "porsi_model": {
+        "negative": 0.4402,
+        "neutral": 0.0296,
+        "positive": 0.5302
+      }
+    },
+    "com.bpjstku": {
+      "aplikasi": "JMO (BPJS Ketenagakerjaan)",
+      "ulasan": 7756,
+      "terbaca": 7755,
+      "kena_batas": false,
+      "ulasan_tertua": "2026-10-15T18:24:27+07:00",
+      "accuracy": 0.8466,
+      "macro_f1": 0.6197,
+      "porsi_bintang": {
+        "negative": 0.2993,
+        "neutral": 0.0573,
+        "positive": 0.6435
+      },
+      "porsi_model": {
+        "negative": 0.3897,
+        "neutral": 0.0365,
+        "positive": 0.5738
+      }
+    },
+    "com.telkom.tracencare": {
+      "aplikasi": "SATUSEHAT Mobile (Kemenkes)",
+      "ulasan": 217,
+      "terbaca": 217,
+      "kena_batas": false,
+      "ulasan_tertua": "2026-08-31T15:53:00+07:00",
+      "accuracy": 0.8433,
+      "macro_f1": 0.6604,
+      "porsi_bintang": {
+        "negative": 0.4194,
+        "neutral": 0.0829,
+        "positive": 0.4977
+      },
+      "porsi_model": {
+        "negative": 0.4977,
+        "neutral": 0.0553,
+        "positive": 0.447
+      }
+    },
+    "com.dafturn.mypertamina": {
+      "aplikasi": "MyPertamina (Pertamina)",
+      "ulasan": 365,
+      "terbaca": 365,
+      "kena_batas": false,
+      "ulasan_tertua": "2026-10-13T16:12:44+07:00",
+      "accuracy": 0.8603,
+      "macro_f1": 0.6694,
+      "porsi_bintang": {
+        "negative": 0.2986,
+        "neutral": 0.0548,
+        "positive": 0.6466
+      },
+      "porsi_model": {
+        "negative": 0.3589,
+        "neutral": 0.0603,
+        "positive": 0.5808
+      }
+    },
+    "com.kai.kaiticketing": {
+      "aplikasi": "Access by KAI (KAI)",
+      "ulasan": 604,
+      "terbaca": 604,
+      "kena_batas": false,
+      "ulasan_tertua": "2026-10-06T13:03:11+07:00",
+      "accuracy": 0.8609,
+      "macro_f1": 0.6582,
+      "porsi_bintang": {
+        "negative": 0.3974,
+        "neutral": 0.0546,
+        "positive": 0.548
+      },
+      "porsi_model": {
+        "negative": 0.4404,
+        "neutral": 0.0563,
+        "positive": 0.5033
+      }
+    },
+    "com.Info_BMKG": {
+      "aplikasi": "Info BMKG (BMKG)",
+      "ulasan": 45,
+      "terbaca": 45,
+      "kena_batas": false,
+      "ulasan_tertua": "2026-07-27T08:51:17+07:00",
+      "accuracy": 0.7778,
+      "macro_f1": 0.5426,
+      "porsi_bintang": {
+        "negative": 0.5333,
+        "neutral": 0.0222,
+        "positive": 0.4444
+      },
+      "porsi_model": {
+        "negative": 0.4222,
+        "neutral": 0.0667,
+        "positive": 0.5111
+      }
+    }
+  }
+}
